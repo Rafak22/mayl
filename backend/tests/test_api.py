@@ -151,14 +151,3 @@ def test_sessions_are_isolated():
     c.post(f"/api/proposals/{card['id']}/decide", json={"role": "ds", "decision": "approve"}, headers=a)
     assert c.get("/api/products/ppe", headers=a).json()["state"] == "resolved"
     assert c.get("/api/products/ppe", headers={"X-Session": "judge-b"}).json()["state"] == "bottleneck"
-
-
-def test_results_tab_reads_saved_eval_runs():
-    r = c.get("/api/products/ppe/eval").json()
-    splits = {s["split"]: s for s in r["splits"]}
-    assert set(splits) == {"dev", "heldout"}
-    cr = next(k for k in splits["heldout"]["kinds"] if k["kind"] == "change_review")
-    assert cr["cases"] > 0 and 0 <= cr["pass_rate"] <= 1 and cr["run"]["report"]
-    for f in splits["heldout"]["failed"]:  # only this project's cases, explained in plain words
-        assert "-ppe-" in f["id"] and f["text"] and not any("[" in x for x in f["reasons"])
-    assert c.get("/api/products/nope/eval").status_code == 404

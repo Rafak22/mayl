@@ -23,7 +23,6 @@ export const api = {
   products: () => req("/api/products"),
   product: (id) => req(`/api/products/${id}`),
   details: (id) => req(`/api/products/${id}/details`),
-  evalResults: (id) => req(`/api/products/${id}/eval`),
   stats: () => req("/api/stats"),
   inbox: (role) => req(`/api/inbox/${role}`),
   propose: (id, body) => req(`/api/products/${id}/proposals`, { method: "POST", body }),

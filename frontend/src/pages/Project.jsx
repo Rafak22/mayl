@@ -12,7 +12,7 @@ import { ProjectMap } from "../components/ProjectMap";
 import { STATE, cap, firstSentence, plural } from "../format";
 import { AgentAvatar, Icon } from "../icons";
 import { useLoad, useMayl } from "../state";
-import { DataTab, KnowledgeTab, ResultsTab } from "./ProjectData";
+import { DataTab, KnowledgeTab } from "./ProjectData";
 
 const TABS = [["map", "Project map"], ["data", "Data & solution"], ["knowledge", "Knowledge"], ["results", "Results"]];
 
@@ -63,7 +63,13 @@ export default function Project() {
         )}
         {tab === "data" && <DataTab pid={pid} />}
         {tab === "knowledge" && <KnowledgeTab pid={pid} />}
-        {tab === "results" && <ResultsTab pid={pid} />}
+        {tab === "results" && (
+          <section className="card placeholder">
+            <Icon name="chart" size={22} color="#5D6788" />
+            <b>Evaluation results coming soon</b>
+            <span className="muted small">Accuracy and latency runs for each version will appear here.</span>
+          </section>
+        )}
       </main>
       {tab === "map" && <ProjectSide product={product} summary={summary} onOpen={openCard} />}
 

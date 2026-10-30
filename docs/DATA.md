@@ -160,10 +160,7 @@ their sections on the Knowledge tab is read straight from `backend/knowledge/`.
 
 ## 4. Evaluation data
 
-Written and run only by the evaluation. The app reads the saved results, never the cases
-themselves: each project's **Results** tab shows how the agents scored on that project's cases
-(through [`backend/app/eval_results.py`](../backend/app/eval_results.py), with no API calls).
-Full method in [TESTING.md](TESTING.md).
+Used only by the evaluation, never by the running app. Full method in [TESTING.md](TESTING.md).
 
 | File | What it is |
 |---|---|
@@ -173,7 +170,7 @@ Full method in [TESTING.md](TESTING.md).
 | `eval/cases/intake.json` | 4 sets of client documents with the constraints and gaps that should be found |
 | `eval/products/retail.json` | Fresh-Food Demand Forecasting for Tamr Markets: graph, objective, rules (`p-cutoff`, `r-staple`, `r-ramadan`, `r-loyalty`, `e-window`) |
 | `eval/knowledge/retail/` | Its knowledge base: 7 files, 28 chunks, same folder layout |
-| `eval/results/*.json` | Raw output of each run: metadata (commit, model, cost) and, per case, every score, the agents' messages, latency, tokens and cost. Read by the Results tab. |
+| `eval/results/*.json` | Raw output of each run: metadata (commit, model, cost) and, per case, every score, the agents' messages, latency, tokens and cost |
 | `eval/reports/*.md`, `eval/eval_report.md` | Reports generated from the results |
 
 ### How the cases are split
