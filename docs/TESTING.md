@@ -2,7 +2,8 @@
 
 How we test Mayl, what we measured and what the numbers mean. The full metric definitions
 are in [`backend/eval/SPEC.md`](../backend/eval/SPEC.md), and every report is in
-[`backend/eval/reports/`](../backend/eval/reports/).
+[`backend/eval/reports/`](../backend/eval/reports/). Where all the data comes from and how it is
+stored: [DATA.md](DATA.md).
 
 ## Headline
 

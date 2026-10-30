@@ -141,6 +141,16 @@ Measured on a frozen 100-case evaluation, on held-out cases the agents were neve
 Full method, iteration history and an honest look at what fails:
 **[docs/TESTING.md](docs/TESTING.md)**.
 
+## Data
+
+All clients, projects, documents and test cases are synthetic, written for this demo. The
+only outside data is three helmet photos from a public MIT-licensed dataset. Nothing is stored
+in a user database: visitor sessions live in server memory, and the knowledge search index is
+one committed SQLite file.
+
+Every data source, how it is stored and searched, what is sent to the Claude API and the
+licenses: **[docs/DATA.md](docs/DATA.md)**.
+
 ## Tech stack
 
 | Layer | Tools |
@@ -183,7 +193,7 @@ backend/
   scripts/      build_index.py, run_eval.py
   tests/        44 automated tests
 frontend/       React app
-docs/           TESTING.md, design
+docs/           TESTING.md, DATA.md, design
 render.yaml     backend hosting config
 ```
 
