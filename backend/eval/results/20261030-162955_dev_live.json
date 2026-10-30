@@ -21,7 +21,10 @@
   ],
   "validation": [],
   "file": "eval/results/20261030-162955_dev_live.json",
-  "total_cost_usd": 2.3295
+  "total_cost_usd": 2.3295,
+  "notes": [
+   "Rescored after the run: Teams F1 now ignores optional teams as SPEC A says (was 0.57, now 0.93). Agent outputs and every other metric are unchanged."
+  ]
  },
  "summary": {
   "change_review": {
@@ -38,8 +41,8 @@
     "std": 0.0
    },
    "teams_f1": {
-    "mean": 0.5698181818181819,
-    "std": 0.026295680442182053
+    "mean": 0.9313636363636364,
+    "std": 0.017477967240013256
    },
    "effort_hit": {
     "mean": 0.2,
@@ -195,7 +198,7 @@
     "ds",
     "engineer"
    ],
-   "teams_f1": 0.5,
+   "teams_f1": 0.667,
    "effort_mid_total": 3.88,
    "effort_hit": false,
    "alternative_ok": null,
@@ -223,7 +226,17 @@
    "tokens_out": 2186,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.07057
+   "cost_usd": 0.07057,
+   "teams_required": [
+    "ds"
+   ],
+   "teams_optional": [
+    "engineer"
+   ],
+   "effort_gold": [
+    0.25,
+    2
+   ]
   },
   {
    "id": "cr-chat-02",
@@ -247,7 +260,7 @@
     "domain",
     "engineer"
    ],
-   "teams_f1": 0.667,
+   "teams_f1": 1.0,
    "effort_mid_total": 5.75,
    "effort_hit": null,
    "alternative_ok": true,
@@ -274,7 +287,15 @@
    "tokens_out": 1233,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.0313
+   "cost_usd": 0.0313,
+   "teams_required": [
+    "engineer"
+   ],
+   "teams_optional": [
+    "ds",
+    "domain"
+   ],
+   "effort_gold": null
   },
   {
    "id": "cr-chat-04",
@@ -296,7 +317,7 @@
     "ds",
     "engineer"
    ],
-   "teams_f1": 0.5,
+   "teams_f1": 1.0,
    "effort_mid_total": 8.75,
    "effort_hit": false,
    "alternative_ok": false,
@@ -324,7 +345,18 @@
    "tokens_out": 2032,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.06053
+   "cost_usd": 0.06053,
+   "teams_required": [
+    "ds"
+   ],
+   "teams_optional": [
+    "engineer",
+    "domain"
+   ],
+   "effort_gold": [
+    1,
+    6
+   ]
   },
   {
    "id": "cr-chat-07",
@@ -346,7 +378,7 @@
     "domain",
     "engineer"
    ],
-   "teams_f1": 0.0,
+   "teams_f1": 1.0,
    "effort_mid_total": 6.75,
    "effort_hit": null,
    "alternative_ok": null,
@@ -375,7 +407,14 @@
    "tokens_out": 1495,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.04009
+   "cost_usd": 0.04009,
+   "teams_required": [],
+   "teams_optional": [
+    "ds",
+    "engineer",
+    "domain"
+   ],
+   "effort_gold": null
   },
   {
    "id": "cr-ppe-01",
@@ -398,7 +437,7 @@
     "ds",
     "engineer"
    ],
-   "teams_f1": 0.8,
+   "teams_f1": 1.0,
    "effort_mid_total": 12.0,
    "effort_hit": true,
    "alternative_ok": true,
@@ -428,7 +467,18 @@
    "tokens_out": 2503,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.06174
+   "cost_usd": 0.06174,
+   "teams_required": [
+    "ds",
+    "engineer"
+   ],
+   "teams_optional": [
+    "domain"
+   ],
+   "effort_gold": [
+    6,
+    14
+   ]
   },
   {
    "id": "cr-ppe-03",
@@ -481,7 +531,16 @@
    "tokens_out": 1955,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.04841
+   "cost_usd": 0.04841,
+   "teams_required": [
+    "ds",
+    "engineer"
+   ],
+   "teams_optional": [],
+   "effort_gold": [
+    2,
+    8
+   ]
   },
   {
    "id": "cr-ppe-05",
@@ -504,7 +563,7 @@
     "domain",
     "engineer"
    ],
-   "teams_f1": 0.667,
+   "teams_f1": 1.0,
    "effort_mid_total": 2.75,
    "effort_hit": null,
    "alternative_ok": true,
@@ -531,7 +590,15 @@
    "tokens_out": 1416,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.04031
+   "cost_usd": 0.04031,
+   "teams_required": [
+    "engineer"
+   ],
+   "teams_optional": [
+    "ds",
+    "domain"
+   ],
+   "effort_gold": null
   },
   {
    "id": "cr-ppe-07",
@@ -553,7 +620,7 @@
     "ds",
     "engineer"
    ],
-   "teams_f1": 0.5,
+   "teams_f1": 0.667,
    "effort_mid_total": 9.25,
    "effort_hit": false,
    "alternative_ok": null,
@@ -584,7 +651,17 @@
    "tokens_out": 2248,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.07263
+   "cost_usd": 0.07263,
+   "teams_required": [
+    "ds"
+   ],
+   "teams_optional": [
+    "engineer"
+   ],
+   "effort_gold": [
+    1,
+    5
+   ]
   },
   {
    "id": "cr-tri-01",
@@ -610,7 +687,7 @@
     "ds",
     "engineer"
    ],
-   "teams_f1": 0.5,
+   "teams_f1": 1.0,
    "effort_mid_total": 9.5,
    "effort_hit": null,
    "alternative_ok": true,
@@ -638,7 +715,15 @@
    "tokens_out": 1897,
    "setup_tokens_in": 9462,
    "setup_tokens_out": 2062,
-   "cost_usd": 0.09623
+   "cost_usd": 0.09623,
+   "teams_required": [
+    "ds"
+   ],
+   "teams_optional": [
+    "engineer",
+    "domain"
+   ],
+   "effort_gold": null
   },
   {
    "id": "cr-tri-03",
@@ -663,7 +748,7 @@
     "ds",
     "engineer"
    ],
-   "teams_f1": 0.5,
+   "teams_f1": 1.0,
    "effort_mid_total": 6.75,
    "effort_hit": null,
    "alternative_ok": null,
@@ -691,7 +776,15 @@
    "tokens_out": 1747,
    "setup_tokens_in": 9783,
    "setup_tokens_out": 2152,
-   "cost_usd": 0.09554
+   "cost_usd": 0.09554,
+   "teams_required": [
+    "ds"
+   ],
+   "teams_optional": [
+    "engineer",
+    "domain"
+   ],
+   "effort_gold": null
   },
   {
    "id": "cr-tri-06",
@@ -714,7 +807,7 @@
     "domain",
     "engineer"
    ],
-   "teams_f1": 0.667,
+   "teams_f1": 1.0,
    "effort_mid_total": 3.25,
    "effort_hit": null,
    "alternative_ok": true,
@@ -741,7 +834,14 @@
    "tokens_out": 1991,
    "setup_tokens_in": 9685,
    "setup_tokens_out": 2036,
-   "cost_usd": 0.08474
+   "cost_usd": 0.08474,
+   "teams_required": [
+    "engineer"
+   ],
+   "teams_optional": [
+    "domain"
+   ],
+   "effort_gold": null
   },
   {
    "id": "qa-chat-01",
@@ -1608,7 +1708,7 @@
     "ds",
     "engineer"
    ],
-   "teams_f1": 0.667,
+   "teams_f1": 1.0,
    "effort_mid_total": 3.5,
    "effort_hit": false,
    "alternative_ok": null,
@@ -1636,7 +1736,17 @@
    "tokens_out": 2005,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.0618
+   "cost_usd": 0.0618,
+   "teams_required": [
+    "ds"
+   ],
+   "teams_optional": [
+    "engineer"
+   ],
+   "effort_gold": [
+    0.25,
+    2
+   ]
   },
   {
    "id": "cr-chat-02",
@@ -1660,7 +1770,7 @@
     "domain",
     "engineer"
    ],
-   "teams_f1": 0.667,
+   "teams_f1": 1.0,
    "effort_mid_total": 6.75,
    "effort_hit": null,
    "alternative_ok": true,
@@ -1687,7 +1797,15 @@
    "tokens_out": 1334,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.03235
+   "cost_usd": 0.03235,
+   "teams_required": [
+    "engineer"
+   ],
+   "teams_optional": [
+    "ds",
+    "domain"
+   ],
+   "effort_gold": null
   },
   {
    "id": "cr-chat-04",
@@ -1708,7 +1826,7 @@
     "ds",
     "engineer"
    ],
-   "teams_f1": 0.667,
+   "teams_f1": 1.0,
    "effort_mid_total": 8.5,
    "effort_hit": false,
    "alternative_ok": true,
@@ -1736,7 +1854,18 @@
    "tokens_out": 2066,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.06088
+   "cost_usd": 0.06088,
+   "teams_required": [
+    "ds"
+   ],
+   "teams_optional": [
+    "engineer",
+    "domain"
+   ],
+   "effort_gold": [
+    1,
+    6
+   ]
   },
   {
    "id": "cr-chat-07",
@@ -1758,7 +1887,7 @@
     "domain",
     "engineer"
    ],
-   "teams_f1": 0.0,
+   "teams_f1": 1.0,
    "effort_mid_total": 6.25,
    "effort_hit": null,
    "alternative_ok": null,
@@ -1787,7 +1916,14 @@
    "tokens_out": 1689,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.0478
+   "cost_usd": 0.0478,
+   "teams_required": [],
+   "teams_optional": [
+    "ds",
+    "engineer",
+    "domain"
+   ],
+   "effort_gold": null
   },
   {
    "id": "cr-ppe-01",
@@ -1810,7 +1946,7 @@
     "ds",
     "engineer"
    ],
-   "teams_f1": 0.8,
+   "teams_f1": 1.0,
    "effort_mid_total": 11.25,
    "effort_hit": true,
    "alternative_ok": true,
@@ -1840,7 +1976,18 @@
    "tokens_out": 2432,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.06105
+   "cost_usd": 0.06105,
+   "teams_required": [
+    "ds",
+    "engineer"
+   ],
+   "teams_optional": [
+    "domain"
+   ],
+   "effort_gold": [
+    6,
+    14
+   ]
   },
   {
    "id": "cr-ppe-03",
@@ -1893,7 +2040,16 @@
    "tokens_out": 2407,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.05291
+   "cost_usd": 0.05291,
+   "teams_required": [
+    "ds",
+    "engineer"
+   ],
+   "teams_optional": [],
+   "effort_gold": [
+    2,
+    8
+   ]
   },
   {
    "id": "cr-ppe-05",
@@ -1916,7 +2072,7 @@
     "domain",
     "engineer"
    ],
-   "teams_f1": 0.667,
+   "teams_f1": 1.0,
    "effort_mid_total": 4.25,
    "effort_hit": null,
    "alternative_ok": true,
@@ -1943,7 +2099,15 @@
    "tokens_out": 1515,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.04085
+   "cost_usd": 0.04085,
+   "teams_required": [
+    "engineer"
+   ],
+   "teams_optional": [
+    "ds",
+    "domain"
+   ],
+   "effort_gold": null
   },
   {
    "id": "cr-ppe-07",
@@ -1965,7 +2129,7 @@
     "ds",
     "engineer"
    ],
-   "teams_f1": 0.5,
+   "teams_f1": 0.667,
    "effort_mid_total": 8.88,
    "effort_hit": false,
    "alternative_ok": null,
@@ -1995,7 +2159,17 @@
    "tokens_out": 2191,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.06524
+   "cost_usd": 0.06524,
+   "teams_required": [
+    "ds"
+   ],
+   "teams_optional": [
+    "engineer"
+   ],
+   "effort_gold": [
+    1,
+    5
+   ]
   },
   {
    "id": "cr-tri-01",
@@ -2020,7 +2194,7 @@
     "ds",
     "engineer"
    ],
-   "teams_f1": 0.667,
+   "teams_f1": 1.0,
    "effort_mid_total": 7.0,
    "effort_hit": null,
    "alternative_ok": true,
@@ -2048,7 +2222,15 @@
    "tokens_out": 1829,
    "setup_tokens_in": 9632,
    "setup_tokens_out": 2351,
-   "cost_usd": 0.10089
+   "cost_usd": 0.10089,
+   "teams_required": [
+    "ds"
+   ],
+   "teams_optional": [
+    "engineer",
+    "domain"
+   ],
+   "effort_gold": null
   },
   {
    "id": "cr-tri-03",
@@ -2073,7 +2255,7 @@
     "ds",
     "engineer"
    ],
-   "teams_f1": 0.5,
+   "teams_f1": 1.0,
    "effort_mid_total": 6.75,
    "effort_hit": null,
    "alternative_ok": null,
@@ -2101,7 +2283,15 @@
    "tokens_out": 1561,
    "setup_tokens_in": 9661,
    "setup_tokens_out": 2172,
-   "cost_usd": 0.09455
+   "cost_usd": 0.09455,
+   "teams_required": [
+    "ds"
+   ],
+   "teams_optional": [
+    "engineer",
+    "domain"
+   ],
+   "effort_gold": null
   },
   {
    "id": "cr-tri-06",
@@ -2124,7 +2314,7 @@
     "domain",
     "engineer"
    ],
-   "teams_f1": 0.667,
+   "teams_f1": 1.0,
    "effort_mid_total": 3.75,
    "effort_hit": null,
    "alternative_ok": true,
@@ -2151,7 +2341,14 @@
    "tokens_out": 1852,
    "setup_tokens_in": 9652,
    "setup_tokens_out": 2175,
-   "cost_usd": 0.08536
+   "cost_usd": 0.08536,
+   "teams_required": [
+    "engineer"
+   ],
+   "teams_optional": [
+    "domain"
+   ],
+   "effort_gold": null
   },
   {
    "id": "qa-chat-01",
@@ -3019,7 +3216,7 @@
     "ds",
     "engineer"
    ],
-   "teams_f1": 0.5,
+   "teams_f1": 0.667,
    "effort_mid_total": 3.88,
    "effort_hit": false,
    "alternative_ok": null,
@@ -3047,7 +3244,17 @@
    "tokens_out": 1885,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.06043
+   "cost_usd": 0.06043,
+   "teams_required": [
+    "ds"
+   ],
+   "teams_optional": [
+    "engineer"
+   ],
+   "effort_gold": [
+    0.25,
+    2
+   ]
   },
   {
    "id": "cr-chat-02",
@@ -3071,7 +3278,7 @@
     "domain",
     "engineer"
    ],
-   "teams_f1": 0.667,
+   "teams_f1": 1.0,
    "effort_mid_total": 5.75,
    "effort_hit": null,
    "alternative_ok": true,
@@ -3098,7 +3305,15 @@
    "tokens_out": 1220,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.03132
+   "cost_usd": 0.03132,
+   "teams_required": [
+    "engineer"
+   ],
+   "teams_optional": [
+    "ds",
+    "domain"
+   ],
+   "effort_gold": null
   },
   {
    "id": "cr-chat-04",
@@ -3120,7 +3335,7 @@
     "ds",
     "engineer"
    ],
-   "teams_f1": 0.5,
+   "teams_f1": 1.0,
    "effort_mid_total": 8.25,
    "effort_hit": false,
    "alternative_ok": true,
@@ -3148,7 +3363,18 @@
    "tokens_out": 2169,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.06287
+   "cost_usd": 0.06287,
+   "teams_required": [
+    "ds"
+   ],
+   "teams_optional": [
+    "engineer",
+    "domain"
+   ],
+   "effort_gold": [
+    1,
+    6
+   ]
   },
   {
    "id": "cr-chat-07",
@@ -3170,7 +3396,7 @@
     "domain",
     "engineer"
    ],
-   "teams_f1": 0.0,
+   "teams_f1": 1.0,
    "effort_mid_total": 6.25,
    "effort_hit": null,
    "alternative_ok": null,
@@ -3199,7 +3425,14 @@
    "tokens_out": 1733,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.04261
+   "cost_usd": 0.04261,
+   "teams_required": [],
+   "teams_optional": [
+    "ds",
+    "engineer",
+    "domain"
+   ],
+   "effort_gold": null
   },
   {
    "id": "cr-ppe-01",
@@ -3222,7 +3455,7 @@
     "ds",
     "engineer"
    ],
-   "teams_f1": 0.8,
+   "teams_f1": 1.0,
    "effort_mid_total": 10.75,
    "effort_hit": true,
    "alternative_ok": true,
@@ -3252,7 +3485,18 @@
    "tokens_out": 2349,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.06678
+   "cost_usd": 0.06678,
+   "teams_required": [
+    "ds",
+    "engineer"
+   ],
+   "teams_optional": [
+    "domain"
+   ],
+   "effort_gold": [
+    6,
+    14
+   ]
   },
   {
    "id": "cr-ppe-03",
@@ -3305,7 +3549,16 @@
    "tokens_out": 1916,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.04798
+   "cost_usd": 0.04798,
+   "teams_required": [
+    "ds",
+    "engineer"
+   ],
+   "teams_optional": [],
+   "effort_gold": [
+    2,
+    8
+   ]
   },
   {
    "id": "cr-ppe-05",
@@ -3328,7 +3581,7 @@
     "domain",
     "engineer"
    ],
-   "teams_f1": 0.667,
+   "teams_f1": 1.0,
    "effort_mid_total": 4.25,
    "effort_hit": null,
    "alternative_ok": false,
@@ -3355,7 +3608,15 @@
    "tokens_out": 1671,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.03615
+   "cost_usd": 0.03615,
+   "teams_required": [
+    "engineer"
+   ],
+   "teams_optional": [
+    "ds",
+    "domain"
+   ],
+   "effort_gold": null
   },
   {
    "id": "cr-ppe-07",
@@ -3377,7 +3638,7 @@
     "ds",
     "engineer"
    ],
-   "teams_f1": 0.5,
+   "teams_f1": 0.667,
    "effort_mid_total": 8.88,
    "effort_hit": false,
    "alternative_ok": null,
@@ -3407,7 +3668,17 @@
    "tokens_out": 2038,
    "setup_tokens_in": 0,
    "setup_tokens_out": 0,
-   "cost_usd": 0.06354
+   "cost_usd": 0.06354,
+   "teams_required": [
+    "ds"
+   ],
+   "teams_optional": [
+    "engineer"
+   ],
+   "effort_gold": [
+    1,
+    5
+   ]
   },
   {
    "id": "cr-tri-01",
@@ -3433,7 +3704,7 @@
     "ds",
     "engineer"
    ],
-   "teams_f1": 0.5,
+   "teams_f1": 1.0,
    "effort_mid_total": 9.5,
    "effort_hit": null,
    "alternative_ok": true,
@@ -3461,7 +3732,15 @@
    "tokens_out": 1779,
    "setup_tokens_in": 9299,
    "setup_tokens_out": 1987,
-   "cost_usd": 0.09395
+   "cost_usd": 0.09395,
+   "teams_required": [
+    "ds"
+   ],
+   "teams_optional": [
+    "engineer",
+    "domain"
+   ],
+   "effort_gold": null
   },
   {
    "id": "cr-tri-03",
@@ -3486,7 +3765,7 @@
     "ds",
     "engineer"
    ],
-   "teams_f1": 0.5,
+   "teams_f1": 1.0,
    "effort_mid_total": 7.25,
    "effort_hit": null,
    "alternative_ok": null,
@@ -3514,7 +3793,15 @@
    "tokens_out": 1678,
    "setup_tokens_in": 9550,
    "setup_tokens_out": 2474,
-   "cost_usd": 0.10115
+   "cost_usd": 0.10115,
+   "teams_required": [
+    "ds"
+   ],
+   "teams_optional": [
+    "engineer",
+    "domain"
+   ],
+   "effort_gold": null
   },
   {
    "id": "cr-tri-06",
@@ -3537,7 +3824,7 @@
     "domain",
     "engineer"
    ],
-   "teams_f1": 0.667,
+   "teams_f1": 1.0,
    "effort_mid_total": 3.75,
    "effort_hit": null,
    "alternative_ok": true,
@@ -3564,7 +3851,14 @@
    "tokens_out": 1848,
    "setup_tokens_in": 9464,
    "setup_tokens_out": 2475,
-   "cost_usd": 0.08969
+   "cost_usd": 0.08969,
+   "teams_required": [
+    "engineer"
+   ],
+   "teams_optional": [
+    "domain"
+   ],
+   "effort_gold": null
   },
   {
    "id": "qa-chat-01",

@@ -9,6 +9,7 @@ the demo never breaks.
 """
 import logging
 import os
+import re
 import threading
 import time
 from collections import OrderedDict
@@ -33,7 +34,23 @@ app.mount("/samples", StaticFiles(directory=SAMPLES), name="samples")  # example
 
 CHAT_AGENTS = ("lead", "ds", "engineer", "domain", "project")
 RECOMMENDATION_TEXT = {"approve": "approving the change", "alternative": "the cheaper alternative",
-                       "reject": "rejecting the change"}
+                       "reject": "rejecting the change", "needs_info": "asking for more detail"}
+LETTER = re.compile(r"[^\W\d_]", re.UNICODE)
+
+
+def _mostly_english(text: str) -> bool:
+    letters = LETTER.findall(text)
+    return not letters or sum(c.isascii() for c in letters) >= 0.8 * len(letters)
+
+
+def _merge_hits(lists: list[list[dict]], k: int) -> list[dict]:
+    """Union of several searches, best score per source first."""
+    best = {}
+    for hits in lists:
+        for h in hits:
+            if h["source"] not in best or h["score"] > best[h["source"]]["score"]:
+                best[h["source"]] = h
+    return sorted(best.values(), key=lambda h: -h["score"])[:k]
 
 SESSIONS: "OrderedDict[str, dict]" = OrderedDict()
 SESSIONS_LOCK = threading.Lock()
@@ -409,21 +426,30 @@ def ask(pid: str, body: AskIn, x_session: str | None = Header(None)):
     if not question:
         raise HTTPException(400, "Empty question")
     retriever = Retriever(pid, live_chunks(p, st["activity"][pid]))
-    hits = retriever.search(question, AGENT_SCOPES["lead" if body.agent == "project" else body.agent], k=5)
-    result = None
-    if not hits:
-        result = {"answer": "I couldn't find anything about that in this project's knowledge yet.",
-                  "sources": [], "confident": False, "mode": "demo"}
-    elif _use_live(st, "chat"):
+    scopes = AGENT_SCOPES["lead" if body.agent == "project" else body.agent]
+    result, queries = None, [question]
+    if _use_live(st, "chat"):
+        # Live: also search in English (the documents are mostly English), drop the similarity cutoff and let
+        # the agent judge whether the hits answer the question; it escalates when they don't.
         try:
-            from .live_agents import answer_live
-            out = answer_live(question, hits, body.agent)
-            cited = [hits[i - 1] for i in out.get("cited", []) if 0 < i <= len(hits)] or hits[:1]
-            result = {"answer": out["answer"], "sources": cited, "confident": out.get("confident", True), "mode": "live"}
+            from .live_agents import answer_live, translate_for_search
+            if not _mostly_english(question):
+                queries.append(translate_for_search(question))
+            hits = _merge_hits([retriever.search(q, scopes, k=5, min_similarity=0.0) for q in queries], k=5)
+            if hits:
+                out = answer_live(question, hits, body.agent)
+                cited = [hits[i - 1] for i in out.get("cited", []) if 0 < i <= len(hits)] or hits[:1]
+                result = {"answer": out["answer"], "sources": cited, "confident": out.get("confident", True), "mode": "live"}
         except Exception:
             log.exception("live answer failed")
-    if result is None:
-        result = {"answer": hits[0]["text"], "sources": hits[:3], "confident": hits[0]["score"] >= 1.0, "mode": "demo"}
+    if result is None:  # demo agents: the similarity cutoff decides
+        hits = retriever.search(question, scopes, k=5)
+        if not hits:
+            result = {"answer": "I couldn't find anything about that in this project's knowledge yet.",
+                      "sources": [], "confident": False, "mode": "demo"}
+        else:
+            result = {"answer": hits[0]["text"], "sources": hits[:3], "confident": hits[0]["score"] >= 1.0, "mode": "demo"}
+    result["search_queries"] = queries
     result["agent"] = body.agent
     result["escalated"] = body.agent == "domain" and not result["confident"]
     if body.agent != "project":

@@ -8,6 +8,8 @@ Pass definitions: change review as in the spec (conflict recall 1, no false conf
 
 38 cases × 3 repeat(s) · kinds: change_review, domain_qa, retrieval, intake · model `claude-sonnet-5-5` · judge `claude-sonnet-5-5` · seeded bottleneck cleared · results `eval/results/20261030-162955_dev_live.json`
 
+- Rescored after the run: Teams F1 now ignores optional teams as SPEC A says (was 0.57, now 0.93). Agent outputs and every other metric are unchanged.
+
 ### Targets
 
 | Metric | Target | Result | |
@@ -28,7 +30,7 @@ Pass definitions: change review as in the spec (conflict recall 1, no false conf
 | pass rate | 0.73 |
 | conflict recall | 0.86 |
 | false conflicts per case | 0 |
-| teams f1 | 0.57 ± 0.03 |
+| teams f1 | 0.93 ± 0.02 |
 | effort hit | 0.20 |
 | alternative | 0.90 ± 0.08 |
 | risk | 0.91 |
@@ -91,6 +93,15 @@ Pass definitions: change review as in the spec (conflict recall 1, no false conf
 | mixed_language | 1 | 1.00 |
 | out_of_scope | 1 | 1.00 |
 | vague | 1 | 0.00 |
+
+### Effort and teams misses (diagnosis, repeat 1: 4 of 11 change reviews)
+
+| Case | Effort predicted (sum of midpoints) | Gold range | Effort | Teams with work | Required | Teams |
+|---|---|---|---|---|---|---|
+| cr-chat-01 | 3.88 d | 0.25–2 d | over | domain, ds, engineer | ds | extra domain |
+| cr-chat-04 | 8.75 d | 1–6 d | over | domain, ds, engineer | ds | ok |
+| cr-ppe-03 | 8.25 d | 2–8 d | over | domain, ds, engineer | ds, engineer | extra domain |
+| cr-ppe-07 | 9.25 d | 1–5 d | over | domain, ds, engineer | ds | extra domain |
 
 ### Failed cases (6 of 38)
 

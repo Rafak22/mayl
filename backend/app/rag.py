@@ -262,7 +262,9 @@ class Retriever:
                 self._live_vecs = _live_vectors([c.text for c in self.live])
             return self._live_vecs
 
-    def search(self, query: str, scopes: tuple[str, ...] | None = None, k: int = 4) -> list[dict]:
+    def search(self, query: str, scopes: tuple[str, ...] | None = None, k: int = 4,
+               min_similarity: float = MIN_SIMILARITY) -> list[dict]:
+        """min_similarity=0 keeps every vector candidate: use it when an agent judges relevance itself."""
         q = tokenize(query)
         if not q:
             return []
@@ -282,7 +284,7 @@ class Retriever:
             sims = self._live_matrix()[mem] @ qvec  # vectors are normalized: dot product = cosine
             vectors += [(float(s), ("live", i)) for i, s in zip(mem, sims)]
         # Same model, same cosine: static and live vector hits rank together.
-        vectors = sorted((v for v in vectors if v[0] >= MIN_SIMILARITY), key=lambda v: -v[0])
+        vectors = sorted((v for v in vectors if v[0] >= min_similarity), key=lambda v: -v[0])
         rankings.append([key for _, key in vectors[:CANDIDATES]])
 
         # Reciprocal Rank Fusion, scaled so rank 1 in one ranking = 1.0 and rank 1 in both = 2.0.

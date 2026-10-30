@@ -20,6 +20,8 @@ class FakeClaude:
         self.seen = []  # (system, first user message, submit schema) per call
         self.propose_alternative = True
         self.lead_fails = False
+        self.lead_choice = None  # force a recommendation, if it is among the allowed options
+        self.answer_confident = True
 
     def lead_calls(self):
         return [s for s in self.seen if "recommendation" in s[2]["properties"]]
@@ -43,8 +45,11 @@ class FakeClaude:
                 if self.lead_fails:
                     raise RuntimeError("Lead down")
                 options = props["recommendation"]["enum"]
-                ans = {"recommendation": "alternative" if "alternative" in options else "reject",
+                choice = self.lead_choice if self.lead_choice in options else "alternative" if "alternative" in options else "reject"
+                ans = {"recommendation": choice,
                        "reason": "Violation recall is the top priority. The alternative keeps the pilot date."}
+            elif "english" in props:
+                ans = {"english": "Is a helmet carried in the hand a violation?"}
             elif "effort_min_days" in props:
                 data = json.dumps([json.loads(b["content"]) for b in tool_results])
                 conflict = ["p-pilot"] if "Domain Agent" in system and "pilot" in data.lower() else []
@@ -60,7 +65,7 @@ class FakeClaude:
                                 "deadline": f("4 weeks"), "stakeholders": f(["Head nurse"])},
                        "gaps": [{"id": "emergency-list", "question": "Which symptoms?", "suggested": "Chest pain"}]}
             else:
-                ans = {"answer": "Only a helmet worn on the head counts.", "cited": [1], "confident": True}
+                ans = {"answer": "Only a helmet worn on the head counts.", "cited": [1], "confident": self.answer_confident}
             if structured:
                 return NS(content=[NS(type="text", text=json.dumps(ans))], stop_reason="end_turn")
             return NS(content=[NS(type="tool_use", id="t-submit", name="submit", input=ans)], stop_reason="tool_use")
@@ -116,8 +121,37 @@ def test_lead_cannot_pick_a_missing_alternative(fake):
     new = c.post("/api/products/ppe/proposals",
                  json={"node_id": "edge", "custom_text": "Move inference to a cloud GPU", "role": "engineer"}).json()
     assert new["alternative"] is None
-    assert fake.lead_calls()[0][2]["properties"]["recommendation"]["enum"] == ["approve", "reject"]
+    assert fake.lead_calls()[0][2]["properties"]["recommendation"]["enum"] == ["approve", "reject", "needs_info"]
     assert new["recommendation"] in ("approve", "reject")
+
+
+def test_lead_can_ask_for_more_detail(fake):
+    fake.lead_choice = "needs_info"
+    card = c.post("/api/products/ppe/proposals", json={"node_id": "model", "custom_text": "change the model", "role": "lead"}).json()
+    assert card["recommendation"] == "needs_info" and card["recommendation_mode"] == "live"
+    act = c.get("/api/products/ppe").json()["activity"]
+    assert any(a["kind"] == "recommendation" and "asking for more detail" in a["text"] for a in act)
+
+
+def test_non_english_question_is_also_searched_in_english(fake):
+    from app import prompts
+    a = c.post("/api/products/ppe/ask", json={"question": "هل الخوذة في اليد مخالفة؟", "agent": "domain"}).json()
+    assert a["mode"] == "live" and a["search_queries"] == ["هل الخوذة في اليد مخالفة؟", "Is a helmet carried in the hand a violation?"]
+    assert any(s == prompts.TRANSLATOR for s, _, _ in fake.seen)
+    assert any(s["source"].startswith("domain/site-safety-rules.md") for s in a["sources"])
+
+
+def test_english_question_is_not_translated(fake):
+    from app import prompts
+    a = c.post("/api/products/ppe/ask", json={"question": "Does a helmet on a belt count?", "agent": "domain"}).json()
+    assert a["search_queries"] == ["Does a helmet on a belt count?"]
+    assert not any(s == prompts.TRANSLATOR for s, _, _ in fake.seen)
+
+
+def test_live_agent_judges_relevance_and_escalates(fake):
+    fake.answer_confident = False  # the passages don't answer it
+    a = c.post("/api/products/ppe/ask", json={"question": "pizza recipe with mozzarella", "agent": "domain"}).json()
+    assert a["mode"] == "live" and a["escalated"]  # no cutoff in live mode: the agent's judgement escalates
 
 
 def test_lead_failure_keeps_team_answers_and_rule_based_recommendation(fake):

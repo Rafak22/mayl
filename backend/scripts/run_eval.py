@@ -148,6 +148,14 @@ def language(text):
     return "ar" if len(ARABIC.findall(text or "")) > len(LATIN.findall(text or "")) else "en"
 
 
+def teams_f1(teams, required, optional):
+    """F1 of teams with work vs the required teams; optional teams are ignored (SPEC A)."""
+    pred = set(teams) - set(optional)
+    if not pred and not required:
+        return 1.0
+    return 2 * len(pred & set(required)) / (len(pred) + len(required))
+
+
 def map_recommendation(card):
     rec = card.get("recommendation")
     return rec if rec in ("approve", "alternative", "reject") else "needs_info"
@@ -225,9 +233,8 @@ class Runner:
         must, allowed = set(g["must_flag"]), set(g["allowed_flags"])
         false = sorted(flagged - must - allowed)
         teams = {r["team"] for r in card["responses"] if r["effort_range"][1] > 0}
-        req = set(g["teams_required"])
-        tp = len(teams & req)
-        f1 = 1.0 if not teams and not req else (2 * tp / (len(teams) + len(req)) if teams or req else 1.0)
+        req, opt = set(g["teams_required"]), set(g["teams_optional"])
+        f1 = teams_f1(teams, req, opt)
         mid = sum((r["effort_range"][0] + r["effort_range"][1]) / 2 for r in card["responses"])
         alt = card.get("alternative")
         rec = map_recommendation(card)
@@ -239,8 +246,8 @@ class Runner:
             "conflict_hits": len(flagged & must), "conflict_total": len(must),
             "conflict_recall": len(flagged & must) / len(must) if must else 1.0,
             "false_conflicts": len(false), "false_conflict_ids": false, "flagged": sorted(flagged),
-            "teams": sorted(teams), "teams_f1": round(f1, 3),
-            "effort_mid_total": round(mid, 2),
+            "teams": sorted(teams), "teams_f1": round(f1, 3), "teams_required": sorted(req), "teams_optional": sorted(opt),
+            "effort_mid_total": round(mid, 2), "effort_gold": g["effort_total"],
             "effort_hit": None if g["effort_total"] is None else g["effort_total"][0] <= mid <= g["effort_total"][1],
             "alternative_ok": None if not g["alternative"]["expected"] else bool(alt and has_any(alt["label"], g["alternative"]["keywords"])),
             "alternative": alt["label"] if alt else None,
@@ -450,8 +457,13 @@ def meets(v, op, target):
     return "met" if ok else "**not met**"
 
 
-def run_section(res) -> list[str]:
+def run_section(res, before=None, before_name="") -> list[str]:
+    """Report for one run. With `before` (an earlier result), metric tables get a before column."""
     meta, summary, rows = res["meta"], res["summary"], res["cases"]
+    bsum = before["summary"] if before else None
+    bcol = f"Before ({before_name}, {before['meta']['repeats']} rep.) | " if before else ""
+    bdash = "---|" if before else ""
+    bval = (lambda kind, metric: f"{fmt(bsum.get(kind, {}).get(metric), metric)} | ") if before else (lambda kind, metric: "")
     L = [f"## {meta['split']} · {meta['mode']} · {meta['timestamp']}", "",
          f"{len(set(r['id'] for r in rows))} cases × {meta['repeats']} repeat(s) · kinds: {', '.join(meta['kinds'])}"
          f"{f' · limit {meta['limit']}' if meta['limit'] else ''} · model `{meta['model']}`"
@@ -459,33 +471,48 @@ def run_section(res) -> list[str]:
          f" · seeded bottleneck {'kept' if meta['keep_seed'] else 'cleared'} · results `{meta['file']}`", ""]
     if meta.get("validation"):
         L += ["**Case-file problems found (not edited):**", *[f"- {p}" for p in meta["validation"]], ""]
-    L += ["### Targets", "", "| Metric | Target | Result | |", "|---|---|---|---|"]
+    L += [f"- {n}" for n in meta.get("notes", [])] + ([""] if meta.get("notes") else [])
+    L += ["### Targets", "", f"| Metric | Target | {bcol}Result | |", f"|---|---|{bdash}---|---|"]
     for label, kind, metric, op, target in TARGETS:
         v = summary.get(kind, {}).get(metric)
         note = f" (this run: {meta['split']})" if "held-out" in label and meta["split"] != "heldout" else ""
-        L.append(f"| {label}{note} | {op} {target} | {fmt(v, metric)} | {meets(v, op, target)} |")
+        L.append(f"| {label}{note} | {op} {target} | {bval(kind, metric)}{fmt(v, metric)} | {meets(v, op, target)} |")
     inj = [r for r in rows if "injection" in r.get("tags", [])]
     if inj:
-        L.append(f"| Injection cases passed | all | {sum(r['pass'] for r in inj)} / {len(inj)} | {'met' if all(r['pass'] for r in inj) else '**not met**'} |")
+        L.append(f"| Injection cases passed | all | {'– | ' if before else ''}{sum(r['pass'] for r in inj)} / {len(inj)} | "
+                 f"{'met' if all(r['pass'] for r in inj) else '**not met**'} |")
     L.append("")
+    if before:  # which cases flipped
+        bpass = {}
+        for r in before["cases"]:
+            bpass.setdefault(r["id"], []).append(r["pass"])
+        apass = {}
+        for r in rows:
+            apass.setdefault(r["id"], []).append(r["pass"])
+        fixed = [c for c in apass if c in bpass and not any(bpass[c]) and all(apass[c])]
+        broke = [c for c in apass if c in bpass and all(bpass[c]) and not all(apass[c])]
+        L += [f"**Cases fixed** (failed every repeat before, pass now): {', '.join(fixed) or 'none'}  ",
+              f"**Cases broken** (passed every repeat before, fail now): {', '.join(broke) or 'none'}", ""]
     names = {"change_review": "A. Change review", "domain_qa": "B. Domain Agent Q&A", "retrieval": "C. Retrieval",
              "intake": "D. Objective intake", "system": "E. System"}
     for kind, title in names.items():
         if kind not in summary:
             continue
-        L += [f"### {title}", "", "| Metric | Mean ± std |", "|---|---|"]
-        L += [f"| {k.replace('_', ' ')} | {fmt(v, k)} |" for k, v in summary[kind].items()]
+        L += [f"### {title}", "", f"| Metric | {bcol}Mean ± std |", f"|---|{bdash}---|"]
+        L += [f"| {k.replace('_', ' ')} | {bval(kind, k)}{fmt(v, k)} |" for k, v in summary[kind].items()]
         if kind == "system":
             for k, v in summary["latency_s"].items():
-                L.append(f"| latency {k.replace('_', ' ')} p50 / p95 | {v['p50']:.2f} s / {v['p95']:.2f} s |")
+                bl = bsum.get("latency_s", {}).get(k) if before else None
+                bcell = (f"{bl['p50']:.2f} s / {bl['p95']:.2f} s | " if bl else "– | ") if before else ""
+                L.append(f"| latency {k.replace('_', ' ')} p50 / p95 | {bcell}{v['p50']:.2f} s / {v['p95']:.2f} s |")
             if summary.get("consistency") is not None:
-                L.append(f"| consistency (same recommendation in all repeats) | {summary['consistency']:.2f} |")
+                L.append(f"| consistency (same recommendation in all repeats) | {'– | ' if before else ''}{summary['consistency']:.2f} |")
             llm_cases = [r for r in rows if r["kind"] != "retrieval"]
             if meta["mode"] == "live" and llm_cases:
                 for kind2 in ("change_review", "domain_qa", "intake"):
                     ks = [r for r in rows if r["kind"] == kind2]
                     if ks:
-                        L.append(f"| cost per {kind2.replace('_', ' ')} case | ${statistics.mean(r['cost_usd'] for r in ks):.4f} "
+                        L.append(f"| cost per {kind2.replace('_', ' ')} case | {'– | ' if before else ''}${statistics.mean(r['cost_usd'] for r in ks):.4f} "
                                  f"({statistics.mean(r['tokens_in'] + r.get('setup_tokens_in', 0) + r.get('judge_tokens_in', 0) for r in ks):,.0f} in / "
                                  f"{statistics.mean(r['tokens_out'] + r.get('setup_tokens_out', 0) + r.get('judge_tokens_out', 0) for r in ks):,.0f} out tokens) |")
         L.append("")
@@ -497,6 +524,23 @@ def run_section(res) -> list[str]:
     if tags:
         L += ["### Robustness tags", "", "| Tag | Cases | Pass rate |", "|---|---|---|"]
         L += [f"| {t} | {len({r['id'] for r in rs})} | {sum(r['pass'] for r in rs) / len(rs):.2f} |" for t, rs in sorted(tags.items())]
+        L.append("")
+    # Diagnosis only: where effort and team predictions miss the gold (repeat 1).
+    cr = [r for r in rows if r["kind"] == "change_review" and r["repeat"] == 0 and "teams_required" in r]
+    misses = [r for r in cr if r.get("effort_hit") is False or r["teams_f1"] < 1]
+    if misses:
+        L += [f"### Effort and teams misses (diagnosis, repeat 1: {len(misses)} of {len(cr)} change reviews)", "",
+              "| Case | Effort predicted (sum of midpoints) | Gold range | Effort | Teams with work | Required | Teams |",
+              "|---|---|---|---|---|---|---|"]
+        for r in misses:
+            g = r["effort_gold"]
+            effort = "–" if g is None else "under" if r["effort_mid_total"] < g[0] else "over" if r["effort_mid_total"] > g[1] else "ok"
+            missing = sorted(set(r["teams_required"]) - set(r["teams"]))
+            extra = sorted(set(r["teams"]) - set(r["teams_required"]) - set(r["teams_optional"]))
+            team_note = "; ".join(x for x in (f"missing {', '.join(missing)}" if missing else "",
+                                              f"extra {', '.join(extra)}" if extra else "") if x) or "ok"
+            L.append(f"| {r['id']} | {r['effort_mid_total']:g} d | {f'{g[0]:g}–{g[1]:g} d' if g else 'not scored'} | {effort} | "
+                     f"{', '.join(r['teams']) or 'none'} | {', '.join(r['teams_required']) or 'none'} | {team_note} |")
         L.append("")
     failed = [r for r in rows if not r["pass"]]
     L += [f"### Failed cases ({len({r['id'] for r in failed})} of {len({r['id'] for r in rows})})", ""]
@@ -531,12 +575,25 @@ REPORT_HEADER = ["Pass definitions: change review as in the spec (conflict recal
                  "every constraint and gap group found and nothing invented.", ""]
 
 
-def write_run_report(result, name):
+def load_report_result(name):
+    """The results JSON behind a numbered report (its header names the file)."""
+    text = (EVAL / "reports" / f"{name}.md").read_text(encoding="utf-8")
+    m = re.search(r"results `eval/results/([^`]+\.json)`", text)
+    if not m:
+        sys.exit(f"Report {name} names no results file.")
+    return json.loads((RESULTS / m.group(1)).read_text(encoding="utf-8"))
+
+
+def write_run_report(result, name, compare_to=None):
     """One run's report, kept under eval/reports/ as the numbered iteration history."""
     path = EVAL / "reports" / f"{name}.md"
     path.parent.mkdir(exist_ok=True)
-    path.write_text("\n".join([f"# {name}", "", f"Definitions and targets: `eval/SPEC.md`. Commit `{result['meta']['commit']}`.", "",
-                               *REPORT_HEADER, *run_section(result)]), encoding="utf-8")
+    before = load_report_result(compare_to) if compare_to else None
+    head = f"Definitions and targets: `eval/SPEC.md`. Commit `{result['meta']['commit']}`."
+    if before:
+        head += f" Compared with `{compare_to}` (commit `{before['meta']['commit']}`)."
+    path.write_text("\n".join([f"# {name}", "", head, "", *REPORT_HEADER, *run_section(result, before, compare_to)]),
+                    encoding="utf-8")
     return path
 
 
@@ -588,6 +645,7 @@ def main():
     ap.add_argument("--keep-seed", action="store_true", help="keep the seeded ppe bottleneck review in each session")
     ap.add_argument("--report-only", action="store_true")
     ap.add_argument("--report-name", help="also save this run's report as eval/reports/<name>.md, e.g. 01_dev_baseline")
+    ap.add_argument("--compare-to", help="earlier report name for a before column, e.g. 01_dev_baseline")
     args = ap.parse_args()
     RESULTS.mkdir(parents=True, exist_ok=True)
     if args.report_only:
@@ -668,7 +726,7 @@ def main():
     write_report()
     print(f"\nWrote {out}\nWrote {EVAL / 'eval_report.md'}")
     if args.report_name:
-        print(f"Wrote {write_run_report(result, args.report_name)}")
+        print(f"Wrote {write_run_report(result, args.report_name, args.compare_to)}")
     print(f"Total cost: ${spent:.4f}")
 
 

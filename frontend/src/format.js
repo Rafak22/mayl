@@ -55,11 +55,13 @@ export const STATE = {
   building: { label: "Engine in progress", tone: "new" },
 };
 
-export const REC_LABEL = { approve: "Approve", alternative: "Use the cheaper alternative", reject: "Reject" };
+export const REC_LABEL = { approve: "Approve", alternative: "Use the cheaper alternative", reject: "Reject",
+  needs_info: "Ask the proposer for more detail" };
 
 export function recPhrase(card) {
   if (card.recommendation === "alternative" && card.alternative)
     return `the cheaper alternative (${fmtDays(card.alternative.effort_days)})`;
+  if (card.recommendation === "needs_info") return "asking for more detail first";
   return card.recommendation === "reject" ? "rejecting this change" : "approving this change";
 }
 

@@ -139,7 +139,7 @@ def _combine(product, nodes, option, proposer, responses) -> dict:
 
 
 def _lead_recommendation(product, nodes, option, proposer, card) -> tuple[str, str]:
-    options = ["approve", "alternative", "reject"] if card["alternative"] else ["approve", "reject"]
+    options = ["approve", "alternative", "reject", "needs_info"] if card["alternative"] else ["approve", "reject", "needs_info"]
     schema = {"type": "object", "properties": {
         "recommendation": {"type": "string", "enum": options},
         "reason": {"type": "string", "description": "2 sentences that name the deciding priority."}},
@@ -243,6 +243,13 @@ ANSWER_SCHEMA = {
     },
     "required": ["answer", "cited", "confident"],
 }
+
+
+def translate_for_search(question: str) -> str:
+    """English version of a question, so English documents can be found for Arabic or mixed questions."""
+    schema = {"type": "object", "properties": {"english": {"type": "string"}}, "required": ["english"]}
+    out, _ = llm.run_agent(prompts.TRANSLATOR, question, [], {}, schema, max_tokens=1000)
+    return out["english"].strip()
 
 
 def answer_live(question: str, hits: list[dict], agent: str) -> dict:
