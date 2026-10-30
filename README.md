@@ -30,9 +30,35 @@ call fails, the deterministic demo agents answer, so the demo never breaks.
 | Lead Agent | RAG search | everything; reads client documents into the Objective Spec |
 
 LangGraph dispatches only the affected teams' agents, in parallel. Every agent ends with a
-structured `submit` (effort range, verdict, conflicts, evidence, alternative). RAG is BM25 over
-section chunks (no model download, handles Arabic); the `Retriever` class can be swapped for
-embeddings later.
+structured `submit` (effort range, verdict, conflicts, evidence, alternative).
+
+### RAG: hybrid search on SQLite
+
+Knowledge files are split into chunks at `## ` headings and indexed into one SQLite file,
+`backend/data/mayl.db`:
+
+- **Keyword search:** an FTS5 table ranked by BM25.
+- **Vector search:** a sqlite-vec table with
+  [`intfloat/multilingual-e5-small`](https://huggingface.co/intfloat/multilingual-e5-small) embeddings
+  (fastembed, ONNX int8 on CPU, no PyTorch). It matches Arabic and English by meaning, e.g.
+  "relatives sending money" finds *Family transfers*.
+
+Each query runs both searches, filtered to the product and the agent's scopes. The two rankings are
+merged with Reciprocal Rank Fusion. Vector matches below 0.80 cosine are dropped, so off-topic
+questions return nothing, and the Expert Twin escalates them instead of guessing.
+
+Live project memory (activity, rules, graph nodes) changes at runtime, so it stays in memory. It is
+searched the same two ways at query time and is never written to the db.
+
+The db is committed, so the server never rebuilds it. **After editing anything in `knowledge/`,
+rebuild and commit it:**
+
+```bash
+cd backend && python scripts/build_index.py
+```
+
+A test fails if the committed index no longer matches the knowledge files. The embedding model
+(~145 MB) downloads on first use to `backend/.cache/fastembed`; on Render it is fetched at build time.
 
 ## Structure
 
@@ -68,6 +94,5 @@ wake. Open the link a minute before you go on stage.
 
 ## Roadmap (not built yet)
 - Live agent mode (Claude API) for free-text changes and objective intake on any document
-- ChromaDB RAG per agent (project memory, codebase, domain knowledge)
 - Code analysis (Python `ast`) to build the engine side of the graph from a real repo
 - Real use cases replacing the placeholder products
