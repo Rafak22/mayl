@@ -1,6 +1,6 @@
 <div align="center">
 
-# Mayl
+# Mayl · مَيْل
 
 ### See the ripple before you make the change.
 
