@@ -17,6 +17,23 @@ Switch roles at the top (AI Lead, Data Scientist, AI Engineer, Domain Expert). S
 different lens. Tap any node to propose a change and watch the other agents respond.
 Every visitor gets their own isolated demo state; **Reset demo** starts over.
 
+## Live agents (Claude + tools + RAG)
+
+Set `ANTHROPIC_API_KEY` (locally or in Render) and the agents go live. Without a key, or if a
+call fails, the deterministic demo agents answer, so the demo never breaks.
+
+| Agent | Tools | Knowledge base (`backend/knowledge/<product>/`) |
+|---|---|---|
+| DS Agent | graph impact, RAG search, rules | `ds/` + `shared/` + live project memory |
+| AI Engineer Agent | graph impact, RAG search, rules | `engineer/` (contracts, change history with actual effort) + `shared/` |
+| Domain Expert Agent (Expert Twin) | graph impact, RAG search, rules | `domain/` (guidelines, compliance) + `shared/` |
+| Lead Agent | RAG search | everything; reads client documents into the Objective Spec |
+
+LangGraph dispatches only the affected teams' agents, in parallel. Every agent ends with a
+structured `submit` (effort range, verdict, conflicts, evidence, alternative). RAG is BM25 over
+section chunks (no model download, handles Arabic); the `Retriever` class can be swapped for
+embeddings later.
+
 ## Structure
 
 ```
