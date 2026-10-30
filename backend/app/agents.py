@@ -118,6 +118,7 @@ def finalize_card(product, nodes, option, proposer, responses, conflicts, altern
         verdict = "conflict"
     else:
         verdict = "works_with_changes" if other_teams else "works"
+    recommendation, reason = recommend(product, verdict, risk, conflicts, alternative, total)
 
     return {
         "id": "chg-" + uuid.uuid4().hex[:6],
@@ -139,9 +140,25 @@ def finalize_card(product, nodes, option, proposer, responses, conflicts, altern
         "total_effort_max": total,
         "approvers": [] if risk == "low" else sorted(approvers),
         "status": "auto_approved" if risk == "low" else "pending",
+        "recommendation": recommendation,
+        "recommendation_reason": reason,
+        "recommendation_mode": "demo",  # rule-based; live_agents switches it to "live" when the Lead Agent answers
         "mode": mode,
         "created_at": now(),
     }
+
+
+def recommend(product, verdict, risk, conflicts, alternative, total_effort) -> tuple[str, str]:
+    """Deterministic Lead recommendation (demo mode, and the fallback if the live Lead Agent fails)."""
+    top = ((product.get("objective") or {}).get("priorities") or ["the objective"])[0]
+    if verdict == "conflict" and alternative:
+        broken = conflicts[0]["text"] if conflicts else "a team's assessment"
+        return "alternative", (f"The change conflicts with “{broken}”, and the cheaper alternative avoids that in "
+                               f"{alternative['effort_days']:g} day(s). It keeps {top}, the top priority, on track without breaking that rule.")
+    if risk == "high" and not alternative:
+        why = f"conflicts with “{conflicts[0]['text']}”" if conflicts else f"is high risk (up to {total_effort:g} days of work)"
+        return "reject", f"The change {why} and no cheaper alternative was found. Rejecting protects {top}, the top priority, until a safer option is proposed."
+    return "approve", f"No conflicts block the change and it costs up to {total_effort:g} days. It moves {top}, the top priority, forward."
 
 
 # ---------------------------------------------------------------------------

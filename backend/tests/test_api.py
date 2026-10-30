@@ -24,6 +24,24 @@ def test_bottleneck_card_has_conflict_and_alternative():
     assert "Compliance logic" in eng["message"]
 
 
+def test_demo_recommendation_on_bottleneck():
+    card = c.get("/api/inbox/ds").json()[0]
+    assert card["recommendation"] == "alternative" and card["recommendation_mode"] == "demo"
+    assert "violation recall" in card["recommendation_reason"]
+
+
+def test_demo_recommendation_rules():
+    from app.agents import recommend
+    product = {"objective": {"priorities": ["patient safety", "speed"]}}
+    rule = {"id": "r1", "text": "Never miss an emergency", "source": "nurse"}
+    alt = {"label": "Cheaper", "effort_days": 1}
+    assert recommend(product, "conflict", "high", [rule], alt, 8)[0] == "alternative"
+    assert recommend(product, "conflict", "high", [rule], None, 8)[0] == "reject"
+    assert recommend(product, "works_with_changes", "high", [], None, 14)[0] == "reject"
+    assert recommend(product, "works_with_changes", "medium", [], None, 4)[0] == "approve"
+    assert "patient safety" in recommend(product, "works", "low", [], None, 1)[1]
+
+
 def test_engineer_change_reaches_data_scientists():
     card = c.post("/api/products/ppe/proposals",
                   json={"node_id": "edge", "custom_text": "Replace edge boxes with a cloud GPU", "role": "engineer"}).json()
@@ -35,7 +53,7 @@ def test_engineer_change_reaches_data_scientists():
 def test_low_risk_auto_approved():
     card = c.post("/api/products/chatbot/proposals",
                   json={"node_id": "channels", "custom_text": "Rename a button", "role": "engineer"}).json()
-    assert card["status"] == "auto_approved"
+    assert card["status"] == "auto_approved" and card["recommendation"] == "approve"
 
 
 def test_decide_alternative_resolves_bottleneck():

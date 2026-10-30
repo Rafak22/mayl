@@ -78,6 +78,10 @@ input { width: 100%; border: 1px solid var(--line); background: var(--panel); bo
 .resp p { font-size: 0.83rem; }
 .alt { border: 1px dashed var(--good); border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; }
 .actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+.rec { border: 1px solid var(--lead); background: #7a4fd614; border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; }
+.rec-h { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; justify-content: space-between; font-size: 0.85rem; }
+button.recommended { box-shadow: 0 0 0 3px #3a5bd940; }
+button.recommended::before { content: "★ "; }
 
 /* inbox, feed, ask */
 .count { background: var(--accent); color: #fff; border-radius: 999px; padding: 1px 7px; font-size: 0.75rem; margin-left: 4px; }

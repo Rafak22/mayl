@@ -1,0 +1,145 @@
+{
+  "card": {
+    "id": "chg-a0571f",
+    "product_id": "ppe",
+    "node_id": "rule-worn",
+    "node_label": "Rule: helmet must be worn",
+    "option_id": "relabel-retrain",
+    "title": "Relabel carried helmets as a new class and retrain",
+    "rationale": "Safety officer: only a worn helmet counts (9% of helmet boxes are carried helmets)",
+    "proposer": "domain",
+    "proposer_name": "Domain Expert",
+    "affected": [
+      "rule-worn",
+      "annot",
+      "model",
+      "eval",
+      "logic",
+      "app"
+    ],
+    "metric_delta": {
+      "violation_recall": 7,
+      "false_alerts": 10
+    },
+    "responses": [
+      {
+        "agent": "DS Agent",
+        "team": "ds",
+        "team_name": "Data Scientist",
+        "effort_range": [
+          5.0,
+          7.0
+        ],
+        "effort_text": "5–7 days",
+        "nodes": [
+          "annot",
+          "model",
+          "eval"
+        ],
+        "message": "The change needs relabeling about 9% of ~21,000 helmet boxes (~1,900), a guide update, retraining YOLOv8n and re-reviewing the 400-image eval set. That is about 6 days (range 5–7), and it eats most of the 3-week pilot buffer. Model size stays at YOLOv8n, so CPU latency is unaffected. I can't say yet how recall moves. The untested overlap post-processing rule (helmet must overlap the top of the head box) could enforce r-worn without retraining, and I'd test it on the eval set first.",
+        "verdict": "works_with_changes",
+        "conflict_ids": [],
+        "evidence": [
+          "project graph › annot",
+          "ds/dataset-card.md › Label statistics",
+          "ds/experiment-log.md › Exp 3: YOLOv8n, 640px (current model v3)",
+          "ds/experiment-log.md › Idea not tested yet"
+        ],
+        "tools_used": [
+          "get_impact_on_my_team",
+          "search_knowledge",
+          "get_rules_and_promises",
+          "search_knowledge"
+        ]
+      },
+      {
+        "agent": "AI Engineer Agent",
+        "team": "engineer",
+        "team_name": "AI Engineer",
+        "effort_range": [
+          3.0,
+          4.0
+        ],
+        "effort_text": "3–4 days",
+        "nodes": [
+          "logic",
+          "app"
+        ],
+        "message": "The new \"carried helmet\" class means we must update the compliance logic (only a worn helmet inside the person box counts, and a carried helmet raises an alert) and the app's reason text. Estimate is 3–4 days, anchored on the Sep 2026 new-class change (estimated 2 days, actual 4 with re-testing on all feeds). This only starts once the Data Scientist ships the retrained model, and we must re-check the 60 s latency (now 8 s) and CPU-only YOLOv8n limit. Retrain and relabel time sits outside my estimate and affects the 3-week pilot.",
+        "verdict": "works_with_changes",
+        "conflict_ids": [],
+        "evidence": [
+          "engineer/engine-contract.md › Interfaces",
+          "engineer/change-history.md › Sep 2026: added a new class to the model output (person)",
+          "engineer/engine-contract.md › Latency",
+          "engineer/engine-contract.md › Hardware"
+        ],
+        "tools_used": [
+          "get_impact_on_my_team",
+          "search_knowledge",
+          "get_rules_and_promises",
+          "search_knowledge"
+        ]
+      },
+      {
+        "agent": "Domain Expert Agent",
+        "team": "domain",
+        "team_name": "Domain Expert",
+        "effort_range": [
+          0.5,
+          1.0
+        ],
+        "effort_text": "0.5–1 days",
+        "nodes": [
+          "rule-worn"
+        ],
+        "message": "This change matches the safety officer's rule (r-worn). I need about 1 day to update the rule text and the labelling definition. The new \"carried helmet\" class must always raise a violation alert, the same as no helmet. Data Scientist and AI Engineer should check that relabelling the 9% of boxes and retraining still fits the 3-week pilot, keeps YOLOv8n on CPU, and doesn't raise false alerts. I found no past relabel-and-retrain effort to compare against.",
+        "verdict": "works_with_changes",
+        "conflict_ids": [],
+        "evidence": [
+          "domain/site-safety-rules.md › Helmet rule",
+          "shared/meeting-notes.md › Site visit with the safety officer (Oct 2026)",
+          "project graph › rule-worn"
+        ],
+        "tools_used": [
+          "get_impact_on_my_team",
+          "search_knowledge",
+          "get_rules_and_promises"
+        ]
+      }
+    ],
+    "conflicts": [
+      {
+        "id": "p-pilot",
+        "text": "Client promise: pilot on 2 sites in 3 weeks",
+        "source": "Kickoff meeting, Sep 2026"
+      }
+    ],
+    "alternative": {
+      "label": "Post-processing rule: a helmet only counts if it overlaps the top of the head box. No relabeling, no retraining.",
+      "effort_days": 1,
+      "metric_delta": {
+        "violation_recall": 6,
+        "false_alerts": 0
+      }
+    },
+    "risk": "high",
+    "verdict": "conflict",
+    "total_effort_max": 12.0,
+    "approvers": [
+      "ds",
+      "engineer",
+      "lead"
+    ],
+    "status": "pending",
+    "recommendation": "alternative",
+    "recommendation_reason": "Violation recall is the top priority, and the overlap post-processing rule (1 day) enforces the 'only a worn helmet counts' requirement without retraining, so it can be tested on the eval set first and still leaves the 3-week pilot deadline intact. The full relabel-and-retrain path (up to 12 days total) would consume most of the pilot buffer with unknown recall impact, so it should only be revisited if the overlap rule fails to hold recall >= 95%.",
+    "recommendation_mode": "live",
+    "mode": "live",
+    "created_at": "2026-10-30T09:14:26+00:00"
+  },
+  "seconds": 18.8,
+  "llm_calls": 9,
+  "input_tokens": 22046,
+  "output_tokens": 2272
+}

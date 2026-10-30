@@ -4,6 +4,7 @@ networkx>=3.3
 pydantic>=2.7
 anthropic>=0.40
 langgraph>=0.2
+python-dotenv>=1.0
 sqlite-vec>=0.1.6
 onnxruntime>=1.17
 sentencepiece>=0.2

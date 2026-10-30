@@ -1,0 +1,140 @@
+{
+  "card": {
+    "id": "chg-424e18",
+    "product_id": "ppe",
+    "node_id": "rule-worn",
+    "node_label": "Rule: helmet must be worn",
+    "option_id": "relabel-retrain",
+    "title": "Relabel carried helmets as a new class and retrain",
+    "rationale": "Safety officer: only a worn helmet counts (9% of helmet boxes are carried helmets)",
+    "proposer": "domain",
+    "proposer_name": "Domain Expert",
+    "affected": [
+      "rule-worn",
+      "annot",
+      "model",
+      "eval",
+      "logic",
+      "app"
+    ],
+    "metric_delta": {
+      "violation_recall": 7,
+      "false_alerts": 10
+    },
+    "responses": [
+      {
+        "agent": "DS Agent",
+        "team": "ds",
+        "team_name": "Data Scientist",
+        "effort_range": [
+          5.0,
+          7.0
+        ],
+        "effort_text": "5–7 days",
+        "nodes": [
+          "annot",
+          "model",
+          "eval"
+        ],
+        "message": "Doable in about 6 days: we would find and relabel roughly 1,900 carried-helmet boxes (9% of 21,000), update the annotation guide, retrain YOLOv8n and re-review the 400-image eval set. It supports the \"worn only\" rule and fits the 3-week pilot, but the AI Engineer must update the compliance logic for the new class. A cheaper first step is an untested post-processing rule that only counts a helmet if its box overlaps the top of a head box. It needs no retraining and takes about 1.5 days.",
+        "verdict": "works_with_changes",
+        "conflict_ids": [],
+        "evidence": [
+          "ds/dataset-card.md › Label statistics",
+          "ds/experiment-log.md › Error analysis on model v3",
+          "ds/experiment-log.md › Idea not tested yet",
+          "ds/dataset-card.md › Classes (current annotation guide v1)"
+        ],
+        "tools_used": [
+          "get_impact_on_my_team",
+          "search_knowledge",
+          "get_rules_and_promises",
+          "search_knowledge",
+          "search_knowledge"
+        ]
+      },
+      {
+        "agent": "AI Engineer Agent",
+        "team": "engineer",
+        "team_name": "AI Engineer",
+        "effort_range": [
+          4.0,
+          6.0
+        ],
+        "effort_text": "4–6 days",
+        "nodes": [
+          "logic",
+          "app"
+        ],
+        "message": "The change fits the rule that a helmet counts only when worn (r-worn). We need to update the compliance logic and the app reason text for the new class. The baseline is 3 days, but a similar class change in Sep 2026 took 4 days against a 2-day estimate, so plan for 4-6 days, plus the Data Scientist's relabel and retrain time. A cheaper option is a head-position check on the existing helmet box, with no retrain.",
+        "verdict": "works_with_changes",
+        "conflict_ids": [],
+        "evidence": [
+          "engineer/change-history.md › Sep 2026: added a new class to the model output (person)",
+          "engineer/engine-contract.md › Interfaces",
+          "shared/meeting-notes.md › Decision pending"
+        ],
+        "tools_used": [
+          "get_impact_on_my_team",
+          "get_rules_and_promises",
+          "search_knowledge"
+        ]
+      },
+      {
+        "agent": "Domain Expert Agent",
+        "team": "domain",
+        "team_name": "Domain Expert",
+        "effort_range": [
+          1.0,
+          2.0
+        ],
+        "effort_text": "1–2 days",
+        "nodes": [
+          "rule-worn"
+        ],
+        "message": "The change matches rule r-worn: a helmet counts only when worn on the head. My side only needs about 1–2 days to update the rule wording and define \"carried helmet\" as a violation. The larger work (annotation guide, relabeling about 9% of helmet boxes, retraining, the evaluation set, and compliance logic) sits with the Data Scientist and AI Engineer, and it puts the 3-week pilot at risk.",
+        "verdict": "works_with_changes",
+        "conflict_ids": [],
+        "evidence": [
+          "shared/meeting-notes.md › Site visit with the safety officer (Oct 2026)",
+          "shared/project-brief.md › Success metrics agreed with the client",
+          "project graph › annot",
+          "shared/project-brief.md › Status"
+        ],
+        "tools_used": [
+          "get_impact_on_my_team",
+          "get_rules_and_promises",
+          "search_knowledge",
+          "search_knowledge"
+        ]
+      }
+    ],
+    "conflicts": [
+      {
+        "id": "p-pilot",
+        "text": "Client promise: pilot on 2 sites in 3 weeks",
+        "source": "Kickoff meeting, Sep 2026"
+      }
+    ],
+    "alternative": {
+      "label": "Keep the current classes and treat 'helmet' with no head overlap as a violation. This is a rule in the compliance logic, with the carried-helmet cases added to the evaluation set only. No retrain before the pilot.",
+      "effort_days": 0.5,
+      "metric_delta": {}
+    },
+    "risk": "high",
+    "verdict": "conflict",
+    "total_effort_max": 15.0,
+    "approvers": [
+      "ds",
+      "engineer",
+      "lead"
+    ],
+    "status": "pending",
+    "mode": "live",
+    "created_at": "2026-10-30T09:03:19+00:00"
+  },
+  "seconds": 14.4,
+  "llm_calls": 8,
+  "input_tokens": 18715,
+  "output_tokens": 2474
+}

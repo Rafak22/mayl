@@ -219,6 +219,7 @@ function ProposePanel({ node, role, pid, onClose, onCard }) {
 }
 
 const UNITS = [["_ms", " ms"], ["_s", " s"], ["_min", " min"]];
+const REC_LABEL = { approve: "Approve", alternative: "Use the cheaper alternative", reject: "Reject" };
 
 function Delta({ d }) {
   const entries = Object.entries(d || {});
@@ -243,6 +244,8 @@ function ImpactCard({ card, role, live, onClose, onDecided }) {
   const decide = async (decision) => onDecided(await api.decide(card.id, { role, decision }));
   const rerun = async () => { setBusy(true); try { onDecided(await api.rerun(card.id)); } finally { setBusy(false); } };
   const verdict = { works: "Works", works_with_changes: "Works, with changes in other teams", conflict: "Conflict found" }[card.verdict];
+  const rec = card.recommendation;
+  const btn = (option, fallback = "") => (rec === option ? "primary recommended" : rec ? "" : fallback);
   return (
     <div className="panel impact">
       <div className="panel-h">
@@ -252,6 +255,15 @@ function ImpactCard({ card, role, live, onClose, onDecided }) {
         </div>
         <button className="ghost" onClick={onClose}>✕</button>
       </div>
+      {rec && (
+        <div className="rec">
+          <div className="rec-h">
+            <span>Lead Agent recommends: <b>{REC_LABEL[rec]}</b></span>
+            <span className={`mode m-${card.recommendation_mode}`}>{card.recommendation_mode === "live" ? "Live" : "Rule-based"}</span>
+          </div>
+          <p>{card.recommendation_reason}</p>
+        </div>
+      )}
       <div className="row">
         <span className={`risk r-${card.risk}`}>{card.risk} risk</span>
         <span className={`verdict v-${card.verdict}`}>{verdict}</span>
@@ -292,9 +304,9 @@ function ImpactCard({ card, role, live, onClose, onDecided }) {
       )}
       {canDecide && (
         <div className="actions">
-          <button className="primary" onClick={() => decide("approve")}>Approve</button>
-          {card.alternative && <button onClick={() => decide("alternative")}>Use cheaper alternative</button>}
-          <button className="ghost" onClick={() => decide("reject")}>Reject</button>
+          <button className={btn("approve", "primary")} onClick={() => decide("approve")}>Approve</button>
+          {card.alternative && <button className={btn("alternative")} onClick={() => decide("alternative")}>Use cheaper alternative</button>}
+          <button className={btn("reject", "ghost")} onClick={() => decide("reject")}>Reject</button>
         </div>
       )}
     </div>
