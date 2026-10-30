@@ -1,3 +1,5 @@
+import numpy as np
+
 from app import rag
 from app.rag import AGENT_SCOPES, Chunk, Retriever
 
@@ -43,6 +45,29 @@ def test_live_chunks_are_merged_and_scoped():
 def test_unrelated_query_finds_nothing():
     for product in ("chatbot", "ppe", "triage"):
         assert Retriever(product).search("pizza recipe with mozzarella") == [], product
+
+
+def test_token_ids_match_xlmr_tokenizer():
+    # Expected ids come from the model's tokenizer.json (HF `tokenizers`), which the sentencepiece path replaces.
+    expected = {
+        "query: relatives sending money": [0, 41, 1294, 12, 35845, 7, 135834, 17265, 2],
+        "passage: شكوى رسمية": [0, 46692, 12, 72453, 34208, 74023, 250, 2],
+        "hello ": [0, 33600, 31, 6, 2],  # trailing whitespace keeps a lone "▁"
+        "end.\n": [0, 3564, 5, 6, 2],
+        " ": [0, 6, 2],
+        "": [0, 2],
+    }
+    for text, ids in expected.items():
+        assert rag.model().token_ids(text) == ids, repr(text)
+    assert len(rag.model().token_ids("word " * 700)) == 512
+
+
+def test_stored_vectors_match_runtime_embeddings():
+    """The index and live queries must be embedded the same way (one text per run)."""
+    texts = [c.text for _, c in rag.knowledge_chunks()]
+    stored = [np.frombuffer(v, dtype=np.float32) for (v,) in
+              rag._db().execute("SELECT embedding FROM chunks_vec ORDER BY chunk_id")]
+    assert np.array_equal(np.stack(stored), rag.embed_passages(texts))
 
 
 def test_index_is_up_to_date():

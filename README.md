@@ -40,7 +40,8 @@ Knowledge files are split into chunks at `## ` headings and indexed into one SQL
 - **Keyword search:** an FTS5 table ranked by BM25.
 - **Vector search:** a sqlite-vec table with
   [`intfloat/multilingual-e5-small`](https://huggingface.co/intfloat/multilingual-e5-small) embeddings
-  (fastembed, ONNX int8 on CPU, no PyTorch). It matches Arabic and English by meaning, e.g.
+  (int8 ONNX on CPU via onnxruntime, with the model's own sentencepiece tokenizer; no PyTorch).
+  It matches Arabic and English by meaning, e.g.
   "helmet hanging from a worker's belt" finds the *Helmet rule*, and "شكوى رسمية" finds the
   chatbot's human-handover guideline.
 
@@ -59,7 +60,7 @@ cd backend && python scripts/build_index.py
 ```
 
 A test fails if the committed index no longer matches the knowledge files. The embedding model
-(~145 MB) downloads on first use to `backend/.cache/fastembed`; on Render it is fetched at build time.
+(~118 MB) downloads on first use to `backend/.cache/models`; on Render it is fetched at build time.
 
 ## Structure
 

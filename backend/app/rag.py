@@ -10,8 +10,9 @@ Each agent searches its own knowledge base plus the shared project memory:
 The knowledge base is indexed ahead of time by `scripts/build_index.py` into one
 SQLite file (data/mayl.db): an FTS5 table for keyword search (BM25) and a
 sqlite-vec table for vector search. Embeddings come from
-intfloat/multilingual-e5-small via fastembed (ONNX on CPU, no PyTorch), so
-Arabic and English queries match by meaning, not only by shared words.
+intfloat/multilingual-e5-small (int8 ONNX on CPU via onnxruntime, sentencepiece
+tokenizer, no PyTorch), so Arabic and English queries match by meaning, not
+only by shared words.
 
 Live project activity (proposals, decisions, rules, graph nodes) changes at
 runtime, so it stays in memory and is searched the same two ways at query
@@ -37,6 +38,7 @@ SCOPES = ("shared", "ds", "engineer", "domain")
 
 MODEL_NAME = "intfloat/multilingual-e5-small"
 MODEL_FILE = "onnx/model_qint8_avx512_vnni.onnx"  # 113 MB int8; the fp32 export is 448 MB
+SPM_FILE = "onnx/sentencepiece.bpe.model"
 DIM = 384
 RRF_K = 60  # standard RRF constant
 CANDIDATES = 20  # per ranking, before fusion
@@ -94,31 +96,61 @@ def fingerprint(rows: list[tuple[str, Chunk]]) -> str:
 
 
 # --- embeddings ------------------------------------------------------------
-@lru_cache(maxsize=1)
-def model():
-    """Loaded once per process (the first call downloads ~145 MB to the cache dir). Uses ~400 MB of RAM,
-    most of it the 250k-token XLM-R tokenizer."""
-    from fastembed import TextEmbedding
-    from fastembed.common.model_description import ModelSource, PoolingType
+class Embedder:
+    """multilingual-e5-small on onnxruntime, tokenized with the model's own sentencepiece file.
 
-    if MODEL_NAME not in {m["model"] for m in TextEmbedding.list_supported_models()}:
-        TextEmbedding.add_custom_model(
-            model=MODEL_NAME, pooling=PoolingType.MEAN, normalization=True,
-            sources=ModelSource(hf=MODEL_NAME), dim=DIM, model_file=MODEL_FILE,
-            additional_files=["onnx/tokenizer.json", "onnx/tokenizer_config.json", "onnx/special_tokens_map.json"])
-    cache = os.getenv("FASTEMBED_CACHE_PATH", str(BACKEND / ".cache" / "fastembed"))
-    # Without the arena, onnxruntime returns batch buffers instead of keeping them (~95 MB less, same speed).
-    return TextEmbedding(MODEL_NAME, cache_dir=cache, enable_cpu_mem_arena=False)
+    Gives the same token ids and vectors as fastembed did for a single text (mean pooling, then
+    L2 norm), but the 5 MB sentencepiece model replaces tokenizer.json, which the `tokenizers`
+    library holds as ~250 MB of RAM for XLM-R's 250k-token vocabulary.
+    """
+    MAX_TOKENS = 512  # model_max_length in the model's tokenizer_config.json, special tokens included
+
+    def __init__(self, cache_dir: str):
+        import onnxruntime as ort
+        import sentencepiece as spm
+        from huggingface_hub import hf_hub_download
+
+        onnx_path, sp_path = (hf_hub_download(MODEL_NAME, f, cache_dir=cache_dir) for f in (MODEL_FILE, SPM_FILE))
+        so = ort.SessionOptions()
+        so.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+        so.enable_cpu_mem_arena = False  # return batch buffers instead of keeping them (~95 MB less, same speed)
+        self.session = ort.InferenceSession(onnx_path, sess_options=so, providers=["CPUExecutionProvider"])
+        proto = Path(sp_path).read_bytes()  # bytes: sentencepiece's file loader fails on non-ASCII paths on Windows
+        self.sp = spm.SentencePieceProcessor(model_proto=proto)
+        self.normalizer = spm.SentencePieceNormalizer(model_proto=proto, remove_extra_whitespaces=False)
+
+    def token_ids(self, text: str) -> list[int]:
+        # XLM-R ids: <s>=0, <pad>=1, </s>=2, <unk>=3; every other sentencepiece id is shifted by one.
+        pieces = [i + 1 if i else 3 for i in self.sp.encode(text)]
+        if self.normalizer.normalize(text).endswith(" "):
+            pieces.append(6)  # tokenizer.json keeps a lone "▁" for trailing whitespace; sentencepiece drops it
+        return [0, *pieces[:self.MAX_TOKENS - 2], 2]
+
+    def embed(self, texts: list[str]) -> np.ndarray:
+        """One text per run: the int8 model quantizes activations per batch, so texts sharing a batch
+        (and its padding) would shift each other's vectors."""
+        out = np.zeros((len(texts), DIM), dtype=np.float32)
+        for row, text in enumerate(texts):
+            ids = np.array([self.token_ids(text)], dtype=np.int64)
+            hidden = self.session.run(None, {"input_ids": ids, "attention_mask": np.ones_like(ids),
+                                             "token_type_ids": np.zeros_like(ids)})[0][0]
+            pooled = np.sum(hidden, axis=0, dtype=np.float64) / len(hidden)
+            out[row] = pooled / max(np.linalg.norm(pooled), 1e-12)
+        return out
+
+
+@lru_cache(maxsize=1)
+def model() -> Embedder:
+    """Loaded once per process; the first call downloads ~118 MB to the cache dir. Uses ~150 MB of RAM."""
+    return Embedder(os.getenv("MODEL_CACHE_PATH", str(BACKEND / ".cache" / "models")))
 
 
 def embed_passages(texts: list[str]) -> np.ndarray:
-    if not texts:
-        return np.zeros((0, DIM), dtype=np.float32)
-    return np.asarray(list(model().embed([f"passage: {t}" for t in texts])), dtype=np.float32)
+    return model().embed([f"passage: {t}" for t in texts])
 
 
 def embed_query(text: str) -> np.ndarray:
-    return np.asarray(next(iter(model().embed([f"query: {text}"]))), dtype=np.float32)
+    return model().embed([f"query: {text}"])[0]
 
 
 _LIVE_VECTORS: "OrderedDict[str, np.ndarray]" = OrderedDict()  # live text -> vector, shared across requests
