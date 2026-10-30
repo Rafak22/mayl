@@ -1,100 +1,73 @@
-# Relay — agentic handoffs for AI product teams
+# Mayl: agentic platform for AI product teams
 
-Team agents (Data Scientist, AI Engineer, Domain Expert) work over a shared **Project Graph**.
-Any change is assessed by every team's agent before anyone commits: what breaks, how long it
-takes, conflicts with domain rules or client promises, and a cheaper alternative.
-**Humans decide; agents do everything else.**
+When anyone on an AI product team proposes a change, each affected team's agent (DS,
+Engineer, Domain) checks it in parallel: what it touches, how long it takes, which rules or
+client promises it breaks, and whether a cheaper alternative exists. The **Lead Agent**
+then weighs the total effort against deadlines and priorities and recommends one option.
+**Humans decide; agents do the legwork.**
 
-## What's in the demo
+- **[docs/PROJECT.md](docs/PROJECT.md):** the full project (agents, demo projects, app, architecture, stack)
+- **[docs/TESTING.md](docs/TESTING.md):** how we test it and the results
 
-| Product | State | Shows |
-|---|---|---|
-| Arabic Customer-Service Chatbot | Healthy | The calm control room: green graph, project chat |
-| Helmet Compliance Detection | Bottleneck | Expert rule (a carried helmet doesn't count) → impact analysis → conflict → cheaper alternative → 1 decision |
-| Smart Clinic Receptionist | New | Objective intake from documents → agents design main + backup triage agents → handoff |
+## At a glance
 
-Switch roles at the top (AI Lead, Data Scientist, AI Engineer, Domain Expert). Same layout,
-different lens. Tap any node to propose a change and watch the other agents respond.
-Every visitor gets their own isolated demo state; **Reset demo** starts over.
+| | |
+|---|---|
+| Agents | Lead, DS, Engineer and Domain Agents on Claude Sonnet 5.5, orchestrated with LangGraph |
+| Knowledge | Hybrid search on SQLite: FTS5 keywords + sqlite-vec multilingual embeddings, Arabic and English |
+| Demo projects | Arabic customer-service chatbot (healthy), helmet compliance detection (bottleneck), smart clinic receptionist (new) |
+| Held-out eval | Change-review pass rate 0.68 (0.83 on familiar projects), 100% correct escalation, 2/2 injection cases resisted, retrieval Recall@4 0.95, about $0.06 per review |
+| Tests | 44 automated tests (`cd backend && pytest`) |
 
-## Live agents (Claude + tools + RAG)
+## Run locally
 
-Set `ANTHROPIC_API_KEY` (locally or in Render) and the agents go live. Without a key, or if a
-call fails, the deterministic demo agents answer, so the demo never breaks.
+```bash
+# API: put ANTHROPIC_API_KEY in backend/.env for live agents (optional)
+cd backend && pip install -r requirements.txt && uvicorn app.main:app --port 8000
 
-| Agent | Tools | Knowledge base (`backend/knowledge/<product>/`) |
-|---|---|---|
-| DS Agent | graph impact, RAG search, rules | `ds/` + `shared/` + live project memory |
-| AI Engineer Agent | graph impact, RAG search, rules | `engineer/` (contracts, change history with actual effort) + `shared/` |
-| Domain Expert Agent (Expert Twin) | graph impact, RAG search, rules | `domain/` (guidelines, compliance) + `shared/` |
-| Lead Agent | RAG search | everything; reads client documents into the Objective Spec |
+# Web, in a new terminal
+cd frontend && npm install && npm run dev
+```
 
-LangGraph dispatches only the affected teams' agents, in parallel. Every agent ends with a
-structured `submit` (effort range, verdict, conflicts, evidence, alternative).
+Without an API key, or if a call fails, deterministic demo agents answer, so the demo never
+breaks. Each session gets 8 live reviews and 20 live chat messages.
 
-### RAG: hybrid search on SQLite
+### After editing knowledge files
 
-Knowledge files are split into chunks at `## ` headings and indexed into one SQLite file,
-`backend/data/mayl.db`:
-
-- **Keyword search:** an FTS5 table ranked by BM25.
-- **Vector search:** a sqlite-vec table with
-  [`intfloat/multilingual-e5-small`](https://huggingface.co/intfloat/multilingual-e5-small) embeddings
-  (int8 ONNX on CPU via onnxruntime, with the model's own sentencepiece tokenizer; no PyTorch).
-  It matches Arabic and English by meaning, e.g.
-  "helmet hanging from a worker's belt" finds the *Helmet rule*, and "شكوى رسمية" finds the
-  chatbot's human-handover guideline.
-
-Each query runs both searches, filtered to the product and the agent's scopes. The two rankings are
-merged with Reciprocal Rank Fusion. Vector matches below 0.80 cosine are dropped, so off-topic
-questions return nothing, and the Expert Twin escalates them instead of guessing.
-
-Live project memory (activity, rules, graph nodes) changes at runtime, so it stays in memory. It is
-searched the same two ways at query time and is never written to the db.
-
-The db is committed, so the server never rebuilds it. **After editing anything in `knowledge/`,
-rebuild and commit it:**
+The search index `backend/data/mayl.db` is committed, so the server never rebuilds it. After
+editing anything in `backend/knowledge/`, rebuild and commit it:
 
 ```bash
 cd backend && python scripts/build_index.py
 ```
 
 A test fails if the committed index no longer matches the knowledge files. The embedding model
-(~118 MB) downloads on first use to `backend/.cache/models`; on Render it is fetched at build time.
+(~118 MB) downloads on first use to `backend/.cache/models`.
+
+### Evaluation
+
+```bash
+cd backend && python scripts/run_eval.py --split dev --mode live --repeats 1 --max-usd 1.5
+```
+
+See [docs/TESTING.md](docs/TESTING.md) for the dev and held-out rules. Never tune on held-out.
 
 ## Structure
 
 ```
-backend/   FastAPI + NetworkX Project Graph + team agents (demo mode, deterministic)
-frontend/  React + React Flow
+backend/   FastAPI, project graph, agents, RAG, eval, tests
+frontend/  React 19 + Vite + React Flow
+docs/      PROJECT.md, TESTING.md, design
 render.yaml  backend hosting config
 ```
 
-## Run locally
+## Deploy (not done yet)
 
-```bash
-# API
-cd backend && pip install -r requirements.txt && uvicorn app.main:app --reload --port 8000
-# Web (new terminal)
-cd frontend && npm install && npm run dev
-```
-Tests: `cd backend && pytest`
+1. **Backend on Render:** New → Blueprint → pick this repo (it reads `render.yaml`).
+   Add `ANTHROPIC_API_KEY` as an environment variable.
+2. **Frontend on Vercel:** root directory `frontend`, environment variable `VITE_API_URL` =
+   the Render URL.
+3. Turn the Vercel URL into a QR code for the slides.
 
-## Deploy (public link + QR code)
-
-1. **Push to GitHub** (this whole folder as one repo).
-2. **Backend on Render:** render.com → New → Blueprint → pick the repo. It reads `render.yaml`.
-   Copy the URL it gives you, e.g. `https://relay-api.onrender.com`.
-3. **Frontend on Vercel:** vercel.com → Add New Project → pick the repo →
-   Root Directory: `frontend` → Environment Variable `VITE_API_URL` = the Render URL → Deploy.
-4. **QR code:** turn the Vercel URL into a QR code (any free QR generator) for your slides.
-
-Every `git push` redeploys both automatically.
-
-**Before presenting:** Render's free plan sleeps after ~15 minutes idle and takes ~30–60 s to
-wake. Open the link a minute before you go on stage.
-
-## Roadmap (not built yet)
-- Live agent mode (Claude API) for free-text changes and objective intake on any document
-- Code analysis (Python `ast`) to build the engine side of the graph from a real repo
-- Real use cases replacing the placeholder products
+Render's free plan sleeps after about 15 minutes idle and takes 30–60 s to wake, so open the
+link a minute before presenting.
