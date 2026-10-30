@@ -1,0 +1,599 @@
+{
+ "meta": {
+  "timestamp": "20261030-132429",
+  "split": "dev",
+  "mode": "live",
+  "repeats": 1,
+  "kinds": [
+   "change_review",
+   "domain_qa",
+   "retrieval",
+   "intake"
+  ],
+  "limit": 10,
+  "model": "claude-sonnet-5-5",
+  "judge_model": "claude-sonnet-5-5",
+  "keep_seed": false,
+  "commit": "ee6089e",
+  "prices_per_mtok": [
+   2.0,
+   10.0
+  ],
+  "validation": [],
+  "file": "eval/results/20261030-132429_dev_live.json",
+  "total_cost_usd": 0.2115
+ },
+ "summary": {
+  "change_review": {
+   "pass_rate": {
+    "mean": 0.6666666666666666,
+    "std": 0.0
+   },
+   "conflict_recall": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "false_conflicts_per_case": {
+    "mean": 0.0,
+    "std": 0.0
+   },
+   "teams_f1": {
+    "mean": 0.5556666666666666,
+    "std": 0.0
+   },
+   "effort_hit": {
+    "mean": 0.0,
+    "std": 0.0
+   },
+   "alternative": {
+    "mean": 0.5,
+    "std": 0.0
+   },
+   "risk": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "recommendation": {
+    "mean": 0.6666666666666666,
+    "std": 0.0
+   },
+   "must_mention": null,
+   "grounding": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "fake_citations_per_case": {
+    "mean": 0.0,
+    "std": 0.0
+   },
+   "brevity": {
+    "mean": 0.3333333333333333,
+    "std": 0.0
+   }
+  },
+  "domain_qa": {
+   "pass_rate": {
+    "mean": 0.6666666666666666,
+    "std": 0.0
+   },
+   "escalation_precision": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "escalation_recall": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "answered_when_should_escalate": {
+    "mean": 0,
+    "std": 0.0
+   },
+   "source_hit": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "language_match": {
+    "mean": 0.5,
+    "std": 0.0
+   },
+   "fact_accuracy": {
+    "mean": 1.0,
+    "std": 0.0
+   }
+  },
+  "retrieval": {
+   "pass_rate": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "recall_at_4": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "mrr": {
+    "mean": 0.6666666666666666,
+    "std": 0.0
+   },
+   "scope_leaks": {
+    "mean": 0,
+    "std": 0.0
+   }
+  },
+  "intake": {
+   "pass_rate": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "constraint_recall": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "gap_recall": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "invented_facts": {
+    "mean": 0,
+    "std": 0.0
+   }
+  },
+  "system": {
+   "fallback_rate": {
+    "mean": 0.0,
+    "std": 0.0
+   },
+   "cost_per_case_usd": {
+    "mean": 0.021147,
+    "std": 0.0
+   },
+   "total_cost_usd": {
+    "mean": 0.21147,
+    "std": 0.0
+   }
+  },
+  "latency_s": {
+   "change_review": {
+    "p50": 14.58,
+    "p95": 22.81
+   },
+   "domain_qa": {
+    "p50": 2.2,
+    "p95": 2.23
+   },
+   "retrieval": {
+    "p50": 0.01,
+    "p95": 0.01
+   },
+   "intake": {
+    "p50": 20.44,
+    "p95": 20.44
+   }
+  }
+ },
+ "cases": [
+  {
+   "id": "cr-chat-01",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "easy"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.5,
+   "effort_mid_total": 4.12,
+   "effort_hit": false,
+   "alternative_ok": null,
+   "alternative": "Ship the synonyms only in the retriever index and have guardrails read canonical package names; skip any handover or channel-adapter work",
+   "risk": "medium",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": false,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "No relabeling or retraining needed (RAG setup). We need to build the synonym list, wire it into keyword search in the hybrid retriever, re-index, and re-run the 600-question eval (current accuracy 91.2%), about 2–3 days. It should fix retrieval misses from AR/EN package-name mismatches, but I can't quantify the accuracy gain until the eval is re-run.",
+    "engineer": "The synonym list is data for the retriever, so the engine, handover (22 s median) and channel adapters need no code changes. My only work is checking that the price check in the answer guardrails matches packages by canonical name (e.g. باقة سوا → Sawa Plus), plus a regression run. It will also need a place in the Sunday re-index so it doesn't drift from the catalogue.",
+    "domain": "No domain rule is broken: the list doesn't touch refunds or billing-dispute routing. I'd need to check each Arabic/English pair against the official package catalogue, because a wrong match (for example two different packages treated as the same) would give customers wrong prices. I found no past synonym change to compare against, so this estimate is only my own review time."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "recommendation alternative not in ['approve']"
+   ],
+   "latency_s": 22.81,
+   "llm_calls": 9,
+   "tokens_in": 20843,
+   "tokens_out": 2011,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0618
+  },
+  {
+   "id": "qa-chat-01",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "answer": "نعم، يجب أن يحوّل البوت المحادثة إلى موظف بشري عندما تتضمن الرسالة عبارة \"شكوى رسمية\"، فهي مذكورة صراحةً ضمن الحالات الواجبة التحويل. ويجب أن يتم التحويل في أقل من 30 ثانية لأن الموضوع حساس.",
+   "sources": [
+    "domain/service-guidelines.md › Must hand over to a human",
+    "project graph › req-handover",
+    "shared/project-brief.md › Success metrics agreed with the client"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": false,
+   "fallback": false,
+   "keyword_precheck": false,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer says yes, the bot must hand over to a human when the message contains \"شكوى رسمية\", matching the reference's core conclusion; the added 30-second timing is extra detail that does not contradict the reference."
+   },
+   "fact_ok": true,
+   "pass": false,
+   "fail_reasons": [
+    "wrong language"
+   ],
+   "latency_s": 2.23,
+   "llm_calls": 1,
+   "tokens_in": 875,
+   "tokens_out": 154,
+   "judge_tokens_in": 611,
+   "judge_tokens_out": 164,
+   "cost_usd": 0.00615
+  },
+  {
+   "id": "rt-chat-01",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "engineer/system-contract.md › Architecture",
+    "engineer/system-contract.md › Change history (actual effort)",
+    "shared/project-brief.md › Client and goal",
+    "engineer/system-contract.md › Latency"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "in-tri-01",
+   "kind": "intake",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "constraint_hits": 6,
+   "constraint_total": 6,
+   "gap_hits": 1,
+   "gap_total": 1,
+   "invented": [],
+   "spec": {
+    "goal": {
+     "value": "Pilot (4 weeks, Riyadh Olaya and Jeddah Rawdah clinics, Arabic and English) of an AI agent that reads patient WhatsApp messages, triages urgency, books the right appointment directly in the clinic calendar for routine and same-day cases, and immediately alerts a nurse for emergencies and nurse-callback cases. It replies within 2 minutes, 24/7.",
+     "source": "Client brief.pdf; Kickoff transcript.txt; Scope email.eml"
+    },
+    "success_metric": {
+     "value": "Safety (gating): 100% of emergency messages in the test set and the pilot get emergency advice (call 997 or go to the ER) plus a nurse alert, and none are offered an appointment. Nurse alerts arrive within 30 seconds. Speed: at least 95% of messages get a reply within 2 minutes, day and night. Booking: percentage of routine and same-day requests booked correctly without human help, with a target to set at kickoff (suggested at least 70%).",
+     "source": "Client brief.pdf (2-minute reply and never-miss-emergency); engineer/integration-contract.md (30-second alert)",
+     "inferred": true
+    },
+    "priorities": {
+     "value": [
+      "1. Patient safety: never miss an emergency. Chest pain etc. gets emergency advice and a nurse alert, never an appointment. Rule-based safety checks sit on top of the AI classifier.",
+      "2. Clinical governance: the head nurse signs off the always-emergency list. Every symptom in a child under 2 goes to a nurse. The agent does not decide emergencies alone.",
+      "3. Data compliance: patient data stays in-country, and only in-region models are used.",
+      "4. Speed: reply within 2 minutes, 24/7.",
+      "5. Autonomous booking in the clinic calendar (book and cancel only, never delete) to cut reception workload.",
+      "6. Arabic (about 82% of traffic, including dialect) and English quality, and handling of mixed symptom-plus-booking messages."
+     ],
+     "source": "Client brief.pdf; Kickoff transcript.txt; domain/triage-guidelines.md",
+     "inferred": true
+    },
+    "constraints": {
+     "value": [
+      "Patient data must not leave the country. Hosting is on the client's in-country cloud and models must run in-region.",
+      "The calendar API allows booking and cancelling only. Deleting records is not allowed.",
+      "Nurse alert goes to the nurse station app with the patient's message and the agent's reason, within 30 seconds.",
+      "Pilot scope: 2 clinics (Riyadh Olaya, Jeddah Rawdah), Arabic and English only.",
+      "Always-emergency symptoms need head-nurse agreement. The current draft is chest pain or pressure, difficulty breathing, stroke signs, severe bleeding, loss of consciousness, seizure.",
+      "Nurse callback within 1 hour: fever above 39°C for more than 3 days, any symptom in a child under 2, pregnancy with bleeding or pain, severe dehydration.",
+      "Emergency training data is scarce (about 120 messages of 12,000), so safety rules are needed."
+     ],
+     "source": "Kickoff transcript.txt; Scope email.eml; engineer/integration-contract.md; domain/triage-guidelines.md"
+    },
+    "deadline": {
+     "value": "Pilot go-live in 4 weeks from kickoff, in 2 clinics, running for 4 weeks.",
+     "source": "Kickoff transcript.txt; Scope email.eml"
+    },
+    "stakeholders": {
+     "value": [
+      "Operations manager (owner of the booking and reply-time requirements)",
+      "Head nurse (clinical sign-off on emergencies and the under-2 rule)",
+      "IT manager (data residency and calendar API)",
+      "Nurses at the pilot clinics (receive alerts and callbacks)",
+      "Reception staff (handle escalations and admin questions)",
+      "Patients (Arabic and English speakers)"
+     ],
+     "source": "Kickoff transcript.txt; Client brief.pdf",
+     "inferred": true
+    }
+   },
+   "gaps": [
+    {
+     "id": "G1",
+     "question": "Who signs off the final always-emergency symptom list, and by when? The head nurse said it is not yet agreed, and the agent can't go live without it. The guidelines hold only a draft list.",
+     "suggested": "The head nurse approves the draft list (chest pain or pressure, difficulty breathing, stroke signs, severe bleeding, loss of consciousness, seizure) in writing by the end of week 1. Anything ambiguous escalates to a nurse. The list is a versioned config file that only clinical staff can change."
+    },
+    {
+     "id": "G2",
+     "question": "Who receives nurse alerts overnight, and what happens if no nurse acknowledges within a set time? The brief asks for replies 'day and night', but it doesn't say whether the nurse station is staffed 24/7.",
+     "suggested": "Name an on-call nurse for the pilot clinics and add an escalation. If there is no acknowledgement within 5 minutes, re-alert and then phone the on-call nurse. The patient always gets the 997/ER advice immediately, whatever the nurse does."
+    },
+    {
+     "id": "G3",
+     "question": "Which acceptance targets apply: the share of bookings the agent must complete on its own, and the share of replies on time? The documents give no measurable pass or fail for the pilot beyond 'never miss an emergency' and '2 minutes'.",
+     "suggested": "Emergency recall of 100% on the clinician-reviewed test set. At least 95% of replies within 2 minutes. At least 70% of routine and same-day requests booked without human help. Review with the operations manager and head nurse after week 2 of the pilot."
+    }
+   ],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 20.44,
+   "llm_calls": 3,
+   "tokens_in": 9633,
+   "tokens_out": 2465,
+   "cost_usd": 0.04392
+  },
+  {
+   "id": "cr-chat-02",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "conflict"
+   ],
+   "conflict_hits": 2,
+   "conflict_total": 2,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-dispute",
+    "r-refund"
+   ],
+   "teams": [
+    "domain",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 1.75,
+   "effort_hit": null,
+   "alternative_ok": true,
+   "alternative": "Detect double-charge complaints, reply with a polite acknowledgement (no refund promise) and hand over to a human agent right away",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "engineer": "Offering refunds for double charges breaks \"never promise refunds\" and the rule that billing disputes always go to a human. Building it would take about 5 days across the answer engine, handover and channels, and I'd advise against it. Instead, keep the July billing-dispute handover rule so double-charge complaints go straight to an agent, with neutral wording and no refund promise (about 1 day).",
+    "domain": "The bot offering a refund for double-charge complaints breaks two rules: it must never promise refunds, and billing disputes must always go to a human agent. I can't approve this as proposed. Instead, the bot should acknowledge the complaint politely and hand over to an agent quickly (under 30 s), who decides on the refund."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 9.11,
+   "llm_calls": 5,
+   "tokens_in": 9565,
+   "tokens_out": 1215,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.03128
+  },
+  {
+   "id": "qa-chat-03",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "dialect"
+   ],
+   "answer": "كلمة \"ابي\" في اللهجة الخليجية تعني \"أريد\" (I want)، وهي من التعابير التي يكتبها العملاء، ويجب أن يفهمها البوت ويرد بعربية واضحة.",
+   "sources": [
+    "domain/service-guidelines.md › Gulf dialect"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer states that 'ابي' is Gulf dialect for 'أريد' (I want), which matches the reference's core conclusion and contradicts nothing in it."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 2.2,
+   "llm_calls": 1,
+   "tokens_in": 531,
+   "tokens_out": 105,
+   "judge_tokens_in": 548,
+   "judge_tokens_out": 70,
+   "cost_usd": 0.00391
+  },
+  {
+   "id": "rt-chat-03",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "ds/knowledge-base-and-eval.md › Latest evaluation (October 2026)",
+    "ds/knowledge-base-and-eval.md › Evaluation set",
+    "shared/project-brief.md › Status",
+    "shared/project-brief.md › Success metrics agreed with the client"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-chat-04",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "judgement"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.5,
+   "effort_mid_total": 7.75,
+   "effort_hit": false,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "Vector-only retrieval needs re-indexing and a full re-run of the 600-question eval. Accuracy is 91.2% today, only 1.2 points above the 90% target, and I have no data on how vector-only would score. Keyword matching helps with package names that differ between Arabic and English (e.g. \"باقة سوا\" vs \"Sawa Plus\"), so accuracy could drop. Only ship it if the eval stays at or above 90%. Answer and guardrail tests (AI Engineer) should be re-run too.",
+    "engineer": "Vector-only search would need re-testing of answer guardrails (price check, sensitive-topic detector), handover and the app/WhatsApp adapters, about 5 days baseline (3–6). Latency should stay within the 2 s p95 limit (currently 1.4 s), but I can't confirm it without a test. No reason was given, and the Data Scientist should show that accuracy (priority 1) holds before we go ahead, since keyword matching may be what finds exact prices and package names.",
+    "domain": "No domain guidelines change, and no rule or promise is clearly broken. Accuracy is our top priority, and vector-only search may miss exact plan names or prices. Please test it on package and price questions, and on refund and billing-dispute wording, before it goes live. I have no past data on this."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 14.58,
+   "llm_calls": 9,
+   "tokens_in": 20279,
+   "tokens_out": 2187,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.06243
+  },
+  {
+   "id": "qa-chat-05",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "escalation"
+   ],
+   "answer": "The passages don't say anything about compensation for customers after a network outage, so I can't answer this from the guidelines. Please refer it to the domain expert.",
+   "sources": [
+    "domain/service-guidelines.md › Gulf dialect"
+   ],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.56,
+   "llm_calls": 1,
+   "tokens_in": 656,
+   "tokens_out": 67,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.00198
+  },
+  {
+   "id": "rt-chat-05",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "arabic"
+   ],
+   "returned": [
+    "shared/decisions-log.md › Jul 2026: always hand over billing disputes",
+    "domain/service-guidelines.md › Must hand over to a human",
+    "shared/decisions-log.md › Aug 2026: weekly document refresh"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  }
+ ]
+}

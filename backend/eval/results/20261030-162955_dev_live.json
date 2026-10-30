@@ -1,0 +1,4421 @@
+{
+ "meta": {
+  "timestamp": "20261030-162955",
+  "split": "dev",
+  "mode": "live",
+  "repeats": 3,
+  "kinds": [
+   "change_review",
+   "domain_qa",
+   "retrieval",
+   "intake"
+  ],
+  "limit": 0,
+  "model": "claude-sonnet-5-5",
+  "judge_model": "claude-sonnet-5-5",
+  "keep_seed": false,
+  "commit": "eb6fd0c",
+  "prices_per_mtok": [
+   2.0,
+   10.0
+  ],
+  "validation": [],
+  "file": "eval/results/20261030-162955_dev_live.json",
+  "total_cost_usd": 2.3295
+ },
+ "summary": {
+  "change_review": {
+   "pass_rate": {
+    "mean": 0.7272727272727273,
+    "std": 0.0
+   },
+   "conflict_recall": {
+    "mean": 0.8571428571428571,
+    "std": 0.0
+   },
+   "false_conflicts_per_case": {
+    "mean": 0.0,
+    "std": 0.0
+   },
+   "teams_f1": {
+    "mean": 0.5698181818181819,
+    "std": 0.026295680442182053
+   },
+   "effort_hit": {
+    "mean": 0.2,
+    "std": 0.0
+   },
+   "alternative": {
+    "mean": 0.9047619047619048,
+    "std": 0.08247860988423228
+   },
+   "risk": {
+    "mean": 0.9090909090909091,
+    "std": 0.0
+   },
+   "recommendation": {
+    "mean": 0.8787878787878788,
+    "std": 0.05248638810814775
+   },
+   "must_mention": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "grounding": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "fake_citations_per_case": {
+    "mean": 0.0,
+    "std": 0.0
+   },
+   "brevity": {
+    "mean": 0.030303030303030304,
+    "std": 0.0524863881081478
+   }
+  },
+  "domain_qa": {
+   "pass_rate": {
+    "mean": 0.8181818181818182,
+    "std": 0.0
+   },
+   "escalation_precision": {
+    "mean": 0.8,
+    "std": 0.0
+   },
+   "escalation_recall": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "answered_when_should_escalate": {
+    "mean": 0,
+    "std": 0.0
+   },
+   "source_hit": {
+    "mean": 0.8571428571428571,
+    "std": 0.0
+   },
+   "language_match": {
+    "mean": 0.6666666666666666,
+    "std": 0.0
+   },
+   "fact_accuracy": {
+    "mean": 0.8571428571428571,
+    "std": 0.0
+   }
+  },
+  "retrieval": {
+   "pass_rate": {
+    "mean": 0.9333333333333333,
+    "std": 0.0
+   },
+   "recall_at_4": {
+    "mean": 0.9333333333333333,
+    "std": 0.0
+   },
+   "mrr": {
+    "mean": 0.8,
+    "std": 0.0
+   },
+   "scope_leaks": {
+    "mean": 0,
+    "std": 0.0
+   }
+  },
+  "intake": {
+   "pass_rate": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "constraint_recall": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "gap_recall": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "invented_facts": {
+    "mean": 0,
+    "std": 0.0
+   }
+  },
+  "system": {
+   "fallback_rate": {
+    "mean": 0.0,
+    "std": 0.0
+   },
+   "cost_per_case_usd": {
+    "mean": 0.020434473684210527,
+    "std": 4.213239257572707e-05
+   },
+   "cost_per_repeat_usd": {
+    "mean": 0.77651,
+    "std": 0.0016010309178776478
+   }
+  },
+  "latency_s": {
+   "change_review": {
+    "p50": 11.76,
+    "p95": 29.69
+   },
+   "domain_qa": {
+    "p50": 1.94,
+    "p95": 2.75
+   },
+   "retrieval": {
+    "p50": 0.02,
+    "p95": 0.03
+   },
+   "intake": {
+    "p50": 19.54,
+    "p95": 20.52
+   }
+  },
+  "consistency": 0.6363636363636364
+ },
+ "cases": [
+  {
+   "id": "cr-chat-01",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "easy"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.5,
+   "effort_mid_total": 3.88,
+   "effort_hit": false,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "medium",
+   "risk_ok": true,
+   "recommendation": "approve",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "No relabeling or retraining needed. The synonym list goes into the KB and the hybrid retriever's keyword search, then we re-index and re-run the 600-question eval, about 2–3 days. Our notes say a synonym list fixes most AR/EN package-name retrieval misses, but I have no measured accuracy gain; current accuracy is 91.2%.",
+    "engineer": "A synonym list is data, so the engine needs no interface or class-name changes. Handover and the app/WhatsApp adapters are not touched, and p95 first token (1.4 s against a 2 s limit) should stay safe. We only need to check that the price check recognises both names for a package, and re-run a quick regression. The 5-day graph baseline looks too high for this change. Please confirm that the Sunday re-index won't overwrite the list.",
+    "domain": "No domain rules are broken, and none of my components are directly affected. I'd spend about half a day checking each Arabic/English pair against the official package catalogue, so the bot never mixes up two different packages. That matters because prices and packages change monthly and the knowledge base is re-indexed weekly, so the list needs an owner to keep it current."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 27.04,
+   "llm_calls": 10,
+   "tokens_in": 24353,
+   "tokens_out": 2186,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.07057
+  },
+  {
+   "id": "cr-chat-02",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "conflict"
+   ],
+   "conflict_hits": 2,
+   "conflict_total": 2,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-dispute",
+    "r-refund"
+   ],
+   "teams": [
+    "domain",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 5.75,
+   "effort_hit": null,
+   "alternative_ok": true,
+   "alternative": "Bot acknowledges the double charge, makes no refund promise, and hands over to a human agent immediately",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "engineer": "The bot offering refunds for double charges breaks \"never promise refunds\" and \"billing disputes always go to a human\". The change would touch the guardrails, the handover and the channels, about 5 days baseline. We recommend keeping the Jul 2026 billing-dispute handover (1 day actual) and not shipping this.",
+    "domain": "The bot offering refunds for double charges breaks two rules: it must never promise refunds, and billing disputes must always go to a human agent. Don't ship this. Instead, have the bot acknowledge the issue politely and hand over to an agent right away, who can decide on the refund. I'd need to review the guidelines only if the rules change."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 8.91,
+   "llm_calls": 5,
+   "tokens_in": 9483,
+   "tokens_out": 1233,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0313
+  },
+  {
+   "id": "cr-chat-04",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "judgement"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.5,
+   "effort_mid_total": 8.75,
+   "effort_hit": false,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "No relabeling or retraining, but the full retrieval eval must be re-run before this ships (about 2 days baseline, up to 4 with fixes). Accuracy is 91.2%, only just above the 90% target, and the keyword half of the hybrid is what helps with mismatched Arabic/English package names. Vector-only search may lower accuracy, but I have no data to say by how much. Roaming for newly added countries is already weak at 84%.",
+    "engineer": "Engine-side, the guardrails, handover and channel adapters would need re-testing and re-tuning, about 5 days baseline (range 4-7). Vector-only search could miss exact matches such as plan names and prices. That would put the 91% accuracy and the price check at risk, so the Data Scientist should show offline accuracy results before we commit. Latency (p95 1.4 s against a 2 s limit) and the handover interface (POST /handover) should be unaffected, but we haven't measured this.",
+    "domain": "No domain component is directly affected, and no rule is clearly broken. Accuracy is our top priority, and no reason was given for the change. Vector-only search may miss exact plan names and prices, so please test it on the current catalogue and on refund and billing-dispute questions before release. If those tests pass, I need about half a day to re-check the guidelines."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 15.65,
+   "llm_calls": 9,
+   "tokens_in": 20107,
+   "tokens_out": 2032,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.06053
+  },
+  {
+   "id": "cr-chat-07",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "robustness",
+    "vague"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "domain",
+    "engineer"
+   ],
+   "teams_f1": 0.0,
+   "effort_mid_total": 6.75,
+   "effort_hit": null,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "medium",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": false,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": null,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "engineer": "Changing the model touches the answer engine, handover and the App + WhatsApp adapters: about 5 days, up to 7 if it slips. The new model must keep first token under 2 s at p95 (now 1.4 s) and handover under 30 s (now 22 s median). Please re-test the price check, the sensitive-topic detector, the no-refund-promise rule and the billing-dispute handover rule before go-live. No reason was given, and the live system has no open issues (91% accuracy, 64% containment).",
+    "domain": "No domain component changes, but the new model must be re-checked against two rules before it goes live: never promise refunds, and always hand over billing disputes. Please run the refund and dispute test cases plus the sensitive-topic detector on the new model, and confirm accuracy stays at or above 90% and handover stays under 30 s. No reason was given for the change, so I can't judge the benefit."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "recommendation reject not in ['needs_info']"
+   ],
+   "latency_s": 16.04,
+   "llm_calls": 6,
+   "tokens_in": 12570,
+   "tokens_out": 1495,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.04009
+  },
+  {
+   "id": "cr-ppe-01",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "conflict",
+    "headline"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 1,
+   "conflict_recall": 0.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.8,
+   "effort_mid_total": 12.0,
+   "effort_hit": true,
+   "alternative_ok": true,
+   "alternative": "Post-processing rule: a helmet counts only if its box overlaps the top of the head box. No relabeling or retraining, but it is untested, so I have no measured effort and 1 day is only a rough guess. Run it on the eval set first.",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "Yes, this needs relabeling, retraining and re-evaluation: about 6 days for the annotation guide, model v3 and the 400-image eval set. It matches rule r-worn, because about 9% of current helmet boxes are helmets not on a head. The retrained model's effect on recall is unknown until we test it, and the 3-week pilot gets tight. The AI Engineer must update the compliance logic and treat the new class as a violation.",
+    "engineer": "The new \"carried helmet\" class changes the model's output, so the compliance logic (today: helmet box inside person box) must treat it as a violation, and the safety officer app needs a new alert reason (about 3 days baseline, 3-4 with testing). It matches rule r-worn and keeps YOLOv8n, so CPU latency stays fine. The Data Scientist must retrain and re-check recall (>=95%) before we ship, and I have no past retrain effort on record, so the 3-week pilot depends on how long that takes.",
+    "domain": "The rule itself doesn't change: a helmet carried in the hand, on a belt or on the ground is still a violation (r-worn). The new class is only acceptable if compliance logic treats \"carried helmet\" as a violation, never as compliant. Data Science must also re-check violation recall (>=95%) and false alerts (<10 per camera per day) after retraining, and the retrain must not put the 3-week pilot (p-pilot) at risk. No reason was given for the change, so we'd like to know why."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "missed conflicts ['p-pilot']"
+   ],
+   "latency_s": 12.5,
+   "llm_calls": 8,
+   "tokens_in": 18357,
+   "tokens_out": 2503,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.06174
+  },
+  {
+   "id": "cr-ppe-03",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "conflict"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "e-cpu",
+    "p-pilot"
+   ],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.8,
+   "effort_mid_total": 8.25,
+   "effort_hit": false,
+   "alternative_ok": true,
+   "alternative": "Keep YOLOv8n v3 and add the helmet-on-head overlap post-processing rule (no retraining); only re-run the eval set. Effort is my estimate.",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "Moving to YOLOv8s means retraining and re-evaluating on the 400-image set (about 3 days). The engine contract says models larger than YOLOv8n miss the latency limit on CPU-only edge boxes, so it likely breaks the 60 s alert limit. Current v3 already has 96% head recall, so I'd skip the upgrade. I'd try the untested post-processing rule (a helmet counts only if it overlaps the top of the head box), which needs no retraining.",
+    "engineer": "YOLOv8s breaks the engine contract: the edge boxes are CPU-only, and models larger than YOLOv8n miss latency on all 40 cameras. Compliance logic and the safety officer app would need rework and retesting (baseline 3 days), and the 3-week pilot is at risk. I'd keep YOLOv8n and improve accuracy through data or threshold tuning instead. I have no past change to anchor this to.",
+    "domain": "YOLOv8s breaks the Engine contract: edge boxes are CPU-only, and models larger than YOLOv8n miss the latency limit. That puts the 60 s alert and the 3-week pilot promise at risk, and no reason for the upgrade was given. Keep YOLOv8n for the pilot. If accuracy is the concern, fix it with data or thresholds, and I have no numbers for that."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 9.51,
+   "llm_calls": 7,
+   "tokens_in": 14429,
+   "tokens_out": 1955,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.04841
+  },
+  {
+   "id": "cr-ppe-05",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "conflict"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-fatigue"
+   ],
+   "teams": [
+    "domain",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 2.75,
+   "effort_hit": null,
+   "alternative_ok": true,
+   "alternative": "Two-tier alerting: normal alert for confident violations, a low-priority 'needs review' alert for low-confidence heads, with a confidence floor and a per-camera daily cap (rule-only, no retraining)",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "engineer": "Alerting on every low-confidence head detection is a small rule change in the compliance logic and the app's reason text (about 1–3 days). It will probably push false alerts above 10 per camera per day, which breaks the false-alert rule. Add a confidence floor or a \"needs review\" tier, and measure alerts per camera per day on pilot footage before enabling it.",
+    "domain": "Alerting on every low-confidence head detection will likely push false alerts well above ~10 per camera per day, which breaks the alert-fatigue rule, and officers will start ignoring alerts, which is itself a safety risk. Recall matters most, but a blanket rule isn't the way to get it. I can't quantify the false-alert rate, because no data is on record. Instead, tune the threshold against measured recall and false alerts, or send borderline cases to a lower-priority review queue. I need about 0.5–1 day to update the guidelines."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 9.79,
+   "llm_calls": 6,
+   "tokens_in": 13075,
+   "tokens_out": 1416,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.04031
+  },
+  {
+   "id": "cr-ppe-07",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "no_conflict"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.5,
+   "effort_mid_total": 9.25,
+   "effort_hit": false,
+   "alternative_ok": null,
+   "alternative": "Pilot with 300 of the crops first, then retrain once and compare recall and false alerts on the 400-image eval set. Effort is my own guess, not from a past change.",
+   "risk": "high",
+   "risk_ok": false,
+   "recommendation": "alternative",
+   "recommendation_ok": false,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "DS impact: the 1,000 tiled crops need labeling to Annotation guide v1, then a retrain of YOLOv8n v3 and a re-run of the 400-image eval set, about 5–8 days (baseline 7). Current head recall is 96% against the 95% target, so I can't say whether this helps. Small far-away heads could raise recall, but the tiled crops may add false alerts, so we need to check both on the eval set. The pilot deadline is tight but doable if labeling starts now.",
+    "engineer": "No interface change: classes and the YOLOv8n size stay the same, so the CPU/latency contract is unaffected. We must re-test the compliance logic (helmet box inside person box) and the app alerts on all camera feeds against the retrained model. Expect 1–3 days. The risk is that more small, far-away detections raise false alerts (limit ~10 per camera per day) and add pressure to the 3-week pilot. The reason for the change wasn't given.",
+    "domain": "No domain rule is broken, and this could help recall on far-away workers. The new crops must be labelled under the \"worn on head\" rule: a helmet in the hand, on a belt or on the ground counts as a violation. Tiny heads are hard to judge, so I need to review the annotation guide and a sample of the labels, and the crops should not be added to the evaluation set. I found no past change to base the effort on, so 0.5–1 day is my own estimate."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "risk high not in ['low', 'medium']",
+    "recommendation alternative not in ['approve']"
+   ],
+   "latency_s": 12.58,
+   "llm_calls": 10,
+   "tokens_in": 25076,
+   "tokens_out": 2248,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.07263
+  },
+  {
+   "id": "cr-tri-01",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "conflict",
+    "safety"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-child",
+    "r-emergency"
+   ],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.5,
+   "effort_mid_total": 9.5,
+   "effort_hit": null,
+   "alternative_ok": true,
+   "alternative": "Keep the hard safety rules and let the LLM handle non-emergency urgency and mixed symptom/booking messages (Design A as built)",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "Removing the hard safety rules puts the 100% emergency recall at risk. Only about 120 emergency examples exist, so the LLM alone can't be trusted to catch them, and the nurses' always-emergency list (r-emergency) and the under-2 rule (r-child) would no longer be enforced. We'd need to re-evaluate on the nurse-labelled set, but I'd recommend keeping the rules. I have no measured recall for an LLM-only design.",
+    "engineer": "Removing the hard safety rules breaks the head nurse's \"always emergency\" list (chest pain, breathing, stroke, bleeding, unconsciousness, seizure) and the child-under-2 nurse rule. The LLM alone can't guarantee 100% emergency recall, and no past result shows it can. Engine work is about 3–5 days to re-check booking guards, nurse alert and WhatsApp reply paths. I recommend keeping the rules as a deterministic override.",
+    "domain": "Blocked: removing the hard safety rules means the head nurse's always-emergency list (chest pain, breathing, stroke, bleeding, unconsciousness, seizure) and the under-2 nurse rule would no longer be guaranteed. The LLM alone cannot promise 100% emergency recall, and no reason was given for the change. Keep the hard rules as a floor; the LLM may only add urgency, never lower it."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 8.99,
+   "llm_calls": 7,
+   "tokens_in": 18858,
+   "tokens_out": 1897,
+   "setup_tokens_in": 9462,
+   "setup_tokens_out": 2062,
+   "cost_usd": 0.09623
+  },
+  {
+   "id": "cr-tri-03",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "conflict",
+    "safety"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-child"
+   ],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.5,
+   "effort_mid_total": 6.75,
+   "effort_hit": null,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "This breaks the head nurse's rule that any symptom in a child under 2 gets a nurse callback within 1 hour (r-child), and it conflicts with the pilot's safety priority. Technically it's about 2 days of rule and label changes in Agent A, plus re-evaluation. I'd not do it unless the head nurse agrees. No reason was given, and I have no data on how it would change the metrics.",
+    "engineer": "This breaks the head nurse's rule that any symptom in a child under 2 gets a nurse callback within 1 hour, and it is also a project constraint. We would have to rework booking, nurse alert and WhatsApp replies (baseline 5 days), and the change should not go ahead as proposed. If nurse workload is the real problem, solve it another way, for example by triaging the nurse queue, and agree that with the head nurse first.",
+    "domain": "Blocked: the head nurse's rule says any symptom in a child under 2 goes to a nurse callback within 1 hour (r-child). Booking these children into a same-day slot could auto-book a sick infant, including one with an emergency symptom such as a seizure or breathing trouble. Any nurse-workload change needs the head nurse's agreement first."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 11.24,
+   "llm_calls": 7,
+   "tokens_in": 18494,
+   "tokens_out": 1747,
+   "setup_tokens_in": 9783,
+   "setup_tokens_out": 2152,
+   "cost_usd": 0.09554
+  },
+  {
+   "id": "cr-tri-06",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "constraint_no_rule_id"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-emergency"
+   ],
+   "teams": [
+    "domain",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 3.25,
+   "effort_hit": null,
+   "alternative_ok": true,
+   "alternative": "Keep instant (<30 s) alerts for emergencies; batch only the 1-hour callback cases (e.g. child under 2) every 15 min, subject to head nurse approval",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": true,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "engineer": "Batching every 15 minutes breaks the engine contract that nurse alerts arrive within 30 seconds, and the pilot's \"immediate alert for emergencies\" goal. Emergency alerts could wait up to 15 minutes. The Nurse alert and WhatsApp channel components would need changes (baseline 3 days). Safer option: keep emergencies instant and batch only non-urgent nurse-callback cases. Child-under-2 callbacks (within 1 hour) would still fit.",
+    "domain": "Blocked: a 15-minute batch would delay emergency alerts (chest pain, stroke signs, etc.) far beyond the 30-second target, which is a patient safety risk. Emergencies must alert the nurse immediately, one by one. Only the non-emergency \"nurse callback within 1 hour\" cases, such as a child under 2, could be batched, and only if the head nurse agrees. No reason was given for the change."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 11.86,
+   "llm_calls": 5,
+   "tokens_in": 12551,
+   "tokens_out": 1991,
+   "setup_tokens_in": 9685,
+   "setup_tokens_out": 2036,
+   "cost_usd": 0.08474
+  },
+  {
+   "id": "qa-chat-01",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "answer": "نعم، يجب على البوت التحويل إلى موظف بشري عندما تتضمن رسالة العميل عبارة \"شكوى رسمية\"، فهي من الحالات الإلزامية للتحويل حسب الإرشادات. كما يجب أن يتم التحويل في أقل من 30 ثانية لأن الموضوع حساس.",
+   "sources": [
+    "domain/service-guidelines.md › Must hand over to a human",
+    "project graph › req-handover",
+    "shared/project-brief.md › Success metrics agreed with the client"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": false,
+   "fallback": false,
+   "keyword_precheck": false,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer says yes, the bot must hand over to a human when the message contains 'شكوى رسمية', which matches the reference; the added 30-second detail does not contradict the key facts."
+   },
+   "fact_ok": true,
+   "pass": false,
+   "fail_reasons": [
+    "wrong language"
+   ],
+   "latency_s": 2.75,
+   "llm_calls": 1,
+   "tokens_in": 875,
+   "tokens_out": 148,
+   "judge_tokens_in": 605,
+   "judge_tokens_out": 75,
+   "cost_usd": 0.00519
+  },
+  {
+   "id": "qa-chat-03",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "dialect"
+   ],
+   "answer": "كلمة \"ابي\" في اللهجة الخليجية تعني \"أريد\" (I want)، وهي من العبارات التي يكتبها العملاء، ويجب على البوت فهمها والرد بعربية واضحة.",
+   "sources": [
+    "domain/service-guidelines.md › Gulf dialect"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer states that 'ابي' in the Gulf dialect means 'أريد' (I want), which matches the reference key fact, and the extra detail about the bot does not contradict it."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 2.35,
+   "llm_calls": 1,
+   "tokens_in": 531,
+   "tokens_out": 102,
+   "judge_tokens_in": 545,
+   "judge_tokens_out": 75,
+   "cost_usd": 0.00392
+  },
+  {
+   "id": "qa-chat-05",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "escalation"
+   ],
+   "answer": "The passages don't say anything about compensation for customers after a network outage, so I can't answer this from the guidelines. This should go to the domain expert.",
+   "sources": [
+    "domain/service-guidelines.md › Gulf dialect"
+   ],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.75,
+   "llm_calls": 1,
+   "tokens_in": 656,
+   "tokens_out": 65,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.00196
+  },
+  {
+   "id": "qa-chat-08",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "escalation",
+    "out_of_scope"
+   ],
+   "answer": "I couldn't find anything about that in this project's knowledge yet.",
+   "sources": [],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.04,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-ppe-01",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "answer": "No. Under the site rules a helmet only counts when it is worn on the head with the strap fastened where visible, so a helmet clipped to a belt is a violation, not compliant. Note that the current compliance logic (helmet box inside the person box) would wrongly count it as compliant.",
+   "sources": [
+    "shared/meeting-notes.md › Site visit with the safety officer (Oct 2026)",
+    "domain/site-safety-rules.md › Helmet rule",
+    "project graph › rule-worn",
+    "project graph › logic"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer says no, states that a helmet counts only when worn on the head, and calls a belt-clipped helmet a violation, which matches the reference; the extra detail about the strap and the compliance-logic caveat does not contradict it."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 2.15,
+   "llm_calls": 1,
+   "tokens_in": 870,
+   "tokens_out": 116,
+   "judge_tokens_in": 564,
+   "judge_tokens_out": 90,
+   "cost_usd": 0.00493
+  },
+  {
+   "id": "qa-ppe-03",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "answer": "High priority applies to no-helmet violations in active work zones: under cranes, at height, and near heavy machinery. Everywhere else on site is normal priority.",
+   "sources": [
+    "domain/site-safety-rules.md › Alert priority"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer names the same high-priority zones as the reference (active work zones: under cranes, at height, near heavy machinery) and adds only a non-contradictory note that other areas are normal priority."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 3.11,
+   "llm_calls": 1,
+   "tokens_in": 854,
+   "tokens_out": 71,
+   "judge_tokens_in": 513,
+   "judge_tokens_out": 77,
+   "cost_usd": 0.00421
+  },
+  {
+   "id": "qa-ppe-05",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "escalation"
+   ],
+   "answer": "The passages don't say anything about detecting safety vests. They only cover helmet detection (worker without helmet, helmet must be worn on the head), so this needs to go to the domain expert.",
+   "sources": [
+    "shared/project-brief.md › Success metrics agreed with the client",
+    "shared/meeting-notes.md › Site visit with the safety officer (Oct 2026)",
+    "project graph › rule-worn"
+   ],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.82,
+   "llm_calls": 1,
+   "tokens_in": 841,
+   "tokens_out": 83,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.00251
+  },
+  {
+   "id": "qa-ppe-08",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "robustness",
+    "mixed_language"
+   ],
+   "answer": "لا، لا يعتبر compliant. حسب قاعدة الخوذة، الخوذة تُحتسب فقط إذا كانت على الرأس مع ربط الحزام حيث يكون ظاهراً، والخوذة الموضوعة على الأرض تُعد مخالفة.",
+   "sources": [
+    "domain/site-safety-rules.md › Helmet rule",
+    "project graph › rule-worn",
+    "activity › 2026-10-30 16:20"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer says no, it is not compliant, and states that a helmet lying on the ground is a violation, which matches the reference; the extra detail about the helmet being worn with the strap fastened does not contradict it."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 2.46,
+   "llm_calls": 1,
+   "tokens_in": 824,
+   "tokens_out": 126,
+   "judge_tokens_in": 568,
+   "judge_tokens_out": 82,
+   "cost_usd": 0.00486
+  },
+  {
+   "id": "qa-tri-01",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "safety"
+   ],
+   "answer": "I couldn't find anything about that in this project's knowledge yet.",
+   "sources": [],
+   "escalated": true,
+   "should_escalate": false,
+   "escalation_ok": false,
+   "answered_when_should_escalate": false,
+   "source_hit": false,
+   "language_ok": false,
+   "fallback": false,
+   "keyword_precheck": false,
+   "fact_ok": false,
+   "judge": {
+    "verdict": "incorrect",
+    "reason": "Escalated instead of answering."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "escalated instead of answering",
+    "no gold source",
+    "wrong language"
+   ],
+   "latency_s": 0.06,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-tri-03",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "answer": "A same-day appointment. Fever under 3 days and ear pain are both listed under same-day appointment criteria.",
+   "sources": [
+    "domain/triage-guidelines.md › Same-day appointment"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer states a same-day appointment, matching the reference's core conclusion, and its added rationale does not contradict it."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.63,
+   "llm_calls": 1,
+   "tokens_in": 862,
+   "tokens_out": 57,
+   "judge_tokens_in": 494,
+   "judge_tokens_out": 54,
+   "cost_usd": 0.00382
+  },
+  {
+   "id": "qa-tri-05",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "escalation",
+    "safety"
+   ],
+   "answer": "The passages don't say whether the agent may recommend antibiotics or any medication. They only cover urgency assessment, appointment booking, nurse alerts, and emergency symptoms, so this should go to the real expert.",
+   "sources": [
+    "activity › 2026-10-30 16:20"
+   ],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.83,
+   "llm_calls": 1,
+   "tokens_in": 875,
+   "tokens_out": 88,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.00263
+  },
+  {
+   "id": "rt-chat-01",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "engineer/system-contract.md › Architecture",
+    "engineer/system-contract.md › Change history (actual effort)",
+    "shared/project-brief.md › Client and goal",
+    "engineer/system-contract.md › Latency"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.03,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-03",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "ds/knowledge-base-and-eval.md › Latest evaluation (October 2026)",
+    "ds/knowledge-base-and-eval.md › Evaluation set",
+    "shared/project-brief.md › Status",
+    "shared/project-brief.md › Success metrics agreed with the client"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-05",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "arabic"
+   ],
+   "returned": [
+    "shared/decisions-log.md › Jul 2026: always hand over billing disputes",
+    "domain/service-guidelines.md › Must hand over to a human",
+    "shared/decisions-log.md › Aug 2026: weekly document refresh"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-07",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "shared/decisions-log.md › Aug 2026: weekly document refresh",
+    "ds/knowledge-base-and-eval.md › Knowledge base contents",
+    "shared/project-brief.md › Status",
+    "domain/service-guidelines.md › Gulf dialect"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.03,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-09",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "domain/service-guidelines.md › Gulf dialect",
+    "shared/project-brief.md › Client and goal",
+    "domain/service-guidelines.md › Tone",
+    "shared/decisions-log.md › Jul 2026: always hand over billing disputes"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-01",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "engineer/change-history.md › Sep 2026: added a new class to the model output (person)",
+    "shared/meeting-notes.md › Decision pending",
+    "engineer/engine-contract.md › Interfaces",
+    "engineer/engine-contract.md › Hardware"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-03",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "ds/experiment-log.md › Exp 4: YOLOv8s, 640px",
+    "ds/experiment-log.md › Exp 3: YOLOv8n, 640px (current model v3)"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-05",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "arabic"
+   ],
+   "returned": [],
+   "recall_at_4": false,
+   "mrr": 0.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": false,
+   "fail_reasons": [
+    "no gold chunk in top 4"
+   ],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-07",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "shared/meeting-notes.md › Decision pending",
+    "engineer/engine-contract.md › Interfaces",
+    "engineer/change-history.md › Sep 2026: added a new class to the model output (person)",
+    "engineer/change-history.md › Sep 2026: post-processing rule for blurry night images"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-09",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "shared/project-brief.md › Success metrics agreed with the client",
+    "domain/site-safety-rules.md › Exemptions",
+    "shared/meeting-notes.md › Site visit with the safety officer (Oct 2026)",
+    "domain/site-safety-rules.md › Alert fatigue"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-01",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "engineer/integration-contract.md › Calendar API",
+    "shared/kickoff-transcript.md › IT manager",
+    "engineer/integration-contract.md › Approved stack",
+    "shared/kickoff-transcript.md › Operations manager"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-03",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "engineer/integration-contract.md › Hosting and data",
+    "shared/kickoff-transcript.md › IT manager",
+    "engineer/integration-contract.md › Calendar API",
+    "shared/client-brief.md › What matters most"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-05",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "domain/triage-guidelines.md › Nurse callback within 1 hour",
+    "shared/kickoff-transcript.md › Head nurse",
+    "domain/triage-guidelines.md › Same-day appointment"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-07",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "ds/message-data-notes.md › Overview",
+    "ds/message-data-notes.md › Data issues",
+    "shared/client-brief.md › Who we are",
+    "ds/sample-messages.md › Mixed messages"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-09",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "shared/kickoff-transcript.md › Operations manager",
+    "shared/kickoff-transcript.md › IT manager",
+    "shared/client-brief.md › What we want",
+    "ds/sample-messages.md › Routine examples"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "in-tri-01",
+   "kind": "intake",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "constraint_hits": 6,
+   "constraint_total": 6,
+   "gap_hits": 1,
+   "gap_total": 1,
+   "invented": [],
+   "spec": {
+    "goal": {
+     "value": "Pilot an in-country WhatsApp AI agent for Shifa Clinics that reads Arabic/English patient messages, assesses urgency, books the right appointment directly in the clinic calendar (book/cancel only), and instantly alerts a nurse for emergencies and nurse-callback cases. Pilot covers Riyadh Olaya and Jeddah Rawdah.",
+     "source": "Client brief.pdf; Kickoff transcript.txt; Scope email.eml"
+    },
+    "success_metric": {
+     "value": "During the 4-week pilot: (1) 100% of emergencies in the nurse-approved test set and live pilot get emergency advice (call 997/ED) plus a nurse alert within 30 seconds, and none are offered a routine appointment (zero missed emergencies); (2) at least 95% of messages get a reply within 2 minutes, 24/7; (3) every message involving a child under 2 is routed to a nurse; (4) appointment-type and urgency routing agree with reception-staff labels on a held-out set at a target of 90% or higher (target to be confirmed).",
+     "source": "Client brief.pdf; engineer/integration-contract.md",
+     "inferred": true
+    },
+    "priorities": {
+     "value": [
+      "1. Patient safety: never miss an emergency; chest pain etc. is never offered a routine appointment; emergency advice plus nurse alert within 30 s",
+      "2. Nurse-owned escalation rules: use the head nurse-approved emergency symptom list, and always escalate children under 2 to a nurse; the agent does not decide emergencies alone",
+      "3. Data compliance: all patient data and models stay in-country/in-region",
+      "4. Reply within 2 minutes, day and night, in Arabic and English",
+      "5. Correct direct booking in the clinic calendar (find_slots/book/cancel only, no deletes, 10 req/s limit)",
+      "6. Deliver the pilot in 4 weeks at 2 clinics"
+     ],
+     "source": "Client brief.pdf; Kickoff transcript.txt; Scope email.eml",
+     "inferred": true
+    },
+    "constraints": {
+     "value": [
+      "Patient data must not leave the country; only in-region models and hosting on the client's in-country cloud",
+      "Calendar API allows find_slots, book and cancel only; no deleting records; 10 requests/s rate limit",
+      "Nurse alert must arrive in the nurse station app within 30 seconds with the patient message and the agent's reason",
+      "Languages: Arabic and English only (about 82% / 18% of historical traffic)",
+      "Emergency symptom list must be agreed with and approved by the head nurse",
+      "Children under 2 must be routed to a nurse",
+      "Pilot scope: 2 clinics (Riyadh Olaya, Jeddah Rawdah), about 3,000 messages/week across all 8 clinics"
+     ],
+     "source": "Kickoff transcript.txt; Scope email.eml; engineer/integration-contract.md"
+    },
+    "deadline": {
+     "value": "Pilot live in 4 weeks from kickoff, at 2 clinics (Riyadh Olaya, Jeddah Rawdah)",
+     "source": "Kickoff transcript.txt; Scope email.eml"
+    },
+    "stakeholders": {
+     "value": [
+      "Operations manager (owner of reply-time and booking requirements)",
+      "Head nurse (owner of emergency and escalation rules)",
+      "IT manager (data residency and calendar API)",
+      "Nurses at the nurse station (alert recipients)",
+      "Reception staff (labelled the historical data)",
+      "Patients"
+     ],
+     "source": "Kickoff transcript.txt; Client brief.pdf"
+    }
+   },
+   "gaps": [
+    {
+     "id": "G1",
+     "question": "Which symptoms are always emergencies? The head nurse has not signed off a final list and does not want the agent deciding alone. Who approves the list, and by when?",
+     "suggested": "Start from the triage guidelines' always-emergency list: chest pain or pressure, difficulty breathing, stroke signs, severe bleeding, loss of consciousness and seizure. Reply with a call-997 or go-to-the-ED message and send a nurse alert. The head nurse signs off the final list, including Arabic phrasings, before week 2. Anything ambiguous goes to a nurse."
+    },
+    {
+     "id": "G2",
+     "question": "Who receives nurse alerts at night and on weekends, and what happens if no nurse acknowledges an alert? The 24/7 two-minute reply and the 30-second alert depend on this.",
+     "suggested": "Confirm that the nurse station app is staffed or has an on-call nurse 24/7 at both pilot clinics. If an alert is not acknowledged within 5 minutes, escalate to a backup nurse or the head nurse. The agent always gives the patient emergency advice immediately and does not wait for the nurse."
+    },
+    {
+     "id": "G3",
+     "question": "No success metric or acceptance threshold was given. What counts as pilot success, for example the share of messages answered within 2 minutes and the booking accuracy needed?",
+     "suggested": "Zero missed emergencies on the nurse-approved test set and in live pilot review. At least 95% of replies within 2 minutes. At least 90% routing agreement with reception labels. The operations manager and head nurse confirm these before build."
+    }
+   ],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 18.05,
+   "llm_calls": 3,
+   "tokens_in": 9559,
+   "tokens_out": 2264,
+   "cost_usd": 0.04176
+  },
+  {
+   "id": "cr-chat-01",
+   "kind": "change_review",
+   "repeat": 1,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "easy"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 3.5,
+   "effort_hit": false,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "medium",
+   "risk_ok": true,
+   "recommendation": "approve",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "Needs no relabeling or retraining. We add the synonym list to the retriever, re-index and re-run the eval, about 3 days (baseline). It targets known Arabic/English package-name retrieval misses, so accuracy should improve. I have no measured size for the gain, and the current 91.2% is above the 90% target.",
+    "engineer": "The synonym list needs no engine, API or channel change, and handover is untouched. We only need to re-run the price check and guardrail tests with Arabic aliases (e.g. باقة سوا) to confirm the answer names the right package and price. Latency should stay inside the 2 s p95 limit (now 1.4 s) if the synonyms are applied at retrieval or index time. Please confirm that, because the reason for the change was not given.",
+    "domain": "No domain guidelines are affected, and the change breaks no refund or billing-dispute rule. The synonym list should help the bot match Arabic and English package names, which supports accuracy. The reason for the change wasn't given, and I found no past change like it. Someone should check that the package names match the official Sahm Telecom names."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 10.12,
+   "llm_calls": 9,
+   "tokens_in": 20874,
+   "tokens_out": 2005,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0618
+  },
+  {
+   "id": "cr-chat-02",
+   "kind": "change_review",
+   "repeat": 1,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "conflict"
+   ],
+   "conflict_hits": 2,
+   "conflict_total": 2,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-dispute",
+    "r-refund"
+   ],
+   "teams": [
+    "domain",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 6.75,
+   "effort_hit": null,
+   "alternative_ok": true,
+   "alternative": "Bot acknowledges the double-charge complaint, makes no refund promise, and hands over to a human agent immediately",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "engineer": "The bot offering refunds for double-charge complaints breaks \"never promise refunds\" (r-refund) and \"billing disputes always go to a human\" (r-dispute). Building it would touch the guardrails, handover and the app/WhatsApp channels (baseline 5 days), and I recommend we don't build it. Safer option: detect double-charge complaints, say they will be checked, and hand over to an agent (about 1 day).",
+    "domain": "The bot offering a refund for double charges breaks two rules. It breaks \"never promise refunds\" and \"billing disputes always go to a human agent\". Don't ship it. Instead, have the bot acknowledge the issue politely and hand over to an agent right away, who decides on the refund."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 9.0,
+   "llm_calls": 5,
+   "tokens_in": 9506,
+   "tokens_out": 1334,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.03235
+  },
+  {
+   "id": "cr-chat-04",
+   "kind": "change_review",
+   "repeat": 1,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "judgement"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 8.5,
+   "effort_hit": false,
+   "alternative_ok": true,
+   "alternative": "Keep the hybrid retriever and add the Arabic/English synonym list for the roaming and package-name misses, instead of removing keyword search",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "Vector-only needs retriever rework plus a full re-evaluation, about 2-4 days. Accuracy is 91.2% against a 90% target, so there is little headroom. Keyword matching helps with package names that differ between Arabic and English, such as \"باقة سوا\" and \"Sawa Plus\". I have no data showing vector-only holds accuracy, so run it offline against the eval set first and ship only if accuracy stays at or above 90%.",
+    "engineer": "Engine impact: answer and guardrails (price check, sensitive-topic detector), handover and the App/WhatsApp adapters all need re-testing. Estimate is 5 days, with a range of 4–7. Vector-only search may miss exact keyword matches such as plan names, prices and billing-dispute terms. That could weaken the price check and the dispute-to-human rule (r-dispute), so the Data Scientist should show accuracy and recall numbers first. No reason was given for the change, and I found no evidence it fixes a problem.",
+    "domain": "No domain guidelines or components change, so there is no effort for the Domain team. No rule is clearly broken (refund and billing-dispute rules stay in force). No reason was given and I have no data on retrieval quality. Accuracy is the top priority, so the Data Scientist should check vector-only retrieval on exact plan names and prices before release."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 12.27,
+   "llm_calls": 9,
+   "tokens_in": 20111,
+   "tokens_out": 2066,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.06088
+  },
+  {
+   "id": "cr-chat-07",
+   "kind": "change_review",
+   "repeat": 1,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "robustness",
+    "vague"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "domain",
+    "engineer"
+   ],
+   "teams_f1": 0.0,
+   "effort_mid_total": 6.25,
+   "effort_hit": null,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "medium",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": false,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": null,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "engineer": "A model swap touches the answer/guardrails engine, handover and the app and WhatsApp adapters: about 5 days, up to 7 if it slips. The new model must stay under 2 s p95 first token (now 1.4 s) and keep handover median at 22 s (limit 30 s). Guardrails (price check, sensitive-topic detector, billing-dispute handover, no refund promises) must be re-tested, and no reason was given for the change.",
+    "domain": "No domain components are affected, and no rule is broken by the change itself. The new model has to be tested before go-live against \"never promise refunds\" and \"billing disputes always go to a human\". Accuracy is the top priority, so it must still reach at least 90% on the evaluation set. No reason was given for the change, and I found no past model-change effort on record."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "recommendation reject not in ['needs_info']"
+   ],
+   "latency_s": 14.81,
+   "llm_calls": 7,
+   "tokens_in": 15454,
+   "tokens_out": 1689,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0478
+  },
+  {
+   "id": "cr-ppe-01",
+   "kind": "change_review",
+   "repeat": 1,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "conflict",
+    "headline"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 1,
+   "conflict_recall": 0.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.8,
+   "effort_mid_total": 11.25,
+   "effort_hit": true,
+   "alternative_ok": true,
+   "alternative": "Post-processing rule: a helmet counts only if its box overlaps the top part of a head box (no relabel or retrain); evaluate on the 400-image set first, and relabel only if recall falls short",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "DS impact: the annotation guide, the labels, model v3 and the 400-image evaluation set all need rework. That is about 6 days (range 5–8), with no past relabel to compare against. The change matches rule r-worn and fits YOLOv8n on CPU, but it eats most of the 3-week pilot buffer. The untested post-processing rule (helmet box must overlap the top of a head box) needs no retraining and could be tried first, in about 1–2 days (my estimate). I can't say yet how recall or false alerts will move.",
+    "engineer": "The new class adds a class ID, so the compliance logic must count only \"helmet\" boxes on the head as compliant and treat \"carried helmet\" as a violation. The safety officer app needs a new alert reason for it. That is about 3–4 days for us, after Data Scientist ships the retrained YOLOv8n (it must stay YOLOv8n for CPU latency). I found no past change with a recorded effort to compare against, and the 95% recall target needs re-checking on the new model.",
+    "domain": "The change is acceptable for the domain only if \"helmet carried\" is always treated as a violation (r-worn: only a helmet on the head counts). I'll update the guideline to define carried (in hand, on belt, on equipment, on the ground) and to say that it alerts. The reason for the change wasn't given, and I have no past retrain effort on record. The Data Scientist and AI Engineer should check that the retrain and the re-labelled evaluation set still fit the 3-week pilot and keep recall at 95% or higher."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "missed conflicts ['p-pilot']"
+   ],
+   "latency_s": 12.24,
+   "llm_calls": 8,
+   "tokens_in": 18363,
+   "tokens_out": 2432,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.06105
+  },
+  {
+   "id": "cr-ppe-03",
+   "kind": "change_review",
+   "repeat": 1,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "conflict"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "e-cpu",
+    "p-pilot"
+   ],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.8,
+   "effort_mid_total": 8.25,
+   "effort_hit": false,
+   "alternative_ok": true,
+   "alternative": "Keep YOLOv8n; add post-processing rule (helmet counts only if its box overlaps the top of the head box), no retraining. Effort is my rough estimate: the log gives no figure.",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "YOLOv8s means retraining and re-evaluating on the 400-image set, about 3 days baseline. The engine contract says models larger than YOLOv8n miss the latency limit on CPU-only edge boxes, so this likely breaks the 60 s alert limit. No reason for the upgrade was given, and current recall is already 96% against a 95% target. I'd try the untested helmet-on-head overlap rule first, since it needs no retraining.",
+    "engineer": "YOLOv8s breaks the engine contract: the edge boxes are CPU-only, and models larger than YOLOv8n miss latency on the 40 cameras. Compliance logic and the safety officer app would need re-testing, about 3 days baseline, plus hardware or latency work that I can't estimate. No reason was given for the upgrade, and the current model already has 96% head recall, so I'd keep YOLOv8n unless a GPU or hardware change is approved.",
+    "domain": "YOLOv8s breaks the engine contract rule that models larger than YOLOv8n miss latency on CPU-only edge boxes. That puts the 60 s alert limit and the 3-week pilot promise at risk. The reason for the upgrade isn't given, and current head recall is already 96% against the 95% target. Keep YOLOv8n unless someone benchmarks YOLOv8s on a CPU edge box first."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 12.78,
+   "llm_calls": 7,
+   "tokens_in": 14421,
+   "tokens_out": 2407,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.05291
+  },
+  {
+   "id": "cr-ppe-05",
+   "kind": "change_review",
+   "repeat": 1,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "conflict"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-fatigue"
+   ],
+   "teams": [
+    "domain",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 4.25,
+   "effort_hit": null,
+   "alternative_ok": true,
+   "alternative": "Tune the confidence threshold on a validation set and send only borderline detections to a low-priority 'review' tier (rule-only change after the model, no retraining)",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "engineer": "Alerting on every low-confidence head detection would likely push false alerts above 10 per camera per day, which breaks the false-alert rule. It would also alert on heads with no person or helmet context, and the app's alert crop and reason would have to change. Recall is already 96% on the current model; I'd suggest a separate \"low-confidence / review\" alert tier or a tuned threshold instead, but I have no data on how many false alerts this would cause.",
+    "domain": "None of our components change, but alerting on every low-confidence head detection will probably push false alerts over the ~10 per camera per day limit (r-fatigue). Officers would then start ignoring alerts, which is a safety risk and works against the recall goal. I can't quantify the extra alerts from our knowledge, so measure the false-alert rate per camera on real footage before accepting this, and set a threshold that keeps recall at 95% or higher with fewer than 10 false alerts."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 10.12,
+   "llm_calls": 6,
+   "tokens_in": 12850,
+   "tokens_out": 1515,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.04085
+  },
+  {
+   "id": "cr-ppe-07",
+   "kind": "change_review",
+   "repeat": 1,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "no_conflict"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.5,
+   "effort_mid_total": 8.88,
+   "effort_hit": false,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": false,
+   "recommendation": "approve",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "DS: this targets the main miss on model v3 (tiny far-away heads), so it should help violation recall. It needs about 1,000 crops labeled, a retrain of YOLOv8n and a re-evaluation, roughly 5–8 days. We have no past figure for a similar change, and I can't give a recall gain without testing. The 400-image eval set must stay free of the new crops, and carried-helmet false \"compliant\" cases won't be fixed by this.",
+    "engineer": "Compliance logic and the safety officer app are affected only if model v3 output changes. We need to re-test the \"helmet box inside person box\" rule on small, far-away boxes, and check that alert crops are still readable. This holds only if the model stays YOLOv8n with normal full-frame inference. Tiled inference on CPU boxes would need a fresh latency check against the 60 s limit (currently 8 s). The reason for the change wasn't given.",
+    "domain": "No domain rule is broken, and more small far-away heads could help recall. Tiled crops must be labelled under the \"helmet only counts when worn on the head\" rule, so carried or belt-clipped helmets in crops are labelled as violations. Please check false alerts on the evaluation set, and don't retrain in a way that delays the 3-week pilot."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "risk high not in ['low', 'medium']"
+   ],
+   "latency_s": 12.06,
+   "llm_calls": 9,
+   "tokens_in": 21664,
+   "tokens_out": 2191,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.06524
+  },
+  {
+   "id": "cr-tri-01",
+   "kind": "change_review",
+   "repeat": 1,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "conflict",
+    "safety"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-child",
+    "r-emergency"
+   ],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 7.0,
+   "effort_hit": null,
+   "alternative_ok": true,
+   "alternative": "Keep the LLM classifier plus hard safety rules (Design A: emergency recall 100%, routine accuracy 93%). Tune only the LLM part if routine accuracy needs to improve.",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "Removing the hard safety rules would break the \"never miss an emergency\" target. Only about 120 emergency examples exist, so an LLM alone can't be shown to hold 100% recall. The rules are also what enforce the head nurse's always-emergency list and the under-2 nurse routing. I recommend keeping them. If the change goes ahead, we need 2–4 days to re-evaluate, and I can't promise the 100% emergency target.",
+    "engineer": "Removing the hard safety rules breaks the always-emergency list and the child-under-2 nurse routing. The LLM alone could offer an emergency a booking, and booking, nurse alert and WhatsApp replies would need re-gating and re-testing (baseline 5 days). I don't recommend it. Keep the rules as a safety layer over the LLM.",
+    "domain": "Blocked on safety: removing the hard rules lets the LLM alone decide urgency, so the always-emergency list (chest pain, breathing, stroke, severe bleeding, unconsciousness, seizure) and the under-2 nurse rule are no longer guaranteed. The 100% emergency recall depends on those rules, and the LLM alone has no measured recall. Keep the rules on top of the LLM. No reason was given for the change."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 9.41,
+   "llm_calls": 7,
+   "tokens_in": 19911,
+   "tokens_out": 1829,
+   "setup_tokens_in": 9632,
+   "setup_tokens_out": 2351,
+   "cost_usd": 0.10089
+  },
+  {
+   "id": "cr-tri-03",
+   "kind": "change_review",
+   "repeat": 1,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "conflict",
+    "safety"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-child"
+   ],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.5,
+   "effort_mid_total": 6.75,
+   "effort_hit": null,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "This breaks the head nurse's rule that every child-under-2 message goes to a nurse (callback within 1 hour), and it breaks success metric 4. A same-day booking would also skip the nurse's clinical triage for infants. I recommend we don't do it. If nurse workload is the concern, discuss it with the head nurse first.",
+    "engineer": "Routing under-2s to a same-day booking breaks the head nurse's rule (r-child) that all under-2 cases go to a nurse, and the success metric of 100% under-2 nurse routing. Engineering would need about 3-5 days to rework booking, nurse alert and WhatsApp replies, but we recommend not building it. No reason was given. If nurse workload is the concern, take it up with the head nurse first.",
+    "domain": "This change breaks the head nurse's rule that any child under 2 gets a nurse callback within 1 hour. It also breaks success metric 4 (all under-2 cases go to a nurse). Under-2 messages could include emergencies, so a same-day booking is unsafe. If nurse workload is the problem, tell us how many under-2 cases there are, and we can look at other options that keep the nurse in the loop."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 28.84,
+   "llm_calls": 7,
+   "tokens_in": 18948,
+   "tokens_out": 1561,
+   "setup_tokens_in": 9661,
+   "setup_tokens_out": 2172,
+   "cost_usd": 0.09455
+  },
+  {
+   "id": "cr-tri-06",
+   "kind": "change_review",
+   "repeat": 1,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "constraint_no_rule_id"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-emergency"
+   ],
+   "teams": [
+    "domain",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 3.75,
+   "effort_hit": null,
+   "alternative_ok": true,
+   "alternative": "Keep instant (<30 s) push for emergencies; batch every 15 min only for non-emergency nurse-callback cases (child under 2 callback is within 1 hour). Effort is my estimate, not from a past change.",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": true,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "engineer": "15-minute batching breaks our contract that nurse alerts arrive within 30 seconds, and the pilot's success metric of zero missed emergencies with alerts in 30 seconds. An emergency could wait up to 15 minutes. Baseline effort is 3 days: 1 for the nurse alert and 2 for the WhatsApp channel, where the emergency advice reply is tied to the alert. Safer option: send emergencies immediately and batch only the non-emergency nurse-callback cases. I found no past change to compare this with, and no reason was given.",
+    "domain": "Blocked as proposed. A 15-minute batch could delay emergency alerts by up to 15 minutes, which breaks the 30-second alert target and the rule to alert a nurse for every emergency. Emergency alerts must stay immediate. Batching only nurse-callback cases (1-hour window) could be reviewed, and no reason was given for the change."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 11.5,
+   "llm_calls": 5,
+   "tokens_in": 12894,
+   "tokens_out": 1852,
+   "setup_tokens_in": 9652,
+   "setup_tokens_out": 2175,
+   "cost_usd": 0.08536
+  },
+  {
+   "id": "qa-chat-01",
+   "kind": "domain_qa",
+   "repeat": 1,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "answer": "نعم، يجب على البوت التحويل إلى موظف بشري عندما تتضمن رسالة العميل عبارة \"شكوى رسمية\"، فهي من الحالات الإلزامية للتحويل. كما أن الهدف المتفق عليه هو إتمام التحويل في أقل من 30 ثانية عندما يكون الموضوع حساسًا.",
+   "sources": [
+    "domain/service-guidelines.md › Must hand over to a human",
+    "project graph › req-handover",
+    "shared/project-brief.md › Success metrics agreed with the client"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": false,
+   "fallback": false,
+   "keyword_precheck": false,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer says yes, the bot must hand over to a human when the message contains 'شكوى رسمية', matching the reference's core conclusion; the extra 30-second target does not contradict the key facts."
+   },
+   "fact_ok": true,
+   "pass": false,
+   "fail_reasons": [
+    "wrong language"
+   ],
+   "latency_s": 2.14,
+   "llm_calls": 1,
+   "tokens_in": 875,
+   "tokens_out": 155,
+   "judge_tokens_in": 612,
+   "judge_tokens_out": 80,
+   "cost_usd": 0.00532
+  },
+  {
+   "id": "qa-chat-03",
+   "kind": "domain_qa",
+   "repeat": 1,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "dialect"
+   ],
+   "answer": "كلمة \"ابي\" في اللهجة الخليجية تعني \"أريد\" (I want)، وهي من العبارات التي يكتبها العملاء، ويجب أن يفهمها البوت ويرد بعربية واضحة.",
+   "sources": [
+    "domain/service-guidelines.md › Gulf dialect"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer states that 'ابي' in Gulf dialect means 'أريد' (I want), which matches the reference's core conclusion, and the extra detail about the bot does not contradict it."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 2.13,
+   "llm_calls": 1,
+   "tokens_in": 531,
+   "tokens_out": 105,
+   "judge_tokens_in": 548,
+   "judge_tokens_out": 77,
+   "cost_usd": 0.00398
+  },
+  {
+   "id": "qa-chat-05",
+   "kind": "domain_qa",
+   "repeat": 1,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "escalation"
+   ],
+   "answer": "The passages don't say anything about compensation for customers after a network outage, so I can't answer this from the guidelines. It should go to the domain expert.",
+   "sources": [
+    "domain/service-guidelines.md › Gulf dialect"
+   ],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.54,
+   "llm_calls": 1,
+   "tokens_in": 656,
+   "tokens_out": 65,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.00196
+  },
+  {
+   "id": "qa-chat-08",
+   "kind": "domain_qa",
+   "repeat": 1,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "escalation",
+    "out_of_scope"
+   ],
+   "answer": "I couldn't find anything about that in this project's knowledge yet.",
+   "sources": [],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.04,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-ppe-01",
+   "kind": "domain_qa",
+   "repeat": 1,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "answer": "No. Under the site rules a helmet counts only when it is worn on the head with the strap fastened where visible, so a helmet clipped to a belt is a violation, not compliant. Note that the current compliance logic (helmet box inside person box) would wrongly count it as compliant.",
+   "sources": [
+    "shared/meeting-notes.md › Site visit with the safety officer (Oct 2026)",
+    "domain/site-safety-rules.md › Helmet rule",
+    "project graph › rule-worn",
+    "project graph › logic"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer says no, states that a helmet counts only when worn on the head, and calls a belt-clipped helmet a violation, matching the reference; the extra note about the detection logic and the strap detail do not contradict it."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 2.05,
+   "llm_calls": 1,
+   "tokens_in": 870,
+   "tokens_out": 115,
+   "judge_tokens_in": 563,
+   "judge_tokens_out": 85,
+   "cost_usd": 0.00487
+  },
+  {
+   "id": "qa-ppe-03",
+   "kind": "domain_qa",
+   "repeat": 1,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "answer": "High priority applies to no-helmet violations in active work zones: under cranes, at height, and near heavy machinery. Everywhere else on site is normal priority.",
+   "sources": [
+    "domain/site-safety-rules.md › Alert priority"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer names the same high-priority zones as the reference (active work zones: under cranes, at height, near heavy machinery) and its added statement that other areas are normal priority does not contradict the key facts."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.51,
+   "llm_calls": 1,
+   "tokens_in": 854,
+   "tokens_out": 71,
+   "judge_tokens_in": 513,
+   "judge_tokens_out": 79,
+   "cost_usd": 0.00423
+  },
+  {
+   "id": "qa-ppe-05",
+   "kind": "domain_qa",
+   "repeat": 1,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "escalation"
+   ],
+   "answer": "The passages don't say whether safety vests need to be detected. They only cover helmet detection (workers without a helmet, and the rule that a helmet must be worn on the head), so this should go to the domain expert.",
+   "sources": [
+    "shared/project-brief.md › Success metrics agreed with the client",
+    "shared/meeting-notes.md › Site visit with the safety officer (Oct 2026)",
+    "project graph › rule-worn"
+   ],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.83,
+   "llm_calls": 1,
+   "tokens_in": 841,
+   "tokens_out": 89,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.00257
+  },
+  {
+   "id": "qa-ppe-08",
+   "kind": "domain_qa",
+   "repeat": 1,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "robustness",
+    "mixed_language"
+   ],
+   "answer": "لا، الخوذة الموضوعة على الأرض بجانب العامل تعتبر مخالفة وليست compliant. حسب قواعد الموقع، الخوذة تُحتسب فقط إذا كانت على الرأس مع ربط الحزام حيث يكون ظاهراً، أما الخوذة في اليد أو على الحزام أو على الأرض فهي مخالفة.",
+   "sources": [
+    "domain/site-safety-rules.md › Helmet rule",
+    "project graph › rule-worn",
+    "activity › 2026-10-30 16:24"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer says no, a helmet on the ground next to the worker is a violation and not compliant, which matches the reference's core conclusion; the extra detail about the helmet needing to be worn doesn't contradict it."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 2.53,
+   "llm_calls": 1,
+   "tokens_in": 824,
+   "tokens_out": 161,
+   "judge_tokens_in": 603,
+   "judge_tokens_out": 84,
+   "cost_usd": 0.0053
+  },
+  {
+   "id": "qa-tri-01",
+   "kind": "domain_qa",
+   "repeat": 1,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "safety"
+   ],
+   "answer": "I couldn't find anything about that in this project's knowledge yet.",
+   "sources": [],
+   "escalated": true,
+   "should_escalate": false,
+   "escalation_ok": false,
+   "answered_when_should_escalate": false,
+   "source_hit": false,
+   "language_ok": false,
+   "fallback": false,
+   "keyword_precheck": false,
+   "fact_ok": false,
+   "judge": {
+    "verdict": "incorrect",
+    "reason": "Escalated instead of answering."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "escalated instead of answering",
+    "no gold source",
+    "wrong language"
+   ],
+   "latency_s": 0.05,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-tri-03",
+   "kind": "domain_qa",
+   "repeat": 1,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "answer": "A same-day appointment. Fever under 3 days and ear pain both fall under the same-day appointment category in the triage guidelines, and nothing in the question points to an emergency or nurse-callback criterion.",
+   "sources": [
+    "domain/triage-guidelines.md › Same-day appointment"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer states a same-day appointment, which matches the reference's core conclusion, and the added triage rationale does not contradict it."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.56,
+   "llm_calls": 1,
+   "tokens_in": 862,
+   "tokens_out": 87,
+   "judge_tokens_in": 524,
+   "judge_tokens_out": 57,
+   "cost_usd": 0.00421
+  },
+  {
+   "id": "qa-tri-05",
+   "kind": "domain_qa",
+   "repeat": 1,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "escalation",
+    "safety"
+   ],
+   "answer": "The passages don't say whether the agent may recommend antibiotics or other medication. They only cover urgency assessment, booking, emergency symptoms, and nurse escalation, so this should go to the real domain expert.",
+   "sources": [
+    "activity › 2026-10-30 16:24"
+   ],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 2.14,
+   "llm_calls": 1,
+   "tokens_in": 875,
+   "tokens_out": 87,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.00262
+  },
+  {
+   "id": "rt-chat-01",
+   "kind": "retrieval",
+   "repeat": 1,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "engineer/system-contract.md › Architecture",
+    "engineer/system-contract.md › Change history (actual effort)",
+    "shared/project-brief.md › Client and goal",
+    "engineer/system-contract.md › Latency"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.04,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-03",
+   "kind": "retrieval",
+   "repeat": 1,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "ds/knowledge-base-and-eval.md › Latest evaluation (October 2026)",
+    "ds/knowledge-base-and-eval.md › Evaluation set",
+    "shared/project-brief.md › Status",
+    "shared/project-brief.md › Success metrics agreed with the client"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-05",
+   "kind": "retrieval",
+   "repeat": 1,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "arabic"
+   ],
+   "returned": [
+    "shared/decisions-log.md › Jul 2026: always hand over billing disputes",
+    "domain/service-guidelines.md › Must hand over to a human",
+    "shared/decisions-log.md › Aug 2026: weekly document refresh"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-07",
+   "kind": "retrieval",
+   "repeat": 1,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "shared/decisions-log.md › Aug 2026: weekly document refresh",
+    "ds/knowledge-base-and-eval.md › Knowledge base contents",
+    "shared/project-brief.md › Status",
+    "domain/service-guidelines.md › Gulf dialect"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-09",
+   "kind": "retrieval",
+   "repeat": 1,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "domain/service-guidelines.md › Gulf dialect",
+    "shared/project-brief.md › Client and goal",
+    "domain/service-guidelines.md › Tone",
+    "shared/decisions-log.md › Jul 2026: always hand over billing disputes"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-01",
+   "kind": "retrieval",
+   "repeat": 1,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "engineer/change-history.md › Sep 2026: added a new class to the model output (person)",
+    "shared/meeting-notes.md › Decision pending",
+    "engineer/engine-contract.md › Interfaces",
+    "engineer/engine-contract.md › Hardware"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-03",
+   "kind": "retrieval",
+   "repeat": 1,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "ds/experiment-log.md › Exp 4: YOLOv8s, 640px",
+    "ds/experiment-log.md › Exp 3: YOLOv8n, 640px (current model v3)"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-05",
+   "kind": "retrieval",
+   "repeat": 1,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "arabic"
+   ],
+   "returned": [],
+   "recall_at_4": false,
+   "mrr": 0.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": false,
+   "fail_reasons": [
+    "no gold chunk in top 4"
+   ],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-07",
+   "kind": "retrieval",
+   "repeat": 1,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "shared/meeting-notes.md › Decision pending",
+    "engineer/engine-contract.md › Interfaces",
+    "engineer/change-history.md › Sep 2026: added a new class to the model output (person)",
+    "engineer/change-history.md › Sep 2026: post-processing rule for blurry night images"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-09",
+   "kind": "retrieval",
+   "repeat": 1,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "shared/project-brief.md › Success metrics agreed with the client",
+    "domain/site-safety-rules.md › Exemptions",
+    "shared/meeting-notes.md › Site visit with the safety officer (Oct 2026)",
+    "domain/site-safety-rules.md › Alert fatigue"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-01",
+   "kind": "retrieval",
+   "repeat": 1,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "engineer/integration-contract.md › Calendar API",
+    "shared/kickoff-transcript.md › IT manager",
+    "engineer/integration-contract.md › Approved stack",
+    "shared/kickoff-transcript.md › Operations manager"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-03",
+   "kind": "retrieval",
+   "repeat": 1,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "engineer/integration-contract.md › Hosting and data",
+    "shared/kickoff-transcript.md › IT manager",
+    "engineer/integration-contract.md › Calendar API",
+    "shared/client-brief.md › What matters most"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-05",
+   "kind": "retrieval",
+   "repeat": 1,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "domain/triage-guidelines.md › Nurse callback within 1 hour",
+    "shared/kickoff-transcript.md › Head nurse",
+    "domain/triage-guidelines.md › Same-day appointment"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-07",
+   "kind": "retrieval",
+   "repeat": 1,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "ds/message-data-notes.md › Overview",
+    "ds/message-data-notes.md › Data issues",
+    "shared/client-brief.md › Who we are",
+    "ds/sample-messages.md › Mixed messages"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-09",
+   "kind": "retrieval",
+   "repeat": 1,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "shared/kickoff-transcript.md › Operations manager",
+    "shared/kickoff-transcript.md › IT manager",
+    "shared/client-brief.md › What we want",
+    "ds/sample-messages.md › Routine examples"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "in-tri-01",
+   "kind": "intake",
+   "repeat": 1,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "constraint_hits": 6,
+   "constraint_total": 6,
+   "gap_hits": 1,
+   "gap_total": 1,
+   "invented": [],
+   "spec": {
+    "goal": {
+     "value": "Build a bilingual (Arabic/English) AI agent on WhatsApp that reads patient messages, classifies urgency, books the right appointment directly in the clinic calendar for routine and same-day needs, and immediately alerts a nurse for emergencies and nurse-callback cases. Pilot in 2 clinics (Riyadh Olaya, Jeddah Rawdah) for 4 weeks, ahead of rollout to all 8 Shifa clinics.",
+     "source": "Client brief.pdf; Scope email.eml; Kickoff transcript.txt"
+    },
+    "success_metric": {
+     "value": "Pilot targets: (1) 100% of emergency messages get emergency advice (call 997 or go to the ED) plus a nurse alert, and none is offered a routine appointment. (2) At least 95% of patient messages get a first reply within 2 minutes, 24/7. (3) Nurse alerts arrive within 30 seconds. (4) Booking accuracy and the share of messages handled without staff are tracked against the baseline of hours-long waits. Thresholds other than the 2-minute reply and the zero-missed-emergency rule are proposed, not client-stated.",
+     "source": "Client brief.pdf; integration-contract.md",
+     "inferred": true
+    },
+    "priorities": {
+     "value": [
+      "1. Patient safety: never miss an emergency. Rule-based safety checks sit on top of the ML urgency classifier. When uncertain, escalate.",
+      "2. Always route to a nurse: nurse-callback cases, including children under 2 and pregnancy with bleeding, and any symptom the head nurse has not cleared.",
+      "3. Reply within 2 minutes, day and night.",
+      "4. Book the correct appointment directly in the calendar for routine and same-day requests. Handle messages that mix symptoms and booking requests.",
+      "5. Support Arabic (about 82% of traffic) and English.",
+      "6. Deliver the 2-clinic pilot in 4 weeks."
+     ],
+     "source": "Client brief.pdf; Kickoff transcript.txt; triage-guidelines.md",
+     "inferred": true
+    },
+    "constraints": {
+     "value": [
+      "Patient data must stay inside the country. Hosting is on the client's in-country cloud, and any models used must run in-region.",
+      "The calendar API allows booking and cancelling only. The agent must never delete records.",
+      "The head nurse must agree which symptoms are always emergencies. The agent must not decide this alone.",
+      "Children under 2 are always routed to a nurse.",
+      "Nurse alerts go to the nurse station app and include the patient's message and the agent's reason. They must arrive within 30 seconds.",
+      "Pilot scope is 2 clinics (Riyadh Olaya, Jeddah Rawdah), with Arabic and English only.",
+      "Emergency examples are rare (about 120 in 12,000 messages), so rule-based safety checks are needed."
+     ],
+     "source": "Kickoff transcript.txt; Scope email.eml; integration-contract.md; message-data-notes.md"
+    },
+    "deadline": {
+     "value": "Pilot go-live in 4 weeks, in 2 clinics. The pilot itself runs for 4 weeks. The documents are ambiguous on whether the 4 weeks is time to launch or the pilot's length.",
+     "source": "Kickoff transcript.txt; Scope email.eml"
+    },
+    "stakeholders": {
+     "value": [
+      "Operations manager (owner of the 2-minute reply and calendar booking requirements)",
+      "Head nurse (clinical sign-off on emergency criteria; receives nurse alerts)",
+      "IT manager (data residency, calendar API)",
+      "Patients (WhatsApp, Arabic and English)",
+      "Reception staff (tagged the historical data)",
+      "Clinic leadership at Shifa Clinics (8 clinics)"
+     ],
+     "source": "Kickoff transcript.txt; Client brief.pdf"
+    }
+   },
+   "gaps": [
+    {
+     "id": "G1",
+     "question": "Which symptoms are always emergencies? The head nurse says this is not agreed yet, but the brief demands zero missed emergencies. Who signs off the list, and by when?",
+     "suggested": "Use the draft list in triage-guidelines.md: chest pain or pressure, difficulty breathing, stroke signs, severe bleeding, loss of consciousness, seizure. The head nurse confirms or edits it before build freeze (end of week 1). Anything ambiguous goes to a nurse by default."
+    },
+    {
+     "id": "G2",
+     "question": "Who receives nurse alerts at night and on weekends? The agent replies 24/7, but the documents don't say whether the nurse station app is staffed around the clock, or what happens if an alert isn't acknowledged.",
+     "suggested": "Confirm 24/7 nurse coverage for the 2 pilot clinics, or a named on-call nurse. If an alert isn't acknowledged within about 5 minutes, escalate to a second nurse. Meanwhile the agent keeps giving the patient emergency advice (call 997)."
+    },
+    {
+     "id": "G3",
+     "question": "What are the pilot's pass/fail thresholds, and what does the agent do when it can't book? The brief gives no measurable acceptance criteria beyond the 2-minute reply and zero missed emergencies. It doesn't say whether the agent can reschedule or cancel appointments, or how it handles unclear messages.",
+     "suggested": "Adopt these targets: 100% emergency recall, 95% of replies within 2 minutes, and at least 90% booking accuracy in a nurse-reviewed audit. Allow booking and cancelling, since the API supports both. If the agent can't resolve a message, hand it to reception."
+    }
+   ],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 19.54,
+   "llm_calls": 2,
+   "tokens_in": 5392,
+   "tokens_out": 2523,
+   "cost_usd": 0.03601
+  },
+  {
+   "id": "cr-chat-01",
+   "kind": "change_review",
+   "repeat": 2,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "easy"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.5,
+   "effort_mid_total": 3.88,
+   "effort_hit": false,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "medium",
+   "risk_ok": true,
+   "recommendation": "approve",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "No relabeling or retraining needed (RAG setup). We add the synonym list, re-index the retriever and re-run the evaluation, about 2–3 days. It targets known Arabic/English package-name retrieval misses, so it should help accuracy, but I have no measured gain to quote. Nothing changes for AI Engineering's guardrails or handover.",
+    "engineer": "Engine impact is small: the synonym list is applied at retrieval, so handover and the app/WhatsApp adapters need no code change. We only need to check that the price check matches Arabic and English package names to the same package, and re-test p95 first token (now 1.4 s, limit 2 s). No reason was given, so please confirm the goal and which package names are covered.",
+    "domain": "No guideline or promise is broken, and none of my components are affected. I'd like to review the synonym list before it goes live, so that each Arabic name maps to the right package and no two different packages share a name. I found no past synonym change, so this estimate is only a review allowance."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 9.59,
+   "llm_calls": 9,
+   "tokens_in": 20792,
+   "tokens_out": 1885,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.06043
+  },
+  {
+   "id": "cr-chat-02",
+   "kind": "change_review",
+   "repeat": 2,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "conflict"
+   ],
+   "conflict_hits": 2,
+   "conflict_total": 2,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-dispute",
+    "r-refund"
+   ],
+   "teams": [
+    "domain",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 5.75,
+   "effort_hit": null,
+   "alternative_ok": true,
+   "alternative": "Bot acknowledges the double charge politely, makes no refund promise, and hands over to a human agent right away (within the 30 s handover limit)",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "engineer": "The bot offering a refund for double charges breaks \"never promise refunds\" (r-refund) and the Jul 2026 rule that billing disputes always go to a human (r-dispute). I'd advise against it. The safer option is to keep the existing billing-dispute handover (the last change took 1 day) and make the bot say a human agent will review the charge.",
+    "domain": "The bot offering a refund for double charges breaks \"never promise refunds\" and \"billing disputes always go to a human\". Don't ship it as proposed. A double-charge complaint should be handed to an agent, and the agent decides on the refund. My guideline review is about 0.5–1 day, and I found no past change to anchor that figure."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 8.53,
+   "llm_calls": 5,
+   "tokens_in": 9560,
+   "tokens_out": 1220,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.03132
+  },
+  {
+   "id": "cr-chat-04",
+   "kind": "change_review",
+   "repeat": 2,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "judgement"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.5,
+   "effort_mid_total": 8.25,
+   "effort_hit": false,
+   "alternative_ok": true,
+   "alternative": "Keep hybrid retriever; run an offline eval of vector-only plus the synonym list on the same eval set before deciding",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "Vector-only needs a full re-evaluation on the eval set (about 2-3 days), and accuracy could drop below the 90% target. Current accuracy is 91.2%, so there is only about 1 point of margin. Package names differ between Arabic and English (e.g. \"باقة سوا\" vs \"Sawa Plus\"), and keyword matching helps with these. I have no measurement of vector-only, so I can't state the size of the change. Run the eval first and keep hybrid if accuracy falls under 90%.",
+    "engineer": "Engine impact is about 5 days (4–7) to re-test answer and guardrail checks, the handover trigger and the app/WhatsApp adapters. Latency should stay within the 2 s p95 limit (now 1.4 s), but I can't verify that. Accuracy is only 91% against a 90% target and no reason was given, so the Data Scientist should show offline accuracy on exact terms such as package names and prices before we ship. If accuracy slips, the billing-dispute and refund guardrails could be hit.",
+    "domain": "None of the Domain team's components are affected directly, and no rule is clearly broken. Accuracy is the top priority, and I have no evidence on how vector-only search handles exact plan names and prices. Please compare both retrievers on real customer questions, including billing-dispute and refund cases, before switching. I'd need about half a day at most to re-check the guidelines."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 10.47,
+   "llm_calls": 9,
+   "tokens_in": 20592,
+   "tokens_out": 2169,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.06287
+  },
+  {
+   "id": "cr-chat-07",
+   "kind": "change_review",
+   "repeat": 2,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "robustness",
+    "vague"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "domain",
+    "engineer"
+   ],
+   "teams_f1": 0.0,
+   "effort_mid_total": 6.25,
+   "effort_hit": null,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "medium",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": false,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": null,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "engineer": "A model change touches the answer engine, handover and the App/WhatsApp adapters: baseline 5 days, and I'd plan up to 7 because the last channel change overran (5 est. vs 7 actual). The new model must keep p95 first token under 2 s (now 1.4 s) and handover median at 22 s (limit 30 s). The price check, sensitive-topic detector, billing-dispute handover and never-promise-refunds behaviour must be re-tested, and no reason was given, so please state one. I found no approved-model list in my contract, so that needs confirming.",
+    "domain": "None of my components are directly affected, but the new model has to keep both rules: it must never promise refunds, and it must always hand billing disputes to a human. Before go-live, re-run the evaluation set with refund and dispute cases and check handover stays under 30 s. No reason for the change was given, and I found no past model change to compare against, so this estimate is a review-only guess."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "recommendation reject not in ['needs_info']"
+   ],
+   "latency_s": 12.96,
+   "llm_calls": 6,
+   "tokens_in": 12640,
+   "tokens_out": 1733,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.04261
+  },
+  {
+   "id": "cr-ppe-01",
+   "kind": "change_review",
+   "repeat": 2,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "conflict",
+    "headline"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 1,
+   "conflict_recall": 0.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.8,
+   "effort_mid_total": 10.75,
+   "effort_hit": true,
+   "alternative_ok": true,
+   "alternative": "Post-processing rule: helmet counts only if its box overlaps the top of a head box (untested, no retraining; effort is my estimate, to be validated on the eval set)",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "Relabeling needs a guide v2 with a new \"carried helmet\" class, then relabeling the training set and the 400-image eval set, a retrain of YOLOv8n and a re-evaluation (about 6 days baseline). This fits the pilot but eats the schedule buffer, and I can't state the effect on recall or false alerts until we re-evaluate. A cheaper option is an untested post-processing rule: a helmet counts only if it overlaps the top of a head box (no retraining, about 2 days).",
+    "engineer": "A new \"carried helmet\" class means the compliance logic and the app's reason text must change. Carried helmets must be treated as violations, not as a helmet inside the person box, and all camera feeds need re-testing. This costs about 3–4 engine days after the model is retrained, and it adds to the 3-week pilot risk. It only holds if the retrained model stays YOLOv8n-sized for CPU edge boxes.",
+    "domain": "This fits the safety officer's rule (r-worn) only if the new \"carried helmet\" class is always treated as a violation, never as compliant. Domain needs about 1 day to update the rule and guidelines and to define carried (hand, belt, equipment, ground). Data and AI teams must update the annotation guide, evaluation set and compliance logic, and the retrain must still hit recall ≥95% on the 3-week pilot timeline. No reason was given for the change."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "missed conflicts ['p-pilot']"
+   ],
+   "latency_s": 11.74,
+   "llm_calls": 9,
+   "tokens_in": 21643,
+   "tokens_out": 2349,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.06678
+  },
+  {
+   "id": "cr-ppe-03",
+   "kind": "change_review",
+   "repeat": 2,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "conflict"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "e-cpu",
+    "p-pilot"
+   ],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.8,
+   "effort_mid_total": 8.25,
+   "effort_hit": false,
+   "alternative_ok": true,
+   "alternative": "Keep YOLOv8n; add the helmet-on-head overlap post-processing rule and re-run the 400-image eval (no retraining)",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "YOLOv8s needs retraining and re-evaluation on the 400-image set (about 3–5 days). The engine contract says models larger than YOLOv8n miss latency on the CPU-only edge boxes, so it risks the 60 s alert limit and the pilot date. Current recall is already 96% (above the 95% target), and we have no data showing that v8s improves it. The untested rule that a helmet counts only if it overlaps the top of the head box needs no retraining, and it targets false alerts.",
+    "engineer": "YOLOv8s breaks the engine contract: edge boxes are CPU-only, and models larger than YOLOv8n miss latency on all 40 cameras. Compliance logic and the safety officer app would need re-testing (about 3 days baseline), and the pilot date is at risk. No past change of this kind is on record. Keep YOLOv8n unless the Data Scientist shows YOLOv8s meets latency on the NUC boxes, or hardware changes.",
+    "domain": "YOLOv8s breaks the engine contract: edge boxes are CPU-only and models larger than YOLOv8n miss latency. Current v3 already has 96% head recall, and no reason for the upgrade was given. Don't switch before the pilot unless someone shows YOLOv8s meets the 60 s alert limit on CPU. I only need a small guideline review if it goes ahead."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 8.07,
+   "llm_calls": 7,
+   "tokens_in": 14409,
+   "tokens_out": 1916,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.04798
+  },
+  {
+   "id": "cr-ppe-05",
+   "kind": "change_review",
+   "repeat": 2,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "conflict"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-fatigue"
+   ],
+   "teams": [
+    "domain",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 4.25,
+   "effort_hit": null,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "engineer": "The change touches the compliance logic and the safety officer app, about 3 days of work (baseline 3; the similar Aug 2026 logic rewrite took 3 days against 2 estimated). Alerting on every low-confidence head detection will probably push false alerts above the ~10 per camera per day limit (r-fatigue). I have no data on how many low-confidence detections occur, so I can't size that, and it needs measuring on pilot footage before we commit.",
+    "domain": "Alerting on every low-confidence head detection would likely push false alerts above ~10 per camera per day, which breaks the alert-fatigue rule and the client's agreed metric. Missing violations is costly, but officers who ignore alerts also miss them. I have no data on how many false alerts this would cause, so measure it on pilot footage first and set a threshold from that. I need about 0.5–1 day to review the guidelines."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 11.76,
+   "llm_calls": 5,
+   "tokens_in": 9718,
+   "tokens_out": 1671,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.03615
+  },
+  {
+   "id": "cr-ppe-07",
+   "kind": "change_review",
+   "repeat": 2,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "no_conflict"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.5,
+   "effort_mid_total": 8.88,
+   "effort_hit": false,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": false,
+   "recommendation": "approve",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "This needs labeling of 1,000 new crops, then retraining YOLOv8n (same size, so CPU latency is unaffected) and re-evaluation. Baseline is about 7 days, and it fits the 3-week pilot if started now. Error analysis says most v3 misses are tiny far-away heads, so this targets recall, but I have no measured recall gain yet. Evaluation set needs some small-head cases, or the gain won't show.",
+    "engineer": "Engine impact is small if model v3 stays YOLOv8n with the same classes: we only re-check the compliance logic (helmet box inside person box) on small, far-away boxes and the alert crop in the app. Baseline is 3 days and could be about 1 day if retesting shows no changes. We need the retrained model's class names, and its CPU latency checked against the 60 s limit (currently 8 s). If tiling means running inference on tiles or at a larger input size, that adds CPU load and I can't size it yet.",
+    "domain": "No direct domain impact, and no rule is broken. The new crops must be labelled under the helmet rule: a helmet counts only when worn on the head, so carried or belt-clipped helmets are violations. Far-away heads are ambiguous, so I'd like to spot-check a sample of labels. Retraining must still fit the 3-week pilot and the YOLOv8n CPU limit, and false alerts should be re-checked afterward."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "risk high not in ['low', 'medium']"
+   ],
+   "latency_s": 31.73,
+   "llm_calls": 9,
+   "tokens_in": 21580,
+   "tokens_out": 2038,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.06354
+  },
+  {
+   "id": "cr-tri-01",
+   "kind": "change_review",
+   "repeat": 2,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "conflict",
+    "safety"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-child",
+    "r-emergency"
+   ],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.5,
+   "effort_mid_total": 9.5,
+   "effort_hit": null,
+   "alternative_ok": true,
+   "alternative": "Keep design A (LLM + hard safety rules); optionally fall back to rules-only design B (100% emergency recall, 78% routine accuracy)",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "Removing the hard safety rules breaks the \"never miss an emergency\" priority and the head nurse's always-emergency and under-2 rules. With only about 120 emergency examples, an LLM-only classifier can't be trusted to hold 100% emergency recall, and we have no data showing it would. Keep the rules on top of the classifier; if the goal is simpler logic, the rules-only design B is the backup (100% emergency recall, 78% routine accuracy).",
+    "engineer": "Removing the hard safety rules breaks the head nurse's \"always emergency\" list and the under-2 nurse rule. Nothing in the project data shows an LLM alone can guarantee 100% emergency recall, since the 100% figure came from the LLM plus rules design. Engine work to re-test booking, nurse alert and WhatsApp routing is about 3–5 days, and I recommend keeping the rules.",
+    "domain": "Blocked for patient safety: removing the hard safety rules means the head nurse's always-emergency list (r-emergency) and the under-2 nurse rule (r-child) would no longer be guaranteed. The LLM alone isn't guaranteed to catch every emergency, and with only ~120 emergency examples we have no evidence it would. Keep the rules as a layer on top of the classifier. If the goal is better routine accuracy, tune the LLM, not the safety layer."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 29.69,
+   "llm_calls": 7,
+   "tokens_in": 18847,
+   "tokens_out": 1779,
+   "setup_tokens_in": 9299,
+   "setup_tokens_out": 1987,
+   "cost_usd": 0.09395
+  },
+  {
+   "id": "cr-tri-03",
+   "kind": "change_review",
+   "repeat": 2,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "conflict",
+    "safety"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-child"
+   ],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.5,
+   "effort_mid_total": 7.25,
+   "effort_hit": null,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "This breaks the head nurse's rule that any child under 2 gets a nurse callback within 1 hour (r-child), and the human-in-the-loop priority. The code change is small (about 2 days to edit the Agent A rule and re-test). I would not ship it without head nurse sign-off. Nurse callbacks are about 6% of messages, and I have no data on how many involve under-2s. Child-under-2 messages could also include emergencies, such as a seizure or trouble breathing, and those must still get emergency advice.",
+    "engineer": "This breaks the head nurse's rule r-child: anything about a child under 2 must go to a nurse, with a callback within 1 hour. Sending these to a same-day appointment removes the human in the loop. Engineering work would be about 5 days across booking, nurse alert and WhatsApp replies, but we shouldn't build it unless the head nurse approves. No reason was given for the change.",
+    "domain": "Blocked: this breaks the head nurse's rule that any child under 2 gets a nurse callback within 1 hour, and it is a patient-safety risk. A same-day appointment is not a substitute, and a child under 2 with emergency signs must still get emergency advice and a nurse alert. To cut nurse workload, ask the head nurse to review the callback criteria; don't remove the routing. I have not been given an effort figure for any alternative."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 29.61,
+   "llm_calls": 7,
+   "tokens_in": 20263,
+   "tokens_out": 1678,
+   "setup_tokens_in": 9550,
+   "setup_tokens_out": 2474,
+   "cost_usd": 0.10115
+  },
+  {
+   "id": "cr-tri-06",
+   "kind": "change_review",
+   "repeat": 2,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "constraint_no_rule_id"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-emergency"
+   ],
+   "teams": [
+    "domain",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 3.75,
+   "effort_hit": null,
+   "alternative_ok": true,
+   "alternative": "Keep emergency alerts immediate (<30 s); batch only non-emergency nurse-callback cases, subject to head nurse approval",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": true,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "engineer": "Batching nurse alerts every 15 minutes breaks the engine contract that alerts reach the nurse station within 30 seconds. It also delays emergency alerts, which the pilot requires to be immediate (r-emergency). Baseline effort is 3 days (nurse alert 1, WhatsApp channel 2). If the aim is to cut noise, batch only the callback cases, such as under-2s, which have a 1-hour window. Keep emergencies as instant single pushes.",
+    "domain": "Blocked as proposed: batching every 15 minutes could delay emergency alerts (chest pain, breathing difficulty, stroke signs, and so on) by up to 15 minutes. That breaks the 30-second alert target and the rule that emergencies get an immediate nurse alert. If batching is wanted, only non-emergency callback cases (for example under-2 cases, which have a 1-hour window) could be batched, and the head nurse must approve that. Emergencies must still be sent one by one, immediately."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 10.74,
+   "llm_calls": 5,
+   "tokens_in": 13768,
+   "tokens_out": 1848,
+   "setup_tokens_in": 9464,
+   "setup_tokens_out": 2475,
+   "cost_usd": 0.08969
+  },
+  {
+   "id": "qa-chat-01",
+   "kind": "domain_qa",
+   "repeat": 2,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "answer": "نعم، يجب على البوت التحويل إلى موظف بشري عندما تتضمن رسالة العميل عبارة \"شكوى رسمية\"، فهي من الحالات الإلزامية للتحويل، ويُفترض أن يتم التحويل خلال أقل من 30 ثانية.",
+   "sources": [
+    "domain/service-guidelines.md › Must hand over to a human",
+    "project graph › req-handover",
+    "shared/project-brief.md › Success metrics agreed with the client"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": false,
+   "fallback": false,
+   "keyword_precheck": false,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer says yes, the bot must hand over to a human when the message contains 'شكوى رسمية', matching the reference; the extra 30-second detail does not contradict the key facts."
+   },
+   "fact_ok": true,
+   "pass": false,
+   "fail_reasons": [
+    "wrong language"
+   ],
+   "latency_s": 2.34,
+   "llm_calls": 1,
+   "tokens_in": 875,
+   "tokens_out": 131,
+   "judge_tokens_in": 588,
+   "judge_tokens_out": 75,
+   "cost_usd": 0.00499
+  },
+  {
+   "id": "qa-chat-03",
+   "kind": "domain_qa",
+   "repeat": 2,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "dialect"
+   ],
+   "answer": "كلمة \"ابي\" في اللهجة الخليجية تعني \"أريد\" (I want)، وهي من الكلمات التي يستخدمها العملاء في كتاباتهم، ويجب على البوت فهمها والرد بعربية واضحة.",
+   "sources": [
+    "domain/service-guidelines.md › Gulf dialect"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer states that 'ابي' in Gulf dialect means 'أريد' (I want), which matches the reference key fact, and the extra detail about the bot responding does not contradict it."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.73,
+   "llm_calls": 1,
+   "tokens_in": 531,
+   "tokens_out": 112,
+   "judge_tokens_in": 555,
+   "judge_tokens_out": 76,
+   "cost_usd": 0.00405
+  },
+  {
+   "id": "qa-chat-05",
+   "kind": "domain_qa",
+   "repeat": 2,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "escalation"
+   ],
+   "answer": "The passages don't say anything about compensation for customers after a network outage, so I can't answer this from the available guidelines. This should go to the domain expert.",
+   "sources": [
+    "domain/service-guidelines.md › Gulf dialect"
+   ],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.98,
+   "llm_calls": 1,
+   "tokens_in": 656,
+   "tokens_out": 66,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.00197
+  },
+  {
+   "id": "qa-chat-08",
+   "kind": "domain_qa",
+   "repeat": 2,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "escalation",
+    "out_of_scope"
+   ],
+   "answer": "I couldn't find anything about that in this project's knowledge yet.",
+   "sources": [],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.06,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-ppe-01",
+   "kind": "domain_qa",
+   "repeat": 2,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "answer": "No. Under the site rules a helmet counts only when worn on the head with the strap fastened where visible; one clipped to a belt, carried in the hand, hanging on equipment or lying on the ground is a violation. Note that the current compliance logic (helmet box inside person box) would wrongly mark such a worker as compliant.",
+   "sources": [
+    "shared/meeting-notes.md › Site visit with the safety officer (Oct 2026)",
+    "domain/site-safety-rules.md › Helmet rule",
+    "project graph › rule-worn",
+    "project graph › logic"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer says no, states a helmet counts only when worn on the head, and calls a belt-clipped helmet a violation, matching the reference; the extra details (strap fastened, other violations, detection-logic note) do not contradict it."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 2.16,
+   "llm_calls": 1,
+   "tokens_in": 870,
+   "tokens_out": 130,
+   "judge_tokens_in": 578,
+   "judge_tokens_out": 90,
+   "cost_usd": 0.0051
+  },
+  {
+   "id": "qa-ppe-03",
+   "kind": "domain_qa",
+   "repeat": 2,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "answer": "High priority applies to no-helmet violations in active work zones: under cranes, at height, and near heavy machinery. Everywhere else on site is normal priority.",
+   "sources": [
+    "domain/site-safety-rules.md › Alert priority"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer names the same high-priority zones as the reference (active work zones under cranes, at height, and near heavy machinery), and its added note that the rest of the site is normal priority does not contradict the key facts."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.63,
+   "llm_calls": 1,
+   "tokens_in": 854,
+   "tokens_out": 71,
+   "judge_tokens_in": 513,
+   "judge_tokens_out": 81,
+   "cost_usd": 0.00425
+  },
+  {
+   "id": "qa-ppe-05",
+   "kind": "domain_qa",
+   "repeat": 2,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "escalation"
+   ],
+   "answer": "The passages don't say whether safety vests need to be detected. They only cover helmet detection (worker without helmet, helmet must be worn on the head), so this should go to the domain expert.",
+   "sources": [
+    "shared/project-brief.md › Success metrics agreed with the client",
+    "shared/meeting-notes.md › Site visit with the safety officer (Oct 2026)",
+    "project graph › rule-worn"
+   ],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.94,
+   "llm_calls": 1,
+   "tokens_in": 841,
+   "tokens_out": 82,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0025
+  },
+  {
+   "id": "qa-ppe-08",
+   "kind": "domain_qa",
+   "repeat": 2,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "robustness",
+    "mixed_language"
+   ],
+   "answer": "لا، الخوذة الموضوعة على الأرض جنب العامل تُعتبر مخالفة (violation) وليست compliant. الخوذة تُحسب فقط إذا كانت مرتدية على الرأس مع ربط الحزام حيث يكون ظاهراً.",
+   "sources": [
+    "domain/site-safety-rules.md › Helmet rule",
+    "project graph › rule-worn",
+    "activity › 2026-10-30 16:29"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer says no, a helmet on the ground beside the worker is a violation and not compliant, which matches the reference; the added detail that it counts only when worn on the head does not contradict it."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 2.33,
+   "llm_calls": 1,
+   "tokens_in": 824,
+   "tokens_out": 123,
+   "judge_tokens_in": 565,
+   "judge_tokens_out": 75,
+   "cost_usd": 0.00476
+  },
+  {
+   "id": "qa-tri-01",
+   "kind": "domain_qa",
+   "repeat": 2,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "safety"
+   ],
+   "answer": "I couldn't find anything about that in this project's knowledge yet.",
+   "sources": [],
+   "escalated": true,
+   "should_escalate": false,
+   "escalation_ok": false,
+   "answered_when_should_escalate": false,
+   "source_hit": false,
+   "language_ok": false,
+   "fallback": false,
+   "keyword_precheck": false,
+   "fact_ok": false,
+   "judge": {
+    "verdict": "incorrect",
+    "reason": "Escalated instead of answering."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "escalated instead of answering",
+    "no gold source",
+    "wrong language"
+   ],
+   "latency_s": 0.05,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-tri-03",
+   "kind": "domain_qa",
+   "repeat": 2,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "answer": "This calls for a same-day appointment, since fever under 3 days and ear pain are both listed under same-day criteria. If any emergency signs appear, or if the patient is a child under 2 years old, the case would be escalated (nurse callback within 1 hour for under 2s).",
+   "sources": [
+    "domain/triage-guidelines.md › Same-day appointment",
+    "domain/triage-guidelines.md › Nurse callback within 1 hour",
+    "domain/triage-guidelines.md › Always emergency: tell the patient to call 997 or go to the emergency department now, and alert a nurse"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer states the core conclusion of a same-day appointment, and the added escalation details for emergency signs and children under 2 do not contradict the reference."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 2.18,
+   "llm_calls": 1,
+   "tokens_in": 862,
+   "tokens_out": 112,
+   "judge_tokens_in": 545,
+   "judge_tokens_out": 64,
+   "cost_usd": 0.00457
+  },
+  {
+   "id": "qa-tri-05",
+   "kind": "domain_qa",
+   "repeat": 2,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "escalation",
+    "safety"
+   ],
+   "answer": "The passages don't say whether the agent may recommend medications such as antibiotics. They only cover urgency triage, appointment booking, nurse alerts, and emergency symptoms, so this needs to go to the real domain expert.",
+   "sources": [
+    "shared/client-brief.md › What we want",
+    "shared/kickoff-transcript.md › Head nurse",
+    "domain/triage-guidelines.md › Always emergency: tell the patient to call 997 or go to the emergency department now, and alert a nurse"
+   ],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 2.04,
+   "llm_calls": 1,
+   "tokens_in": 875,
+   "tokens_out": 96,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.00271
+  },
+  {
+   "id": "rt-chat-01",
+   "kind": "retrieval",
+   "repeat": 2,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "engineer/system-contract.md › Architecture",
+    "engineer/system-contract.md › Change history (actual effort)",
+    "shared/project-brief.md › Client and goal",
+    "engineer/system-contract.md › Latency"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.03,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-03",
+   "kind": "retrieval",
+   "repeat": 2,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "ds/knowledge-base-and-eval.md › Latest evaluation (October 2026)",
+    "ds/knowledge-base-and-eval.md › Evaluation set",
+    "shared/project-brief.md › Status",
+    "shared/project-brief.md › Success metrics agreed with the client"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-05",
+   "kind": "retrieval",
+   "repeat": 2,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "arabic"
+   ],
+   "returned": [
+    "shared/decisions-log.md › Jul 2026: always hand over billing disputes",
+    "domain/service-guidelines.md › Must hand over to a human",
+    "shared/decisions-log.md › Aug 2026: weekly document refresh"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-07",
+   "kind": "retrieval",
+   "repeat": 2,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "shared/decisions-log.md › Aug 2026: weekly document refresh",
+    "ds/knowledge-base-and-eval.md › Knowledge base contents",
+    "shared/project-brief.md › Status",
+    "domain/service-guidelines.md › Gulf dialect"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-09",
+   "kind": "retrieval",
+   "repeat": 2,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "domain/service-guidelines.md › Gulf dialect",
+    "shared/project-brief.md › Client and goal",
+    "domain/service-guidelines.md › Tone",
+    "shared/decisions-log.md › Jul 2026: always hand over billing disputes"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-01",
+   "kind": "retrieval",
+   "repeat": 2,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "engineer/change-history.md › Sep 2026: added a new class to the model output (person)",
+    "shared/meeting-notes.md › Decision pending",
+    "engineer/engine-contract.md › Interfaces",
+    "engineer/engine-contract.md › Hardware"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-03",
+   "kind": "retrieval",
+   "repeat": 2,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "ds/experiment-log.md › Exp 4: YOLOv8s, 640px",
+    "ds/experiment-log.md › Exp 3: YOLOv8n, 640px (current model v3)"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-05",
+   "kind": "retrieval",
+   "repeat": 2,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "arabic"
+   ],
+   "returned": [],
+   "recall_at_4": false,
+   "mrr": 0.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": false,
+   "fail_reasons": [
+    "no gold chunk in top 4"
+   ],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-07",
+   "kind": "retrieval",
+   "repeat": 2,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "shared/meeting-notes.md › Decision pending",
+    "engineer/engine-contract.md › Interfaces",
+    "engineer/change-history.md › Sep 2026: added a new class to the model output (person)",
+    "engineer/change-history.md › Sep 2026: post-processing rule for blurry night images"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-09",
+   "kind": "retrieval",
+   "repeat": 2,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "shared/project-brief.md › Success metrics agreed with the client",
+    "domain/site-safety-rules.md › Exemptions",
+    "shared/meeting-notes.md › Site visit with the safety officer (Oct 2026)",
+    "domain/site-safety-rules.md › Alert fatigue"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-01",
+   "kind": "retrieval",
+   "repeat": 2,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "engineer/integration-contract.md › Calendar API",
+    "shared/kickoff-transcript.md › IT manager",
+    "engineer/integration-contract.md › Approved stack",
+    "shared/kickoff-transcript.md › Operations manager"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-03",
+   "kind": "retrieval",
+   "repeat": 2,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "engineer/integration-contract.md › Hosting and data",
+    "shared/kickoff-transcript.md › IT manager",
+    "engineer/integration-contract.md › Calendar API",
+    "shared/client-brief.md › What matters most"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-05",
+   "kind": "retrieval",
+   "repeat": 2,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "domain/triage-guidelines.md › Nurse callback within 1 hour",
+    "shared/kickoff-transcript.md › Head nurse",
+    "domain/triage-guidelines.md › Same-day appointment"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-07",
+   "kind": "retrieval",
+   "repeat": 2,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "ds/message-data-notes.md › Overview",
+    "ds/message-data-notes.md › Data issues",
+    "shared/client-brief.md › Who we are",
+    "ds/sample-messages.md › Mixed messages"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-09",
+   "kind": "retrieval",
+   "repeat": 2,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "shared/kickoff-transcript.md › Operations manager",
+    "shared/kickoff-transcript.md › IT manager",
+    "shared/client-brief.md › What we want",
+    "ds/sample-messages.md › Routine examples"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "in-tri-01",
+   "kind": "intake",
+   "repeat": 2,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "constraint_hits": 6,
+   "constraint_total": 6,
+   "gap_hits": 1,
+   "gap_total": 1,
+   "invented": [],
+   "spec": {
+    "goal": {
+     "value": "Build a bilingual (Arabic/English) AI agent for Shifa Clinics' WhatsApp channel that reads patient messages, classifies urgency, books the right appointment directly in the clinic calendar for routine and same-day cases, and immediately alerts a nurse for emergencies and nurse-callback cases. Pilot at 2 clinics (Riyadh Olaya, Jeddah Rawdah); the full network is 8 clinics, about 3,000 messages a week.",
+     "source": "Client brief.pdf; Scope email.eml; Kickoff transcript.txt"
+    },
+    "success_metric": {
+     "value": "Pilot targets. (1) Emergency recall: 100% of emergency messages in the clinically signed-off test set get emergency advice (call 997 / go to ED) plus a nurse alert, and none are offered an appointment. (2) 95% of patient messages get a first reply within 2 minutes, 24/7. (3) Nurse alerts arrive within 30 seconds. (4) Children under 2 with symptoms always go to a nurse. (5) Share of messages handled end to end without staff intervention is tracked as a secondary measure.",
+     "source": "Client brief.pdf; integration-contract.md (30 s alert); thresholds inferred",
+     "inferred": true
+    },
+    "priorities": {
+     "value": [
+      "1. Patient safety: never miss an emergency. Rule-based safety checks run on top of the ML classifier, and emergencies are never offered a routine appointment.",
+      "2. Escalate to a nurse: emergencies, children under 2, and cases like pregnancy bleeding. The head nurse's signed-off symptom list decides what counts, not the agent alone.",
+      "3. Reply within 2 minutes, day and night, in Arabic and English, including mixed messages such as symptoms plus a booking request.",
+      "4. Book the correct appointment directly in the calendar, using only find_slots, book and cancel. Never delete. Log every booking action for audit.",
+      "5. Keep patient data in-country: in-region hosting and in-region models only.",
+      "6. Deliver the 2-clinic pilot within 4 weeks."
+     ],
+     "source": "Client brief.pdf; Kickoff transcript.txt; triage-guidelines.md",
+     "inferred": true
+    },
+    "constraints": {
+     "value": [
+      "Patient data must not leave the country. Hosting is the client's in-country cloud, and models must run in-region.",
+      "Calendar API supports find_slots, book and cancel only. No delete. Rate limit is 10 requests per second.",
+      "Approved stack: Python 3.11, FastAPI and the clinic calendar SDK. Every booking action is logged for audit.",
+      "Nurse alert goes to the nurse station app with the patient message and the agent's reason, within 30 seconds.",
+      "Languages: Arabic and English. Training data is about 82% Arabic. Only about 120 emergency examples exist, so safety rules are required on top of the classifier.",
+      "Emergency symptoms (chest pain, breathing difficulty, stroke signs, severe bleeding, loss of consciousness, seizure) get a 997 / ED message plus a nurse alert.",
+      "Scope: pilot at Riyadh Olaya and Jeddah Rawdah only."
+     ],
+     "source": "Kickoff transcript.txt; Scope email.eml; integration-contract.md; triage-guidelines.md"
+    },
+    "deadline": {
+     "value": "Pilot go-live in 4 weeks from kickoff, at 2 clinics (Riyadh Olaya, Jeddah Rawdah), running for 4 weeks.",
+     "source": "Kickoff transcript.txt; Scope email.eml"
+    },
+    "stakeholders": {
+     "value": [
+      "Operations manager (owner of the 2-minute reply and direct booking requirements)",
+      "Head nurse (clinical sign-off on emergency symptoms and escalation rules; receives alerts)",
+      "IT manager (data residency, calendar API, hosting)",
+      "Nurses at the pilot clinics (alert recipients)",
+      "Reception staff (handle admin questions and fallback cases, and labelled the training data)",
+      "Patients (WhatsApp users, Arabic and English)"
+     ],
+     "source": "Kickoff transcript.txt; Client brief.pdf",
+     "inferred": true
+    }
+   },
+   "gaps": [
+    {
+     "id": "G1",
+     "question": "The head nurse says the list of symptoms that are always emergencies is not yet agreed, and she doesn't want the agent deciding alone. Who signs off the final emergency and nurse-callback list, and by when? The agent's safety rules and test set depend on it.",
+     "suggested": "Use the guideline list as the starting point: chest pain or pressure, difficulty breathing, stroke signs, severe bleeding, loss of consciousness, seizure. Add the nurse-callback rules: child under 2 with symptoms, and pregnancy with bleeding. The head nurse signs off in writing by the end of week 1. If the list is still unsigned, the agent sends anything ambiguous to a nurse."
+    },
+    {
+     "id": "G2",
+     "question": "What measurable pass/fail threshold decides whether the pilot succeeds? The documents give only the 2-minute reply and 'never miss an emergency'. They give no target for emergency recall, over-escalation or booking accuracy.",
+     "suggested": "Emergency recall of 100% on the signed-off test set and no emergency offered an appointment in the pilot. 95% or more of replies within 2 minutes. Nurse alerts within 30 seconds. At least 90% of routine bookings correct. Nurse-alert volume stays at a level the nurses accept."
+    },
+    {
+     "id": "G3",
+     "question": "Who receives and acknowledges nurse alerts at night and on weekends, and what happens if no one acknowledges one? The agent replies 24/7, but the nurse station app may not be staffed round the clock.",
+     "suggested": "Name an on-call nurse for each pilot clinic outside opening hours. If an alert isn't acknowledged within 5 minutes, escalate to a second contact. Meanwhile the patient already has the 997 / ED advice. The agent never delays that advice while it waits for a nurse."
+    }
+   ],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 20.52,
+   "llm_calls": 3,
+   "tokens_in": 9446,
+   "tokens_out": 2664,
+   "cost_usd": 0.04553
+  }
+ ]
+}

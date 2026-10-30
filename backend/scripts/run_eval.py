@@ -35,9 +35,10 @@ ROBUSTNESS_TAGS = ("vague", "typos", "mixed_language", "injection", "missing_inf
 # USD per million tokens (input, output), Claude API list prices.
 PRICES = {"claude-sonnet-5-5": (2.0, 10.0), "claude-sonnet-5": (2.0, 10.0), "claude-opus-5-5": (4.0, 20.0),
           "claude-haiku-5-5": (0.10, 0.50), "claude-fable-5-1": (10.0, 50.0)}
-# Prior token use per case for the cost guard, from measured runs (docs/eval_after.md: ~22k in / 2.3k out per review).
-ESTIMATE = {"change_review": (24_000, 2_500), "domain_qa": (3_500, 900), "retrieval": (0, 0), "intake": (9_000, 3_000)}
-TRIAGE_SETUP = (9_000, 3_000)  # live intake before triage change reviews
+# Token use per case for the cost guard: means of the first live dev run (20261030-132429), plus ~10% margin.
+# The run also stops for real once actual spend passes --max-usd.
+ESTIMATE = {"change_review": (18_600, 2_000), "domain_qa": (1_400, 260), "retrieval": (0, 0), "intake": (10_600, 2_700)}
+TRIAGE_SETUP = (10_600, 2_700)  # live intake before triage change reviews
 
 JUDGE_RUBRIC = """You grade one answer from a domain assistant against reference key facts.
 Mark "correct" when the answer states the reference's core conclusion (for example the yes/no and the rule or
@@ -390,7 +391,7 @@ def per_repeat_metrics(rows, live=True):
     llm_rows = [r for r in rows if r["kind"] != "retrieval"]
     out["system"] = {"fallback_rate": rate(llm_rows, "fallback") if live else None,
                      "cost_per_case_usd": statistics.mean(r["cost_usd"] for r in rows) if rows else None,
-                     "total_cost_usd": sum(r["cost_usd"] for r in rows)}
+                     "cost_per_repeat_usd": sum(r["cost_usd"] for r in rows)}
     return out
 
 
@@ -510,10 +511,16 @@ def run_section(res) -> list[str]:
     L.append("")
     judged = [r for r in rows if r.get("judge") and meta["mode"] == "live" and r["judge"]["reason"] != "Escalated instead of answering."]
     if judged:
-        L += ["### Judge verdicts to hand-check (first 10)", "", "| Case | Verdict | Keyword pre-check | Judge reason | Answer |", "|---|---|---|---|---|"]
-        for r in judged[:10]:
+        by_case = {}
+        for r in judged:
+            by_case.setdefault(r["id"], []).append(r)
+        L += [f"### Judge verdicts to hand-check ({min(10, len(by_case))} distinct cases; answer and reason from repeat 1)", "",
+              "| Case | Verdict per repeat | Keyword pre-check | Judge reason | Answer |", "|---|---|---|---|---|"]
+        for cid, rs in list(by_case.items())[:10]:
+            r = rs[0]
             ans = r["answer"].replace("|", "/").replace("\n", " ")[:160]
-            L.append(f"| {r['id']} | {r['judge']['verdict']} | {'hit' if r['keyword_precheck'] else 'miss'} | {r['judge']['reason']} | {ans} |")
+            L.append(f"| {cid} | {' / '.join(x['judge']['verdict'] for x in rs)} | {'hit' if r['keyword_precheck'] else 'miss'} | "
+                     f"{r['judge']['reason']} | {ans} |")
         L.append("")
     return L
 
