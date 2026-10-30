@@ -47,7 +47,7 @@ class FakeClaude:
                        "reason": "Violation recall is the top priority. The alternative keeps the pilot date."}
             elif "effort_min_days" in props:
                 data = json.dumps([json.loads(b["content"]) for b in tool_results])
-                conflict = ["p-pilot"] if "Domain Expert Agent" in system and "pilot" in data.lower() else []
+                conflict = ["p-pilot"] if "Domain Agent" in system and "pilot" in data.lower() else []
                 ans = {"effort_min_days": 1, "effort_max_days": 2, "verdict": "conflict" if conflict else "works",
                        "message": "Assessed from tools.", "conflicts": conflict,
                        "evidence": ["engineer/change-history.md › May 2026"]}
@@ -150,9 +150,17 @@ def test_live_intake_then_confirm():
     assert c.get("/api/products/triage").json()["objective"]["success_metric"] == "100% emergencies escalated"
 
 
-def test_live_ask_and_expert_twin():
+def test_live_ask_and_domain_agent():
     a = c.post("/api/products/ppe/ask", json={"question": "does a helmet in the hand count", "agent": "domain"}).json()
     assert a["mode"] == "live" and a["sources"] and not a["escalated"]
+
+
+def test_live_chat_uses_each_agents_persona(fake):
+    from app import prompts
+    for agent in ("lead", "ds", "engineer", "domain", "project"):
+        a = c.post("/api/products/ppe/ask", json={"question": "helmet rule and pilot date", "agent": agent}).json()
+        assert a["mode"] == "live" and a["agent"] == agent
+        assert fake.seen[-1][0] == prompts.CHAT_AGENTS[agent]
 
 
 def test_live_limit_per_session(monkeypatch):

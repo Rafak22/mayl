@@ -294,9 +294,12 @@ AGENT_SCOPES = {
 }
 
 
+CHAT_LOG_KINDS = ("answer", "escalation")  # chat Q&A log lines: retrieving them would echo old questions back
+
+
 def live_chunks(product: dict, activity: list[dict]) -> list[Chunk]:
     docs = [Chunk(f"{a['actor']}: {a['text']}", f"activity › {a['at'][:16].replace('T', ' ')}", "live")
-            for a in activity]
+            for a in activity if a.get("kind") not in CHAT_LOG_KINDS]
     docs += [Chunk(f"Rule: {r['text']}", f"rules › {r['source']}", "live") for r in product.get("rules", [])]
     docs += [Chunk(f"{n['label']}: {n['description']}", f"project graph › {n['id']}", "live")
              for n in product.get("nodes", [])]

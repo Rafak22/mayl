@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mayl · Project view</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Sans+Arabic:wght@500;600&amp;display=swap">
+<style>
+body{margin:0;background:#F4F6FB}
+a{color:#3A52B0}a:hover{color:#26387F}
+</style>
+</helmet>
+<div style="min-height: 1080px; background: #F4F6FB; color: #16204A; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; display: flex; flex-direction: column">
+
+  <header style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding: 12px 24px; background: #FFFFFF; border-bottom: 1px solid #E6EAF3">
+    <div style="display: flex; align-items: center; gap: 10px">
+      <svg width="32" height="26" viewBox="0 0 34 28" aria-hidden="true"><path d="M3 4 C 14 4, 14 24, 31 24" fill="none" stroke="#3A52B0" stroke-width="2.6" stroke-linecap="round"></path><circle cx="3" cy="4" r="3" fill="#3A52B0"></circle><circle cx="12" cy="8" r="2.6" fill="#3A52B0"></circle><circle cx="18" cy="13" r="2.4" fill="#3A52B0"></circle><circle cx="24" cy="18" r="2.6" fill="#23885A"></circle><circle cx="31" cy="24" r="3" fill="#23885A"></circle></svg>
+      <span style="font-size: 19px; font-weight: 700">Mayl</span>
+      <span style="width: 1px; height: 18px; background: #C9D1E6"></span>
+      <span lang="ar" style="font-family: 'IBM Plex Sans Arabic', sans-serif; font-size: 17px; font-weight: 600; color: #3A52B0">مَيْل</span>
+    </div>
+    <nav aria-label="Sections" style="display: flex; gap: 2px; margin-left: 12px">
+      <a href="Overview.html" style="padding: 8px 12px; border-radius: 10px; font-size: 14px; color: #5D6788; text-decoration: none">Overview</a>
+      <a href="Projects.html" style="padding: 8px 12px; border-radius: 10px; font-size: 14px; font-weight: 600; color: #16204A; text-decoration: none; background: #EEF3FF">Projects</a>
+      <a href="Agents.html" style="padding: 8px 12px; border-radius: 10px; font-size: 14px; color: #5D6788; text-decoration: none">Agents</a>
+      <a href="Chat.html" style="padding: 8px 12px; border-radius: 10px; font-size: 14px; color: #5D6788; text-decoration: none">Chat</a>
+    </nav>
+    <span style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #1B6E48; background: #EAF6EF; padding: 4px 10px; border-radius: 999px"><span style="width: 7px; height: 7px; border-radius: 50%; background: #23885A"></span>4 agents live</span>
+    <div role="group" aria-label="View as" style="display: flex; gap: 4px; padding: 4px; background: #EEF1F8; border-radius: 999px; margin-left: auto; flex-wrap: wrap">
+      <button style="border: 0; background: transparent; padding: 7px 14px; border-radius: 999px; font: inherit; font-size: 13px; color: #5D6788">AI Lead</button>
+      <button style="border: 0; background: #FFFFFF; padding: 7px 14px; border-radius: 999px; font: inherit; font-size: 13px; font-weight: 600; color: #1B6E48; box-shadow: 0 1px 3px rgba(22,32,74,0.12)">Data Scientist</button>
+      <button style="border: 0; background: transparent; padding: 7px 14px; border-radius: 999px; font: inherit; font-size: 13px; color: #5D6788">AI Engineer</button>
+      <button style="border: 0; background: transparent; padding: 7px 14px; border-radius: 999px; font: inherit; font-size: 13px; color: #5D6788">Domain Expert</button>
+    </div>
+    <a href="#" style="font-size: 12px; color: #5D6788; padding: 8px">Restart demo</a>
+  </header>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px 24px; flex: 1">
+
+    <aside aria-label="Products" style="flex: 1 1 200px; max-width: 230px; display: flex; flex-direction: column; gap: 10px">
+      <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #5D6788; padding: 0 4px">Products</span>
+      <a href="#" style="display: flex; flex-direction: column; gap: 5px; padding: 14px; border-radius: 14px; text-decoration: none; color: #16204A; background: #EEF3FF; border: 1px solid #D9E2FA">
+        <span style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #1B6E48"><span style="width: 7px; height: 7px; border-radius: 50%; background: #23885A"></span>Healthy</span>
+        <span style="font-size: 15px; font-weight: 700; line-height: 1.3">Arabic Customer-Service Chatbot</span>
+        <span style="font-size: 12px; color: #5D6788">Telecom · NLP · accuracy 91%</span>
+      </a>
+      <a href="#" style="display: flex; flex-direction: column; gap: 5px; padding: 14px; border-radius: 14px; text-decoration: none; color: #16204A; background: #DCE6FF; border: 1.5px solid #3A52B0; box-shadow: 0 4px 14px rgba(58,82,176,0.15)">
+        <span style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #9A5A0E"><span style="width: 7px; height: 7px; border-radius: 50%; background: #D98A1E"></span>Bottleneck</span>
+        <span style="font-size: 15px; font-weight: 700; line-height: 1.3">Helmet Compliance Detection</span>
+        <span style="font-size: 12px; color: #33405F">Construction · Computer vision · 1 decision pending</span>
+      </a>
+      <a href="#" style="display: flex; flex-direction: column; gap: 5px; padding: 14px; border-radius: 14px; text-decoration: none; color: #16204A; background: #EEF3FF; border: 1px solid #D9E2FA">
+        <span style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #2E44A0"><span style="width: 7px; height: 7px; border-radius: 50%; background: #3A52B0"></span>New</span>
+        <span style="font-size: 15px; font-weight: 700; line-height: 1.3">Smart Clinic Receptionist</span>
+        <span style="font-size: 12px; color: #5D6788">Healthcare · Agentic AI · 3 documents</span>
+      </a>
+    </aside>
+
+    <main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <h1 style="margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.02em">Helmet Compliance Detection</h1>
+        <p style="margin: 0; font-size: 14px; color: #33405F; line-height: 1.55; max-width: 760px">Mid-project. The safety officer says a helmet carried in the hand doesn't count. The rule ripples through annotations, the model and the alert engine.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <span style="font-size: 13px; background: #FFFFFF; padding: 7px 12px; border-radius: 999px; box-shadow: 0 1px 4px rgba(22,32,74,0.06)"><span style="color: #5D6788">Goal</span> violation recall ≥ 95%, &lt; 10 false alerts / camera / day</span>
+          <span style="font-size: 13px; background: #FFFFFF; padding: 7px 12px; border-radius: 999px; box-shadow: 0 1px 4px rgba(22,32,74,0.06)"><span style="color: #5D6788">Deadline</span> pilot on 2 sites in 3 weeks</span>
+          <span style="font-size: 13px; background: #FFFFFF; padding: 7px 12px; border-radius: 999px; box-shadow: 0 1px 4px rgba(22,32,74,0.06)"><span style="color: #5D6788">Priority</span> recall › false alerts › speed</span>
+        </div>
+        <nav aria-label="Project tabs" style="display: flex; gap: 4px; border-bottom: 1px solid #E1E6F0">
+          <a href="#" style="padding: 10px 14px; font-size: 14px; font-weight: 700; color: #16204A; text-decoration: none; border-bottom: 2.5px solid #3A52B0; margin-bottom: -1px">Project map</a>
+          <a href="ProjectDetails.html" style="padding: 10px 14px; font-size: 14px; color: #5D6788; text-decoration: none">Data &amp; solution</a>
+          <a href="#" style="padding: 10px 14px; font-size: 14px; color: #5D6788; text-decoration: none">Knowledge</a>
+          <a href="#" style="padding: 10px 14px; font-size: 14px; color: #5D6788; text-decoration: none">Results</a>
+        </nav>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+          <span style="display: flex; flex-direction: column; gap: 6px; background: #FFFFFF; border-radius: 14px; padding: 12px 14px; box-shadow: 0 1px 4px rgba(22,32,74,0.06)">
+            <span style="display: flex; align-items: center; gap: 6px"><span style="font-size: 12px; color: #5D6788">Violation recall</span><span style="margin-left: auto; font-size: 11px; font-weight: 600; color: #9A5A0E; background: #FFF4E5; padding: 2px 8px; border-radius: 999px">Below goal</span></span>
+            <span style="font-size: 20px; font-weight: 700">88% <span style="font-size: 13px; font-weight: 500; color: #5D6788">of 95% goal</span></span>
+            <span style="height: 6px; border-radius: 999px; background: #EEF1F7; overflow: hidden"><span style="display: block; width: 88%; height: 100%; border-radius: 999px; background: #D98A1E"></span></span>
+          </span>
+          <span style="display: flex; flex-direction: column; gap: 6px; background: #FFFFFF; border-radius: 14px; padding: 12px 14px; box-shadow: 0 1px 4px rgba(22,32,74,0.06)">
+            <span style="display: flex; align-items: center; gap: 6px"><span style="font-size: 12px; color: #5D6788">False alerts / camera / day</span><span style="margin-left: auto; font-size: 11px; font-weight: 600; color: #1B6E48; background: #EAF6EF; padding: 2px 8px; border-radius: 999px">On target</span></span>
+            <span style="font-size: 20px; font-weight: 700">6 <span style="font-size: 13px; font-weight: 500; color: #5D6788">limit 10</span></span>
+            <span style="height: 6px; border-radius: 999px; background: #EEF1F7; overflow: hidden"><span style="display: block; width: 60%; height: 100%; border-radius: 999px; background: #23885A"></span></span>
+          </span>
+          <span style="display: flex; flex-direction: column; gap: 6px; background: #FFFFFF; border-radius: 14px; padding: 12px 14px; box-shadow: 0 1px 4px rgba(22,32,74,0.06)">
+            <span style="display: flex; align-items: center; gap: 6px"><span style="font-size: 12px; color: #5D6788">Alert speed</span><span style="margin-left: auto; font-size: 11px; font-weight: 600; color: #1B6E48; background: #EAF6EF; padding: 2px 8px; border-radius: 999px">On target</span></span>
+            <span style="font-size: 20px; font-weight: 700">8 s <span style="font-size: 13px; font-weight: 500; color: #5D6788">limit 60 s</span></span>
+            <span style="height: 6px; border-radius: 999px; background: #EEF1F7; overflow: hidden"><span style="display: block; width: 13%; height: 100%; border-radius: 999px; background: #23885A"></span></span>
+          </span>
+        </div>
+      </div>
+
+      <section aria-label="Project map" style="position: relative; border-radius: 18px; background-color: #0F1626; background-image: radial-gradient(#26304A 1px, transparent 1px); background-size: 18px 18px; padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 6px 24px rgba(15,22,38,0.18)">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; font-size: 12px; color: #AEB8D0">
+          <span style="font-size: 13px; font-weight: 700; color: #E8EDF7; margin-right: 6px">Project map</span>
+          <span style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 3px; background: #8B7CF0"></span>AI Lead</span>
+          <span style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 3px; background: #3CC27A"></span>Data Scientist</span>
+          <span style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 3px; background: #6E8BF0"></span>AI Engineer</span>
+          <span style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 3px; background: #E2709E"></span>Domain Expert</span>
+          <span style="margin-left: auto; color: #8E9AB8">Tap a node to propose a change</span>
+        </div>
+        <div style="overflow-x: auto">
+          <div style="position: relative; width: 842px; height: 370px; margin: 0 auto">
+            <div style="position: absolute; left: 130px; top: 79px; width: 22px; height: 2px; background: #3A4664"></div>
+            <div style="position: absolute; left: 270px; top: 79px; width: 22px; height: 2px; background: #3A4664"></div>
+            <div style="position: absolute; left: 410px; top: 79px; width: 22px; height: 2px; background: #E7A548"></div>
+            <div style="position: absolute; left: 550px; top: 79px; width: 22px; height: 2px; background: #E7A548"></div>
+            <div style="position: absolute; left: 690px; top: 79px; width: 22px; height: 2px; background: #E7A548"></div>
+            <svg style="position: absolute; left: 130px; top: 78px" width="162" height="244" viewBox="0 0 162 244" aria-hidden="true"><path d="M0 242 C81 242 81 2 162 2" fill="none" stroke="#E7A548" stroke-width="2"></path></svg>
+            <svg style="position: absolute; left: 130px; top: 78px" width="442" height="124" viewBox="0 0 442 124" aria-hidden="true"><path d="M0 122 C221 122 221 2 442 2" fill="none" stroke="#3A4664" stroke-width="1.5"></path></svg>
+            <div style="position: absolute; left: 490px; top: 110px; width: 2px; height: 60px; background: #E7A548"></div>
+            <svg style="position: absolute; left: 550px; top: 78px" width="22" height="124" viewBox="0 0 22 124" aria-hidden="true"><path d="M0 122 C11 122 11 2 22 2" fill="none" stroke="#E7A548" stroke-width="2"></path></svg>
+            <div style="position: absolute; left: 630px; top: 110px; width: 0; height: 60px; border-left: 1.5px dashed #56627F"></div>
+            <span style="position: absolute; left: 640px; top: 131px; font-size: 9px; color: #AEB8D0; background: #172036; border: 1px solid #2A3553; border-radius: 6px; padding: 1px 6px">constrains</span>
+
+            <div style="position: absolute; left: 12px; top: 50px; width: 118px; height: 60px; box-sizing: border-box; padding: 8px 10px 8px 14px; border-radius: 12px; background: #172036; box-shadow: inset 0 0 0 1px #2A3553; display: flex; flex-direction: column; justify-content: center; gap: 2px; overflow: hidden; color: #E8EDF7"><span style="position: absolute; left: 5px; top: 10px; bottom: 10px; width: 3px; border-radius: 3px; background: #8B7CF0"></span><span style="font-size: 8.5px; letter-spacing: 0.06em; text-transform: uppercase; color: #98A4C2">Objective · Lead</span><span style="font-size: 11.5px; font-weight: 700; line-height: 1.25">Catch missing helmets</span></div>
+            <div style="position: absolute; left: 152px; top: 50px; width: 118px; height: 60px; box-sizing: border-box; padding: 8px 10px 8px 14px; border-radius: 12px; background: #172036; box-shadow: inset 0 0 0 1px #2A3553; display: flex; flex-direction: column; justify-content: center; gap: 2px; overflow: hidden; color: #E8EDF7"><span style="position: absolute; left: 5px; top: 10px; bottom: 10px; width: 3px; border-radius: 3px; background: #3CC27A"></span><span style="font-size: 8.5px; letter-spacing: 0.06em; text-transform: uppercase; color: #98A4C2">Dataset · DS</span><span style="font-size: 11.5px; font-weight: 700; line-height: 1.25">Images (~8,200)</span></div>
+            <div style="position: absolute; left: 292px; top: 50px; width: 118px; height: 60px; box-sizing: border-box; padding: 8px 10px 8px 14px; border-radius: 12px; background: #231C14; box-shadow: inset 0 0 0 1.5px #E7A548; display: flex; flex-direction: column; justify-content: center; gap: 2px; overflow: hidden; color: #E8EDF7"><span style="position: absolute; left: 5px; top: 10px; bottom: 10px; width: 3px; border-radius: 3px; background: #3CC27A"></span><span style="font-size: 8.5px; letter-spacing: 0.06em; text-transform: uppercase; color: #98A4C2">Pipeline · DS</span><span style="font-size: 11.5px; font-weight: 700; line-height: 1.25">Annotation guide</span><span style="font-size: 8.5px; font-weight: 700; color: #F0B060">PENDING</span></div>
+            <div style="position: absolute; left: 432px; top: 50px; width: 118px; height: 60px; box-sizing: border-box; padding: 8px 10px 8px 14px; border-radius: 12px; background: #231C14; box-shadow: inset 0 0 0 1.5px #E7A548; display: flex; flex-direction: column; justify-content: center; gap: 2px; overflow: hidden; color: #E8EDF7"><span style="position: absolute; left: 5px; top: 10px; bottom: 10px; width: 3px; border-radius: 3px; background: #3CC27A"></span><span style="font-size: 8.5px; letter-spacing: 0.06em; text-transform: uppercase; color: #98A4C2">Pipeline · DS</span><span style="font-size: 11.5px; font-weight: 700; line-height: 1.25">YOLOv8n model v3</span><span style="font-size: 8.5px; font-weight: 700; color: #F0B060">PENDING</span></div>
+            <div style="position: absolute; left: 572px; top: 50px; width: 118px; height: 60px; box-sizing: border-box; padding: 8px 10px 8px 14px; border-radius: 12px; background: #231C14; box-shadow: inset 0 0 0 1.5px #E7A548; display: flex; flex-direction: column; justify-content: center; gap: 2px; overflow: hidden; color: #E8EDF7"><span style="position: absolute; left: 5px; top: 10px; bottom: 10px; width: 3px; border-radius: 3px; background: #6E8BF0"></span><span style="font-size: 8.5px; letter-spacing: 0.06em; text-transform: uppercase; color: #98A4C2">Engine · Eng</span><span style="font-size: 11.5px; font-weight: 700; line-height: 1.25">Compliance logic</span><span style="font-size: 8.5px; font-weight: 700; color: #F0B060">PENDING</span></div>
+            <div style="position: absolute; left: 712px; top: 50px; width: 118px; height: 60px; box-sizing: border-box; padding: 8px 10px 8px 14px; border-radius: 12px; background: #231C14; box-shadow: inset 0 0 0 1.5px #E7A548; display: flex; flex-direction: column; justify-content: center; gap: 2px; overflow: hidden; color: #E8EDF7"><span style="position: absolute; left: 5px; top: 10px; bottom: 10px; width: 3px; border-radius: 3px; background: #6E8BF0"></span><span style="font-size: 8.5px; letter-spacing: 0.06em; text-transform: uppercase; color: #98A4C2">Engine · Eng</span><span style="font-size: 11.5px; font-weight: 700; line-height: 1.25">Safety officer app</span><span style="font-size: 8.5px; font-weight: 700; color: #F0B060">PENDING</span></div>
+            <div style="position: absolute; left: 12px; top: 170px; width: 118px; height: 60px; box-sizing: border-box; padding: 8px 10px 8px 14px; border-radius: 12px; background: #172036; box-shadow: inset 0 0 0 1px #2A3553; display: flex; flex-direction: column; justify-content: center; gap: 2px; overflow: hidden; color: #E8EDF7"><span style="position: absolute; left: 5px; top: 10px; bottom: 10px; width: 3px; border-radius: 3px; background: #8B7CF0"></span><span style="font-size: 8.5px; letter-spacing: 0.06em; text-transform: uppercase; color: #98A4C2">Promise · Lead</span><span style="font-size: 11.5px; font-weight: 700; line-height: 1.25">Pilot in 3 weeks</span></div>
+            <div style="position: absolute; left: 432px; top: 170px; width: 118px; height: 60px; box-sizing: border-box; padding: 8px 10px 8px 14px; border-radius: 12px; background: #231C14; box-shadow: inset 0 0 0 1.5px #E7A548; display: flex; flex-direction: column; justify-content: center; gap: 2px; overflow: hidden; color: #E8EDF7"><span style="position: absolute; left: 5px; top: 10px; bottom: 10px; width: 3px; border-radius: 3px; background: #3CC27A"></span><span style="font-size: 8.5px; letter-spacing: 0.06em; text-transform: uppercase; color: #98A4C2">Pipeline · DS</span><span style="font-size: 11.5px; font-weight: 700; line-height: 1.25">Evaluation set</span><span style="font-size: 8.5px; font-weight: 700; color: #F0B060">PENDING</span></div>
+            <div style="position: absolute; left: 572px; top: 170px; width: 118px; height: 60px; box-sizing: border-box; padding: 8px 10px 8px 14px; border-radius: 12px; background: #172036; box-shadow: inset 0 0 0 1px #2A3553; display: flex; flex-direction: column; justify-content: center; gap: 2px; overflow: hidden; color: #E8EDF7"><span style="position: absolute; left: 5px; top: 10px; bottom: 10px; width: 3px; border-radius: 3px; background: #6E8BF0"></span><span style="font-size: 8.5px; letter-spacing: 0.06em; text-transform: uppercase; color: #98A4C2">Engine · Eng</span><span style="font-size: 11.5px; font-weight: 700; line-height: 1.25">Edge boxes (CPU)</span></div>
+            <div style="position: absolute; left: 12px; top: 290px; width: 118px; height: 60px; box-sizing: border-box; padding: 8px 10px 8px 14px; border-radius: 12px; background: #231C14; box-shadow: inset 0 0 0 1.5px #E7A548, 0 0 0 6px rgba(231,165,72,0.18); display: flex; flex-direction: column; justify-content: center; gap: 2px; overflow: hidden; color: #E8EDF7"><span style="position: absolute; left: 5px; top: 10px; bottom: 10px; width: 3px; border-radius: 3px; background: #E2709E"></span><span style="font-size: 8.5px; letter-spacing: 0.06em; text-transform: uppercase; color: #98A4C2">Rule · Expert</span><span style="font-size: 11.5px; font-weight: 700; line-height: 1.25">Helmet must be worn</span><span style="font-size: 8.5px; font-weight: 700; color: #F0B060">PENDING</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section aria-label="Agents on this project" style="display: flex; flex-direction: column; gap: 10px">
+        <div style="display: flex; align-items: center; gap: 8px">
+          <span style="font-size: 15px; font-weight: 700">Agents on this project</span>
+          <a href="Agents.html" style="margin-left: auto; font-size: 13px; font-weight: 600">See all agents</a>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px">
+          <div style="display: flex; flex-direction: column; gap: 8px; background: #FFFFFF; border-radius: 16px; padding: 14px; box-shadow: 0 2px 10px rgba(22,32,74,0.06)">
+            <div style="display: flex; align-items: center; gap: 10px">
+              <span style="width: 34px; height: 34px; border-radius: 11px; background: #6B5BD2; display: flex; align-items: center; justify-content: center; flex: none"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="#FFFFFF" stroke-width="2"></circle><path d="M15 9l-2 5-4 1 2-5z" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"></path></svg></span>
+              <span style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700">Lead Agent</span><span style="font-size: 11px; color: #5D6788">The decider</span></span>
+            </div>
+            <span style="font-size: 12px; color: #33405F; line-height: 1.45">Recommends the 1-day fix: keeps the pilot date.</span>
+            <span style="font-size: 11px; font-weight: 600; color: #5A4BC4">Recommended · 2 min ago</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px; background: #FFFFFF; border-radius: 16px; padding: 14px; box-shadow: 0 2px 10px rgba(22,32,74,0.06)">
+            <div style="display: flex; align-items: center; gap: 10px">
+              <span style="width: 34px; height: 34px; border-radius: 11px; background: #23885A; display: flex; align-items: center; justify-content: center; flex: none"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V10M12 19V5M19 19v-6" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path></svg></span>
+              <span style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700">DS Agent</span><span style="font-size: 11px; color: #5D6788">Data first</span></span>
+            </div>
+            <span style="font-size: 12px; color: #33405F; line-height: 1.45">Relabel + retrain + re-evaluate: 5–7 days.</span>
+            <span style="font-size: 11px; font-weight: 600; color: #1B6E48">Reviewed · cited 2 experiments</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px; background: #FFFFFF; border-radius: 16px; padding: 14px; box-shadow: 0 2px 10px rgba(22,32,74,0.06)">
+            <div style="display: flex; align-items: center; gap: 10px">
+              <span style="width: 34px; height: 34px; border-radius: 11px; background: #3A52B0; display: flex; align-items: center; justify-content: center; flex: none"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" fill="none" stroke="#FFFFFF" stroke-width="2"></rect><path d="M10 3v3M14 3v3M10 18v3M14 18v3M3 10h3M3 14h3M18 10h3M18 14h3" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"></path></svg></span>
+              <span style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700">Engineer Agent</span><span style="font-size: 11px; color: #5D6788">Guards the engine</span></span>
+            </div>
+            <span style="font-size: 12px; color: #33405F; line-height: 1.45">Alert logic + app update: 3–4 days, CPU limit holds.</span>
+            <span style="font-size: 11px; font-weight: 600; color: #2E44A0">Reviewed · checked the contract</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px; background: #FFFFFF; border-radius: 16px; padding: 14px; box-shadow: 0 2px 10px rgba(22,32,74,0.06)">
+            <div style="display: flex; align-items: center; gap: 10px">
+              <span style="width: 34px; height: 34px; border-radius: 11px; background: #C2457A; display: flex; align-items: center; justify-content: center; flex: none"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"></path></svg></span>
+              <span style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700">Domain Agent</span><span style="font-size: 11px; color: #5D6788">The expert's twin</span></span>
+            </div>
+            <span style="font-size: 12px; color: #33405F; line-height: 1.45">The rule is correct, but it puts the pilot date at risk.</span>
+            <span style="font-size: 11px; font-weight: 600; color: #A33666">Flagged a conflict</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <aside aria-label="Inbox, ask and activity" style="flex: 1 1 290px; max-width: 330px; display: flex; flex-direction: column; gap: 20px">
+      <section style="display: flex; flex-direction: column; gap: 10px">
+        <span style="display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700">My inbox <span style="font-size: 11px; color: #FFFFFF; background: #3A52B0; border-radius: 999px; padding: 2px 8px">1</span></span>
+        <div style="display: flex; flex-direction: column; gap: 10px; background: #FFFFFF; border-radius: 16px; padding: 16px; box-shadow: 0 2px 12px rgba(22,32,74,0.07)">
+          <span style="display: flex; gap: 6px; flex-wrap: wrap"><span style="font-size: 11px; font-weight: 600; color: #B0332A; background: #FDECEA; padding: 3px 8px; border-radius: 999px">High risk</span><span style="font-size: 11px; font-weight: 600; color: #B0332A; background: #FDECEA; padding: 3px 8px; border-radius: 999px">Conflict: pilot date</span></span>
+          <span style="font-size: 15px; font-weight: 700; line-height: 1.35">Relabel carried helmets as a new class and retrain</span>
+          <span style="font-size: 12px; color: #5D6788">From Domain Expert · Helmet Compliance Detection</span>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+            <span style="display: flex; flex-direction: column; gap: 2px; background: #F6F8FC; border-radius: 12px; padding: 10px"><span style="font-size: 11px; color: #5D6788">Original</span><span style="font-size: 16px; font-weight: 700">~12 days</span></span>
+            <span style="display: flex; flex-direction: column; gap: 2px; background: #EAF6EF; border-radius: 12px; padding: 10px"><span style="font-size: 11px; color: #1B6E48; font-weight: 600">Alternative</span><span style="font-size: 16px; font-weight: 700">1 day</span></span>
+          </div>
+          <span style="display: flex; gap: 8px; align-items: flex-start; font-size: 12px; color: #33405F; line-height: 1.45"><span style="width: 22px; height: 22px; border-radius: 7px; background: #6B5BD2; display: flex; align-items: center; justify-content: center; flex: none"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="#FFFFFF" stroke-width="2.8"></circle><path d="M15 9l-2 5-4 1 2-5z" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linejoin="round"></path></svg></span>Lead Agent recommends the 1-day rule: it keeps the pilot date and lifts recall to 94%.</span>
+          <button style="border: 0; background: #3A52B0; color: #FFFFFF; border-radius: 12px; padding: 11px; font: inherit; font-size: 14px; font-weight: 600">Review decision</button>
+        </div>
+      </section>
+
+      <section aria-label="Chat with agents" style="display: flex; flex-direction: column; gap: 12px; background: #FFFFFF; border-radius: 18px; padding: 16px; box-shadow: 0 0 0 1.5px #D9E2FA, 0 4px 16px rgba(58,82,176,0.10)">
+        <div style="display: flex; align-items: center; gap: 8px">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8l-5 4v-4H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" fill="none" stroke="#3A52B0" stroke-width="2" stroke-linejoin="round"></path></svg>
+          <span style="font-size: 15px; font-weight: 700">Chat with an agent</span>
+          <a href="Chat.html" style="margin-left: auto; font-size: 12px; font-weight: 600">Open chat</a>
+        </div>
+        <div role="group" aria-label="Choose an agent" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px">
+          <button type="button" style="display: flex; align-items: center; gap: 8px; border: 1px solid #DDE3EF; background: #FFFFFF; border-radius: 12px; padding: 6px 8px; font: inherit; font-size: 12px; font-weight: 600; color: #16204A"><span style="width: 24px; height: 24px; border-radius: 8px; background: #6B5BD2; display: flex; align-items: center; justify-content: center; flex: none"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="#FFFFFF" stroke-width="2.4"></circle><path d="M15 9l-2 5-4 1 2-5z" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round"></path></svg></span>Lead Agent</button>
+          <button type="button" style="display: flex; align-items: center; gap: 8px; border: 1px solid #DDE3EF; background: #FFFFFF; border-radius: 12px; padding: 6px 8px; font: inherit; font-size: 12px; font-weight: 600; color: #16204A"><span style="width: 24px; height: 24px; border-radius: 8px; background: #23885A; display: flex; align-items: center; justify-content: center; flex: none"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V10M12 19V5M19 19v-6" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round"></path></svg></span>DS Agent</button>
+          <button type="button" style="display: flex; align-items: center; gap: 8px; border: 1px solid #DDE3EF; background: #FFFFFF; border-radius: 12px; padding: 6px 8px; font: inherit; font-size: 12px; font-weight: 600; color: #16204A"><span style="width: 24px; height: 24px; border-radius: 8px; background: #3A52B0; display: flex; align-items: center; justify-content: center; flex: none"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" fill="none" stroke="#FFFFFF" stroke-width="2.4"></rect><path d="M10 3v3M14 3v3M10 18v3M14 18v3M3 10h3M3 14h3M18 10h3M18 14h3" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path></svg></span>Engineer Agent</button>
+          <button type="button" style="display: flex; align-items: center; gap: 8px; border: 1.5px solid #C2457A; background: #FCEEF4; border-radius: 12px; padding: 6px 8px; font: inherit; font-size: 12px; font-weight: 700; color: #16204A"><span style="width: 24px; height: 24px; border-radius: 8px; background: #C2457A; display: flex; align-items: center; justify-content: center; flex: none"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round"></path></svg></span>Domain Agent</button>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: flex-start; background: #FCEEF4; border-radius: 12px; padding: 10px; font-size: 12px; line-height: 1.45; color: #33405F"><span style="width: 22px; height: 22px; border-radius: 7px; background: #C2457A; display: flex; align-items: center; justify-content: center; flex: none"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linejoin="round"></path></svg></span><span>Hi, I speak for the site safety officer. Ask me about site rules, in Arabic or English.</span></div>
+        <label for="askC" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Message the Domain Agent</label>
+        <div style="display: flex; gap: 6px">
+          <input id="askC" type="text" placeholder="Message the Domain Agent…" style="flex: 1; min-width: 0; border: 1px solid #DDE3EF; background: #F6F8FC; border-radius: 12px; padding: 11px 12px; font: inherit; font-size: 13px; color: #16204A">
+          <button aria-label="Send" style="border: 0; background: #3A52B0; border-radius: 12px; width: 42px; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M13 6l6 6-6 6" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        </div>
+      </section>
+
+      <section style="display: flex; flex-direction: column; gap: 12px">
+        <span style="font-size: 15px; font-weight: 700">Activity</span>
+        <div style="display: flex; flex-direction: column; gap: 4px; border-left: 4px solid #6B5BD2; padding: 2px 0 2px 12px; font-size: 13px; line-height: 1.5">
+          <span style="display: flex; align-items: center; gap: 6px"><span style="width: 20px; height: 20px; border-radius: 6px; background: #6B5BD2; display: flex; align-items: center; justify-content: center"><svg width="11" height="11" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="#FFFFFF" stroke-width="2.8"></circle><path d="M15 9l-2 5-4 1 2-5z" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linejoin="round"></path></svg></span><b>Lead Agent</b><span style="margin-left: auto; font-size: 11px; color: #5D6788">2 min ago</span></span>
+          <span>Recommends the alternative: "Keep YOLOv8n v3 and add a rule that only counts a helmet overlapping the top of the head. 1 day of work, keeps the 3-week pilot, recall rises to 94%."</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 4px; border-left: 4px solid #3A52B0; padding: 2px 0 2px 12px; font-size: 13px; line-height: 1.5">
+          <span style="display: flex; align-items: center; gap: 6px"><span style="width: 20px; height: 20px; border-radius: 6px; background: #3A52B0; display: flex; align-items: center; justify-content: center"><svg width="11" height="11" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" fill="none" stroke="#FFFFFF" stroke-width="2.6"></rect><path d="M10 3v3M14 3v3M10 18v3M14 18v3M3 10h3M3 14h3M18 10h3M18 14h3" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"></path></svg></span><b>Engineer Agent</b><span style="margin-left: auto; font-size: 11px; color: #5D6788">2 min ago</span></span>
+          <span>Estimated 3–4 days for the alert logic and app, anchored to the Sep 2026 class change that took 4 days. CPU latency limit still holds.</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 4px; border-left: 4px solid #C2457A; padding: 2px 0 2px 12px; font-size: 13px; line-height: 1.5">
+          <span style="display: flex; align-items: center; gap: 6px"><span style="width: 20px; height: 20px; border-radius: 6px; background: #C2457A; display: flex; align-items: center; justify-content: center"><svg width="11" height="11" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linejoin="round"></path></svg></span><b>Domain Agent</b><span style="margin-left: auto; font-size: 11px; color: #5D6788">3 min ago</span></span>
+          <span>Confirmed the rule matches the site safety rules, and flagged a conflict: a full relabel puts the client's 3-week pilot at risk.</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 4px; border-left: 4px solid #C9D1E6; padding: 2px 0 2px 12px; font-size: 13px; line-height: 1.5">
+          <span style="display: flex; align-items: center; gap: 6px"><b>Domain Expert</b> (human)<span style="margin-left: auto; font-size: 11px; color: #5D6788">10 min ago</span></span>
+          <span>Added the helmet rule after the site visit: a helmet in the hand, on a belt or on the ground is a violation.</span>
+        </div>
+      </section>
+    </aside>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

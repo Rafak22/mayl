@@ -245,9 +245,9 @@ ANSWER_SCHEMA = {
 }
 
 
-def answer_live(question: str, hits: list[dict], as_expert: bool) -> dict:
+def answer_live(question: str, hits: list[dict], agent: str) -> dict:
     passages = "\n".join(f"[{i + 1}] ({h['source']}) {h['text']}" for i, h in enumerate(hits))
-    system = prompts.EXPERT_TWIN if as_expert else prompts.PROJECT_ASSISTANT
+    system = prompts.CHAT_AGENTS[agent]
     out, _ = llm.run_agent(system, f"Passages:\n{passages}\n\nQuestion: {question}", [], {}, ANSWER_SCHEMA,
                            max_tokens=4000)
     return out

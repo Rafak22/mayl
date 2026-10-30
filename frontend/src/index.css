@@ -1,12 +1,23 @@
+/* Design tokens from the approved mockups (docs/design). Light app; the project map is dark. */
 :root {
-  --bg: #f6f7f9; --panel: #ffffff; --ink: #14181f; --muted: #667085; --line: #e3e6eb;
-  --accent: #3a5bd9; --lead: #7a4fd6; --ds: #1f8a70; --engineer: #2f6fd6; --domain: #c26a1c;
-  --good: #1a7f46; --bad: #b42318; --warn: #b54708;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ink);
-}
-@media (prefers-color-scheme: dark) {
-  :root { --bg: #0f1216; --panel: #171b21; --ink: #e8ebf0; --muted: #98a2b3; --line: #2a3039; }
+  --bg: #F4F6FB; --card: #FFFFFF; --ink: #16204A; --ink-2: #33405F; --muted: #5D6788;
+  --line: #E6EAF3; --line-2: #DDE3EF; --line-3: #EEF1F7;
+  --blue: #3A52B0; --blue-dark: #26387F; --blue-soft: #EEF3FF; --blue-soft-2: #DCE6FF; --blue-border: #D9E2FA; --blue-ink: #2E44A0;
+  --good: #23885A; --good-ink: #1B6E48; --good-soft: #EAF6EF;
+  --warn: #D98A1E; --warn-ink: #9A5A0E; --warn-soft: #FFF4E5; --warn-line: #F0C27A;
+  --bad: #B0332A; --bad-soft: #FDECEA;
+  --dark: #0F1626; --dark-dot: #26304A; --dark-node: #172036; --dark-line: #2A3553; --dark-ink: #E8EDF7; --dark-dim: #AEB8D0;
+  --shadow: 0 2px 12px rgba(22, 32, 74, 0.07);
+  --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-ar: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  color-scheme: light;
+  font-family: var(--font);
+  color: var(--ink);
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); }
-button, input { font: inherit; color: inherit; }
+body { margin: 0; background: var(--bg); font-size: 14px; -webkit-font-smoothing: antialiased; }
+button, input, select { font: inherit; color: inherit; }
+img { max-width: 100%; }
+a { color: var(--blue); }
+a:hover { color: var(--blue-dark); }
+[lang="ar"], [dir="rtl"] { font-family: var(--font-ar); }

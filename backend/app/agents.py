@@ -17,10 +17,11 @@ from .products import ROLES
 
 TEAM_AGENTS = {
     "ds": "DS Agent",
-    "engineer": "AI Engineer Agent",
-    "domain": "Domain Expert Agent",
+    "engineer": "Engineer Agent",
+    "domain": "Domain Agent",
     "lead": "Lead Agent",
 }
+AGENT_BY_NAME = {name: key for key, name in TEAM_AGENTS.items()}
 
 
 def now() -> str:
@@ -214,9 +215,13 @@ def build_from_objective(product: dict, answers: dict) -> dict:
         {"id": "e-nodelete", "text": "Calendar API: book and cancel only, never delete", "source": "IT manager"},
     ]
 
+    shorts = {"data": "Messages", "agentA": "Agent A", "agentB": "Agent B", "booking": "Booking",
+              "nurse": "Nurse alert", "whatsapp": "WhatsApp"}
+
     def n(id, label, kind, owner, effort, desc, x, y, options=None):
-        return {"id": id, "label": label, "kind": kind, "owner": owner, "effort_days": effort,
-                "description": desc, "status": "ok", "position": {"x": x, "y": y}, "change_options": options or []}
+        return {"id": id, "label": label, "short": shorts.get(id, label), "kind": kind, "owner": owner,
+                "effort_days": effort, "description": desc, "status": "ok", "position": {"x": x, "y": y},
+                "change_options": options or []}
 
     product["nodes"] = [
         n("obj", "Objective: safe triage + booking", "objective", "lead", 0, "100% emergencies escalated, reply < 2 min", 0, 0),
@@ -240,15 +245,20 @@ def build_from_objective(product: dict, answers: dict) -> dict:
         ("booking", "whatsapp", "feeds"), ("nurse", "whatsapp", "feeds"),
     ]
     product["metrics"] = {"emergency_recall": 1.0, "routine_accuracy": 0.93, "reply_s": 40}
+    product["metric_goals"] = {
+        "emergency_recall": {"label": "Emergencies escalated", "goal": 1.0, "better": "higher", "unit": "%"},
+        "routine_accuracy": {"label": "Routine booking accuracy", "goal": None, "better": "higher", "unit": "%"},
+        "reply_s": {"label": "Reply time", "goal": 120, "better": "lower", "unit": "s"},
+    }
     product["state"] = "handoff"
     product["summary"] = "Agents designed and tested the triage agent. Waiting for the AI Engineer to accept the handoff."
     steps = [
         ("DS Agent", "Profiled 12,000 messages: 82% Arabic, emergencies only 1% (about 120 examples), many messages mix symptoms and booking requests."),
         ("DS Agent", "Built 2 agent designs. A: LLM classifier + hard safety rules (emergency recall 100%, routine accuracy 93%). B: rules only (100% / 78%)."),
         ("DS Agent", "Chose A: patient safety is the top priority and both catch every emergency, but A books correctly far more often. B kept as backup."),
-        ("Domain Expert Agent", "Checked both designs against the head nurse's emergency list and the under-2 rule. No conflicts."),
-        ("AI Engineer Agent", "Contract check: the booking tool used a delete call for rescheduling → replaced with cancel + book. All checks pass."),
-        ("AI Engineer Agent", "Handoff package ready: agent design, tools, test results on 400 messages, assumptions."),
+        ("Domain Agent", "Checked both designs against the head nurse's emergency list and the under-2 rule. No conflicts."),
+        ("Engineer Agent", "Contract check: the booking tool used a delete call for rescheduling, so it was replaced with cancel + book. All checks pass."),
+        ("Engineer Agent", "Handoff package ready: agent design, tools, test results on 400 messages, assumptions."),
     ]
     handoff = {
         "id": "chg-" + uuid.uuid4().hex[:6], "product_id": product["id"], "node_id": "agentA",

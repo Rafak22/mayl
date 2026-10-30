@@ -10,14 +10,18 @@ the demo never breaks.
 import logging
 import os
 import threading
+import time
 from collections import OrderedDict
+from datetime import datetime, timezone
 
 from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from . import llm
-from .agents import TEAM_AGENTS, assess_change, build_from_objective, now, objective_intake
+from .agents import AGENT_BY_NAME, TEAM_AGENTS, assess_change, build_from_objective, now, objective_intake
+from .details import SAMPLES, documents, product_details
 from .products import ROLES, build_products
 from .rag import AGENT_SCOPES, Retriever, live_chunks
 
@@ -25,6 +29,11 @@ log = logging.getLogger("mayl")
 app = FastAPI(title="Mayl API")
 app.add_middleware(CORSMiddleware, allow_origins=os.getenv("ALLOWED_ORIGINS", "*").split(","),
                    allow_methods=["*"], allow_headers=["*"])
+app.mount("/samples", StaticFiles(directory=SAMPLES), name="samples")  # example images for the Data tab
+
+CHAT_AGENTS = ("lead", "ds", "engineer", "domain", "project")
+RECOMMENDATION_TEXT = {"approve": "approving the change", "alternative": "the cheaper alternative",
+                       "reject": "rejecting the change"}
 
 SESSIONS: "OrderedDict[str, dict]" = OrderedDict()
 SESSIONS_LOCK = threading.Lock()
@@ -43,17 +52,21 @@ def _use_live(st) -> bool:
 def new_state() -> dict:
     st = {"products": build_products(), "proposals": {}, "lock": threading.Lock()}
     st["activity"] = {pid: [] for pid in st["products"]}
-    _log(st, "chatbot", "Ops Agent",
-         "Weekly check: accuracy 91.2% (target 90%), containment 64%, median handover 22 s. Knowledge base refreshed Sunday. All green.")
-    _log(st, "ppe", "Domain Expert Agent",
-         "Expert input recorded from the site visit: a helmet carried in the hand, on a belt or on the ground is a violation.")
+    _log(st, "chatbot", "Ops check",
+         "Weekly check: accuracy 91.2% (target 90%), containment 64%, median handover 22 s. Knowledge base refreshed Sunday. All green.",
+         agent="ds")
+    _log(st, "ppe", "Domain Expert",
+         "Added the helmet rule after the site visit: a helmet in the hand, on a belt or on the ground is a violation.")
     _log(st, "triage", "Lead Agent", "3 documents uploaded by Shifa Clinics. Ready for objective intake.")
     for p in st["products"].values():  # seed each product's open bottleneck, if any
         seed = p.get("seed_proposal")
         if seed:
             node = next(n for n in p["nodes"] if n["id"] == seed["node"])
             option = next(o for o in node["change_options"] if o["id"] == seed["option"])
-            _store_card(st, p, assess_change(p, node["id"], option, seed["proposer"]))
+            start = time.perf_counter()
+            card = assess_change(p, node["id"], option, seed["proposer"])
+            card["review_seconds"] = round(time.perf_counter() - start, 2)
+            _store_card(st, p, card)
     return st
 
 
@@ -68,8 +81,12 @@ def session(x_session: str | None) -> dict:
         return SESSIONS[key]
 
 
-def _log(st, pid, actor, text, kind="info"):
-    st["activity"][pid].insert(0, {"at": now(), "actor": actor, "text": text, "kind": kind})
+def _log(st, pid, actor, text, kind="info", agent=None):
+    """Newest first. `agent` (lead | ds | engineer | domain) marks entries written by an agent; None = a human."""
+    agent = agent or AGENT_BY_NAME.get(actor)
+    st["seq"] = st.get("seq", 0) + 1  # orders entries across products; timestamps only have 1 s resolution
+    st["activity"][pid].insert(0, {"at": now(), "seq": st["seq"], "actor": actor, "text": text, "kind": kind,
+                                   "agent": agent})
 
 
 def _product(st, pid):
@@ -87,22 +104,33 @@ def _store_card(st, product, card, replaces: str | None = None):
         for n in product["nodes"]:
             if n["id"] in card["affected"]:
                 n["status"] = "pending"
-    who = ROLES[card["proposer"]]
-    actor = TEAM_AGENTS[card["proposer"]]
+    pid, who = product["id"], ROLES[card["proposer"]]
     tag = " (live agents)" if card.get("mode") == "live" else ""
     if replaces:
-        _log(st, product["id"], "Orchestrator",
-             f"Re-assessed “{card['title']}” with {len(card['responses'])} agents{tag}. Risk: {card['risk']}.", "agent")
+        _log(st, pid, "Mayl", f"Re-assessed “{card['title']}” with {len(card['responses'])} agents{tag}. Risk: {card['risk']}.", "agent")
     elif card["status"] == "auto_approved":
-        _log(st, product["id"], actor, f"{who} change “{card['title']}” is low risk: auto-approved and applied{tag}.", "auto")
+        _log(st, pid, who, f"Proposed “{card['title']}”. Low risk, so it was auto-approved and applied{tag}.", "auto")
     else:
         names = ", ".join(ROLES[a] for a in card["approvers"])
-        _log(st, product["id"], actor,
-             f"{who} proposed “{card['title']}”. Risk: {card['risk']}. Waiting on: {names}{tag}.", "proposal")
+        _log(st, pid, who, f"Proposed “{card['title']}”. Risk: {card['risk']}. Waiting on: {names}{tag}.", "proposal")
+    for r in card["responses"]:  # each agent's own assessment, in its words
+        _log(st, pid, r["agent"], r["message"], "review", agent=r["team"])
+    if card["status"] == "pending" and card.get("recommendation"):
+        _log(st, pid, TEAM_AGENTS["lead"],
+             f"Recommends {RECOMMENDATION_TEXT[card['recommendation']]} for “{card['title']}”. {card['recommendation_reason']}",
+             "recommendation", agent="lead")
     return card
 
 
 def _assess(st, product, node_id, option, proposer):
+    """Run the agents on a change and record how long the review took."""
+    start = time.perf_counter()
+    card = _run_agents(st, product, node_id, option, proposer)
+    card["review_seconds"] = round(time.perf_counter() - start, 2)
+    return card
+
+
+def _run_agents(st, product, node_id, option, proposer):
     """Live agents when available, demo agents otherwise (or if live fails)."""
     if _use_live(st):
         try:
@@ -139,8 +167,58 @@ def products(x_session: str | None = Header(None)):
     out = []
     for p in st["products"].values():
         pending = [c for c in st["proposals"].values() if c["product_id"] == p["id"] and c["status"] == "pending"]
-        out.append({k: p[k] for k in ("id", "name", "domain", "state", "summary", "metrics")} | {"pending": len(pending)})
+        steps = sorted((n for n in p["nodes"] if n["kind"] in ("dataset", "pipeline", "engine")),
+                       key=lambda n: (n["position"]["x"], n["position"]["y"]))
+        out.append({k: p.get(k) for k in ("id", "name", "domain", "client", "tech", "expert", "state", "summary",
+                                           "objective", "metrics", "metric_goals")} | {
+            "pending": len(pending),
+            "steps": [{"id": n["id"], "short": n.get("short", n["label"]), "status": n["status"], "owner": n["owner"]}
+                      for n in steps],
+            "documents": len(p.get("documents") or []),
+        })
     return out
+
+
+@app.get("/api/products/{pid}/details")
+def details(pid: str, x_session: str | None = Header(None)):
+    """Data & solution and Knowledge tabs: examples, dataset, pipeline, samples and knowledge documents."""
+    return product_details(_product(session(x_session), pid))
+
+
+@app.get("/api/stats")
+def stats(x_session: str | None = Header(None)):
+    """Overview and Agents pages: counted from this session's proposals and activity."""
+    st = session(x_session)
+    today = datetime.now(timezone.utc).date().isoformat()
+    reviews = [c for c in st["proposals"].values() if c.get("kind") != "handoff" and c["responses"]]
+    timed = [c["review_seconds"] for c in reviews if "review_seconds" in c]
+    activity = sorted(({**a, "product_id": pid, "product_name": st["products"][pid]["name"]}
+                       for pid, entries in st["activity"].items() for a in entries),
+                      key=lambda a: a["seq"], reverse=True)
+
+    decided = [c for c in reviews if c["status"] in ("approved", "approved_alternative", "rejected") and c.get("recommendation")]
+    followed = {"approve": "approved", "alternative": "approved_alternative", "reject": "rejected"}
+    accepted = sum(c["status"] == followed[c["recommendation"]] for c in decided)
+    docs = [d for pid in st["products"] for d in documents(pid)]
+    agents = {}
+    for key in ("lead", "ds", "engineer", "domain"):
+        mine = [a for a in activity if a["agent"] == key]
+        count = lambda kind: sum(a["kind"] == kind for a in mine)  # noqa: E731
+        agents[key] = {
+            "reviews": count("review"), "recommendations": count("recommendation"),
+            "answers": count("answer"), "escalations": count("escalation"),
+            "documents": sum(d["agent"] == key for d in docs) if key != "lead" else len(docs),
+            "latest": mine[0] if mine else None,
+        }
+    agents["lead"]["accepted"] = {"followed": accepted, "decided": len(decided)}
+    return {
+        "changes_reviewed_today": sum(c["created_at"].startswith(today) for c in reviews),
+        "changes_reviewed": len(reviews),
+        "avg_review_seconds": round(sum(timed) / len(timed), 2) if timed else None,
+        "conflicts_caught": sum(c["verdict"] == "conflict" for c in reviews),
+        "agents": agents,
+        "latest": activity[:12],
+    }
 
 
 @app.get("/api/products/{pid}")
@@ -306,37 +384,43 @@ def confirm(pid: str, body: ConfirmIn, x_session: str | None = Header(None)):
         return result
 
 
-# --- project chat + Expert Twin (RAG) ---------------------------------------
+# --- chat with an agent (RAG over that agent's knowledge) -------------------
 class AskIn(BaseModel):
     question: str
-    agent: str = "project"  # project | domain
+    agent: str = "project"  # lead | ds | engineer | domain | project
 
 
 @app.post("/api/products/{pid}/ask")
 def ask(pid: str, body: AskIn, x_session: str | None = Header(None)):
     st = session(x_session)
     p = _product(st, pid)
-    as_expert = body.agent == "domain"
+    if body.agent not in CHAT_AGENTS:
+        raise HTTPException(400, f"agent must be one of: {', '.join(CHAT_AGENTS)}")
+    question = body.question.strip()
+    if not question:
+        raise HTTPException(400, "Empty question")
     retriever = Retriever(pid, live_chunks(p, st["activity"][pid]))
-    hits = retriever.search(body.question, AGENT_SCOPES["domain" if as_expert else "lead"], k=5)
+    hits = retriever.search(question, AGENT_SCOPES["lead" if body.agent == "project" else body.agent], k=5)
+    result = None
     if not hits:
         result = {"answer": "I couldn't find anything about that in this project's knowledge yet.",
                   "sources": [], "confident": False, "mode": "demo"}
     elif _use_live(st):
         try:
             from .live_agents import answer_live
-            out = answer_live(body.question, hits, as_expert)
+            out = answer_live(question, hits, body.agent)
             cited = [hits[i - 1] for i in out.get("cited", []) if 0 < i <= len(hits)] or hits[:1]
             result = {"answer": out["answer"], "sources": cited, "confident": out.get("confident", True), "mode": "live"}
         except Exception:
             log.exception("live answer failed")
-            result = None
-    else:
-        result = None
     if result is None:
         result = {"answer": hits[0]["text"], "sources": hits[:3], "confident": hits[0]["score"] >= 1.0, "mode": "demo"}
-    result["escalated"] = as_expert and not result["confident"]
+    result["agent"] = body.agent
+    result["escalated"] = body.agent == "domain" and not result["confident"]
+    if body.agent != "project":
+        _log(st, pid, TEAM_AGENTS[body.agent], f"Answered a question: “{question[:100]}”", "answer", agent=body.agent)
     if result["escalated"]:
-        _log(st, pid, "Domain Expert Agent",
-             f"Couldn't answer “{body.question[:80]}” from the expert's knowledge. Escalated to the Domain Expert.", "proposal")
+        _log(st, pid, TEAM_AGENTS["domain"],
+             f"Couldn't answer “{question[:80]}” from the expert's knowledge, so it went to the Domain Expert.",
+             "escalation", agent="domain")
     return result
