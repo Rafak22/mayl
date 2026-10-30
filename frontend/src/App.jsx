@@ -19,7 +19,7 @@ const STATE_LABEL = {
 export default function App() {
   const [role, setRole] = useState("ds");
   const [products, setProducts] = useState([]);
-  const [pid, setPid] = useState("fraud");
+  const [pid, setPid] = useState("ppe");
   const [product, setProduct] = useState(null);
   const [inbox, setInbox] = useState([]);
   const [selectedNode, setSelectedNode] = useState(null);
@@ -218,16 +218,21 @@ function ProposePanel({ node, role, pid, onClose, onCard }) {
   );
 }
 
+const UNITS = [["_ms", " ms"], ["_s", " s"], ["_min", " min"]];
+
 function Delta({ d }) {
   const entries = Object.entries(d || {});
   if (!entries.length) return null;
   return (
     <div className="deltas">
-      {entries.map(([k, v]) => (
-        <span key={k} className={`delta ${(k.includes("false") || k.includes("latency")) ? (v < 0 ? "good" : "bad") : (v >= 0 ? "good" : "bad")}`}>
-          {k.replace(/_/g, " ")} {v > 0 ? "+" : ""}{v}{k.includes("latency") ? (k.endsWith("min") ? " min" : " ms") : "%"}
-        </span>
-      ))}
+      {entries.map(([k, v]) => {
+        const [suffix, unit] = UNITS.find(([s]) => k.endsWith(s)) || ["", "%"];
+        return (
+          <span key={k} className={`delta ${(k.includes("false") || k.includes("latency")) ? (v < 0 ? "good" : "bad") : (v >= 0 ? "good" : "bad")}`}>
+            {k.slice(0, k.length - suffix.length).replace(/_/g, " ")} {v > 0 ? "+" : ""}{v}{unit}
+          </span>
+        );
+      })}
     </div>
   );
 }

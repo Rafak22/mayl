@@ -9,9 +9,9 @@ takes, conflicts with domain rules or client promises, and a cheaper alternative
 
 | Product | State | Shows |
 |---|---|---|
-| Arabic Support Ticket Classifier | Healthy | The calm control room: green graph, project chat |
-| Transaction Fraud Detection | Bottleneck | Expert rule → impact analysis → conflict → cheaper alternative → 1 decision |
-| Heart Reading Anomaly Detection | New | Objective intake from documents → agents build best + backup pipelines → handoff |
+| Arabic Customer-Service Chatbot | Healthy | The calm control room: green graph, project chat |
+| Helmet Compliance Detection | Bottleneck | Expert rule (a carried helmet doesn't count) → impact analysis → conflict → cheaper alternative → 1 decision |
+| Smart Clinic Receptionist | New | Objective intake from documents → agents design main + backup triage agents → handoff |
 
 Switch roles at the top (AI Lead, Data Scientist, AI Engineer, Domain Expert). Same layout,
 different lens. Tap any node to propose a change and watch the other agents respond.
@@ -41,7 +41,8 @@ Knowledge files are split into chunks at `## ` headings and indexed into one SQL
 - **Vector search:** a sqlite-vec table with
   [`intfloat/multilingual-e5-small`](https://huggingface.co/intfloat/multilingual-e5-small) embeddings
   (fastembed, ONNX int8 on CPU, no PyTorch). It matches Arabic and English by meaning, e.g.
-  "relatives sending money" finds *Family transfers*.
+  "helmet hanging from a worker's belt" finds the *Helmet rule*, and "شكوى رسمية" finds the
+  chatbot's human-handover guideline.
 
 Each query runs both searches, filtered to the product and the agent's scopes. The two rankings are
 merged with Reciprocal Rank Fusion. Vector matches below 0.80 cosine are dropped, so off-topic

@@ -21,26 +21,39 @@ from .agents import TEAM_AGENTS, assess_change, build_from_objective, now, objec
 from .products import ROLES, build_products
 from .rag import AGENT_SCOPES, Retriever, live_chunks
 
-log = logging.getLogger("relay")
-app = FastAPI(title="Relay API")
+log = logging.getLogger("mayl")
+app = FastAPI(title="Mayl API")
 app.add_middleware(CORSMiddleware, allow_origins=os.getenv("ALLOWED_ORIGINS", "*").split(","),
                    allow_methods=["*"], allow_headers=["*"])
 
 SESSIONS: "OrderedDict[str, dict]" = OrderedDict()
 SESSIONS_LOCK = threading.Lock()
 MAX_SESSIONS = 300
+LIVE_LIMIT = int(os.getenv("LIVE_LIMIT_PER_SESSION", "8"))
+
+
+def _use_live(st) -> bool:
+    """Live agents if enabled and this visitor still has live runs left."""
+    if not llm.enabled() or st.get("live_used", 0) >= LIVE_LIMIT:
+        return False
+    st["live_used"] = st.get("live_used", 0) + 1
+    return True
 
 
 def new_state() -> dict:
     st = {"products": build_products(), "proposals": {}, "lock": threading.Lock()}
     st["activity"] = {pid: [] for pid in st["products"]}
-    _log(st, "support", "Ops Agent", "Weekly check: macro F1 0.88 (target 0.85), latency 420 ms. All green.")
-    _log(st, "fraud", "Domain Expert Agent",
-         "Expert input recorded: family transfers are a normal pattern and shouldn't be flagged.")
-    _log(st, "heart", "Lead Agent", "3 documents uploaded by the client. Ready for objective intake.")
-    fraud = st["products"]["fraud"]
-    node = next(n for n in fraud["nodes"] if n["id"] == "req-family")
-    _store_card(st, fraud, assess_change(fraud, node["id"], node["change_options"][0], "domain"))
+    _log(st, "chatbot", "Ops Agent",
+         "Weekly check: accuracy 91.2% (target 90%), containment 64%, median handover 22 s. Knowledge base refreshed Sunday. All green.")
+    _log(st, "ppe", "Domain Expert Agent",
+         "Expert input recorded from the site visit: a helmet carried in the hand, on a belt or on the ground is a violation.")
+    _log(st, "triage", "Lead Agent", "3 documents uploaded by Shifa Clinics. Ready for objective intake.")
+    for p in st["products"].values():  # seed each product's open bottleneck, if any
+        seed = p.get("seed_proposal")
+        if seed:
+            node = next(n for n in p["nodes"] if n["id"] == seed["node"])
+            option = next(o for o in node["change_options"] if o["id"] == seed["option"])
+            _store_card(st, p, assess_change(p, node["id"], option, seed["proposer"]))
     return st
 
 
@@ -91,7 +104,7 @@ def _store_card(st, product, card, replaces: str | None = None):
 
 def _assess(st, product, node_id, option, proposer):
     """Live agents when available, demo agents otherwise (or if live fails)."""
-    if llm.enabled():
+    if _use_live(st):
         try:
             from .live_agents import assess_change_live
             return assess_change_live(product, node_id, option, proposer, st["activity"][product["id"]])
@@ -100,7 +113,10 @@ def _assess(st, product, node_id, option, proposer):
             card = assess_change(product, node_id, option, proposer)
             card["fallback_reason"] = str(e)[:200]
             return card
-    return assess_change(product, node_id, option, proposer)
+    card = assess_change(product, node_id, option, proposer)
+    if llm.enabled():
+        card["fallback_reason"] = "Live-agent limit for this session reached"
+    return card
 
 
 # ---------------------------------------------------------------------------
@@ -179,6 +195,8 @@ def rerun(cid: str, x_session: str | None = Header(None)):
         raise HTTPException(409, "Already decided")
     if not llm.enabled():
         raise HTTPException(400, "Live agents are not enabled on this server")
+    if st.get("live_used", 0) >= LIVE_LIMIT:
+        raise HTTPException(429, "You've used all live-agent runs for this session. Reset the demo to start over.")
     p = _product(st, card["product_id"])
     node = next(n for n in p["nodes"] if n["id"] == card["node_id"])
     option = next((o for o in node["change_options"] if o["id"] == card["option_id"]),
@@ -217,10 +235,11 @@ def decide(cid: str, body: DecisionIn, x_session: str | None = Header(None)):
         if card.get("kind") == "handoff" and body.decision == "approve":
             p["state"] = "building"
             p["summary"] = "Handoff accepted. Engine work started with full context attached."
-        if card["node_id"] == "req-family" and body.decision != "reject":
+        seed = p.get("seed_proposal")
+        if seed and card["node_id"] == seed["node"] and body.decision != "reject":
             p["state"] = "resolved"
-            p["summary"] = "Bottleneck resolved by the agents in one decision. No meeting was needed."
-            p["metrics"]["false_alarm_rate"] = 0.06 if body.decision == "alternative" else 0.054
+            p["summary"] = p["resolved"]["summary"]
+            p["metrics"].update(p["resolved"]["metrics"])
         what = card["alternative"]["label"] if body.decision == "alternative" else card["title"]
         _log(st, p["id"], ROLES[body.role], f"{body.decision.title()}: “{what}”. No meeting needed.", "decision")
         return card
@@ -242,7 +261,7 @@ def intake(pid: str, x_session: str | None = Header(None)):
         raise HTTPException(400, "No documents to read")
     mode = "demo"
     result = None
-    if llm.enabled():
+    if _use_live(st):
         try:
             from .live_agents import intake_live
             result, mode = intake_live(p), "live"
@@ -303,7 +322,7 @@ def ask(pid: str, body: AskIn, x_session: str | None = Header(None)):
     if not hits:
         result = {"answer": "I couldn't find anything about that in this project's knowledge yet.",
                   "sources": [], "confident": False, "mode": "demo"}
-    elif llm.enabled():
+    elif _use_live(st):
         try:
             from .live_agents import answer_live
             out = answer_live(body.question, hits, as_expert)

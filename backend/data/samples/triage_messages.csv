@@ -1,0 +1,21 @@
+message_id,channel,language,text,expected_outcome
+m001,whatsapp,ar,عندي ألم شديد في صدري وضيق نفس,emergency
+m002,whatsapp,en,My father's face is drooping and he can't lift his arm,emergency
+m003,whatsapp,ar,أختي أغمي عليها قبل شوي,emergency
+m004,whatsapp,en,Heavy bleeding from a cut that won't stop,emergency
+m005,whatsapp,ar,ولدي عمره سنة وحرارته ٣٨ ونص,nurse_callback
+m006,whatsapp,en,I'm 20 weeks pregnant and have some bleeding,nurse_callback
+m007,whatsapp,ar,حرارتي ٣٩ ونص من أربع أيام,nurse_callback
+m008,whatsapp,en,My baby (8 months) has been vomiting all day,nurse_callback
+m009,whatsapp,ar,عندي حرارة من يومين وألم في الأذن,same_day
+m010,whatsapp,en,Burning when I urinate since yesterday,same_day
+m011,whatsapp,ar,عندي حرارة من ثلاث أيام ابي موعد,same_day
+m012,whatsapp,en,"Bad sore throat since this morning, can I see a doctor today?",same_day
+m013,whatsapp,ar,ابي أجدد وصفة الضغط,routine
+m014,whatsapp,en,Can I book my daughter's vaccination next week?,routine
+m015,whatsapp,ar,ابي موعد متابعة السكر,routine
+m016,whatsapp,en,I need a general check-up sometime next month,routine
+m017,whatsapp,ar,وش أوقات دوام عيادة العليا؟,admin
+m018,whatsapp,en,Do you accept Bupa insurance?,admin
+m019,whatsapp,ar,ابي ألغي موعدي بكرة,admin
+m020,whatsapp,en,Where can I get my lab results?,admin

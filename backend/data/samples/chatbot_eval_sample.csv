@@ -1,0 +1,11 @@
+question_id,language,question,topic,result
+q001,ar,كم سعر باقة ٥٠ جيجا؟,packages,correct
+q002,en,What's the cheapest unlimited social add-on?,packages,correct
+q003,ar,ابي باقة انترنت للسفر لتركيا,roaming,correct
+q004,en,Roaming price for Georgia?,roaming,correct_after_refresh
+q005,ar,هذي الفاتورة غلط وابي اكلم موظف,billing_dispute,handed_over
+q006,en,How do I switch to eSIM?,sim,correct
+q007,ar,وش الفرق بين باقة سوا وباقة لايك؟,packages,correct
+q008,en,I want to cancel my line,cancellation,handed_over
+q009,ar,ابي شكوى رسمية,complaint,handed_over
+q010,en,Store opening hours in Jeddah?,stores,correct
