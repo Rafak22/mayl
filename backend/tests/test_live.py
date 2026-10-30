@@ -22,6 +22,7 @@ class FakeClaude:
         self.lead_fails = False
         self.lead_choice = None  # force a recommendation, if it is among the allowed options
         self.answer_confident = True
+        self.lead_deadline = []  # promise ids the Lead flags as at risk from the total effort
 
     def lead_calls(self):
         return [s for s in self.seen if "recommendation" in s[2]["properties"]]
@@ -47,7 +48,8 @@ class FakeClaude:
                 options = props["recommendation"]["enum"]
                 choice = self.lead_choice if self.lead_choice in options else "alternative" if "alternative" in options else "reject"
                 ans = {"recommendation": choice,
-                       "reason": "Violation recall is the top priority. The alternative keeps the pilot date."}
+                       "reason": "Violation recall is the top priority. The alternative keeps the pilot date.",
+                       "deadline_conflicts": self.lead_deadline}
             elif "english" in props:
                 ans = {"english": "Is a helmet carried in the hand a violation?"}
             elif "effort_min_days" in props:
@@ -131,6 +133,17 @@ def test_lead_can_ask_for_more_detail(fake):
     assert card["recommendation"] == "needs_info" and card["recommendation_mode"] == "live"
     act = c.get("/api/products/ppe").json()["activity"]
     assert any(a["kind"] == "recommendation" and "asking for more detail" in a["text"] for a in act)
+
+
+def test_lead_flags_a_promised_date_from_total_effort(fake):
+    fake.lead_deadline = ["r-fatigue", "not-a-rule"]  # no team flags it; unknown ids are dropped
+    card = c.post("/api/products/ppe/proposals",
+                  json={"node_id": "edge", "custom_text": "Move inference to a cloud GPU", "role": "engineer"}).json()
+    lead_task = fake.lead_calls()[0][1]
+    assert "Rules and promises on record:" in lead_task and "total effort of all teams" in lead_task
+    added = [x for x in card["conflicts"] if x.get("raised_by") == "Lead Agent"]
+    assert [x["id"] for x in added] == ["r-fatigue"]
+    assert card["risk"] == "high" and card["verdict"] == "conflict" and card["recommendation_mode"] == "live"
 
 
 def test_non_english_question_is_also_searched_in_english(fake):

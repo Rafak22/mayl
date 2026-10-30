@@ -80,7 +80,7 @@ def _tools_for(team, product, node_id, option, nodes, retriever):
             "changed_node": {k: nodes[0][k] for k in ("id", "label", "kind", "description")},
             "change": option["label"],
             "my_affected_nodes": [{k: n[k] for k in ("id", "label", "kind", "description", "effort_days")} for n in mine],
-            "baseline_effort_days": round(base, 1),
+            "baseline_effort_days_if_all_reworked": round(base, 1),
             "how_it_reaches_us": " → ".join(chain),
             "all_affected": [f"{n['label']} ({ROLES[n['owner']]})" for n in nodes],
         }
@@ -92,7 +92,7 @@ def _tools_for(team, product, node_id, option, nodes, retriever):
         return product.get("rules", [])
 
     tools = [
-        {"name": "get_impact_on_my_team", "description": "Graph traversal: which of my team's components this change affects, with a baseline effort.",
+        {"name": "get_impact_on_my_team", "description": "Graph traversal: which of my team's components this change affects, with an upper-bound baseline effort (if all of them had to be reworked).",
          "input_schema": {"type": "object", "properties": {}}},
         {"name": "search_knowledge", "description": "Search my team's knowledge base and the shared project memory (contracts, change history, guidelines, decisions).",
          "input_schema": {"type": "object", "properties": {"query": {"type": "string"}}, "required": ["query"]}},
@@ -138,13 +138,19 @@ def _combine(product, nodes, option, proposer, responses) -> dict:
     return finalize_card(product, nodes, option, proposer, responses, conflicts, alternative, "live", blocked)
 
 
-def _lead_recommendation(product, nodes, option, proposer, card) -> tuple[str, str]:
+def _lead_recommendation(product, nodes, option, proposer, card) -> tuple[str, str, list[str]]:
+    """The Lead's recommendation, plus the ids of promised dates the total effort puts at risk."""
     options = ["approve", "alternative", "reject", "needs_info"] if card["alternative"] else ["approve", "reject", "needs_info"]
+    rules = product.get("rules", [])
+    rule_id = {"type": "string", "enum": [r["id"] for r in rules]} if rules else {"type": "string"}
     schema = {"type": "object", "properties": {
         "recommendation": {"type": "string", "enum": options},
-        "reason": {"type": "string", "description": "2 sentences that name the deciding priority."}},
-        "required": ["recommendation", "reason"]}
+        "reason": {"type": "string", "description": "2 sentences that name the deciding priority."},
+        "deadline_conflicts": {"type": "array", "items": rule_id,
+                               "description": "Ids of promised dates the total effort makes unlikely; empty if none."}},
+        "required": ["recommendation", "reason", "deadline_conflicts"]}
     alt = card["alternative"]
+    total_min = sum(r["effort_range"][0] for r in card["responses"])
     assessments = "\n".join(
         f"- {r['agent']}: {r['effort_text']}, verdict {r.get('verdict')}"
         + (f", conflicts {', '.join(r['conflict_ids'])}" if r.get("conflict_ids") else "")
@@ -152,14 +158,15 @@ def _lead_recommendation(product, nodes, option, proposer, card) -> tuple[str, s
     prompt = (
         _change_text(product, nodes, option, proposer)
         + f"\n\nComputed by the platform: risk {card['risk']}, verdict {card['verdict']}, "
-          f"total effort up to {card['total_effort_max']:g} days.\n"
-        + "Conflicts: " + ("; ".join(f"{c['id']}: {c['text']} ({c['source']})" for c in card["conflicts"]) or "none") + "\n"
+          f"total effort of all teams {total_min:g}–{card['total_effort_max']:g} days.\n"
+        + "Rules and promises on record: " + ("; ".join(f"{r['id']}: {r['text']} ({r['source']})" for r in rules) or "none") + "\n"
+        + "Conflicts found by the teams: " + (", ".join(c["id"] for c in card["conflicts"]) or "none") + "\n"
         + "Cheaper alternative: " + (f"{alt['label']} ({alt['effort_days']:g} days)" if alt else "none") + "\n\n"
         + f"Team assessments:\n{assessments}\n\nSubmit your recommendation.")
     out, _ = llm.run_agent(prompts.LEAD_AGENT, prompt, [], {}, schema, max_tokens=4000)
     if out.get("recommendation") not in options or not str(out.get("reason", "")).strip():
         raise ValueError(f"Unusable Lead Agent answer: {out}")
-    return out["recommendation"], out["reason"].strip()
+    return out["recommendation"], out["reason"].strip(), list(out.get("deadline_conflicts") or [])
 
 
 class _State(TypedDict, total=False):
@@ -181,8 +188,15 @@ def assess_change_live(product, node_id, option, proposer, activity) -> dict:
         card = _combine(product, nodes, option, proposer, responses)
         if card["status"] == "pending":  # auto-approved changes need no recommendation call
             try:
-                card["recommendation"], card["recommendation_reason"] = _lead_recommendation(
-                    product, nodes, option, proposer, card)
+                rec, reason, late = _lead_recommendation(product, nodes, option, proposer, card)
+                rules = {r["id"]: r for r in product.get("rules", [])}
+                known = {c["id"] for c in card["conflicts"]}
+                added = [dict(rules[i], raised_by="Lead Agent") for i in dict.fromkeys(late) if i in rules and i not in known]
+                if added:  # a promised date at risk is a conflict: risk, verdict and approvers are recomputed
+                    blocked = any(r["verdict"] == "blocked" for r in responses)
+                    card = finalize_card(product, nodes, option, proposer, card["responses"],
+                                         card["conflicts"] + added, card["alternative"], "live", blocked)
+                card["recommendation"], card["recommendation_reason"] = rec, reason
                 card["recommendation_mode"] = "live"
             except Exception:  # keep the team agents' work; the rule-based recommendation stands
                 log.exception("Lead Agent failed; keeping the rule-based recommendation")
