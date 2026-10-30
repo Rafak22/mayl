@@ -1,0 +1,2795 @@
+{
+ "meta": {
+  "timestamp": "20261030-173022",
+  "split": "heldout",
+  "mode": "live",
+  "repeats": 1,
+  "kinds": [
+   "change_review",
+   "domain_qa",
+   "retrieval",
+   "intake"
+  ],
+  "limit": 0,
+  "model": "claude-sonnet-5-5",
+  "judge_model": "claude-sonnet-5-5",
+  "keep_seed": false,
+  "commit": "529d36c",
+  "prices_per_mtok": [
+   2.0,
+   10.0
+  ],
+  "validation": [],
+  "file": "eval/results/20261030-173022_heldout_live.json",
+  "total_cost_usd": 1.3784
+ },
+ "summary": {
+  "change_review": {
+   "pass_rate": {
+    "mean": 0.6842105263157895,
+    "std": 0.0
+   },
+   "conflict_recall": {
+    "mean": 0.8888888888888888,
+    "std": 0.0
+   },
+   "false_conflicts_per_case": {
+    "mean": 0.05263157894736842,
+    "std": 0.0
+   },
+   "teams_f1": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "effort_hit": {
+    "mean": 0.875,
+    "std": 0.0
+   },
+   "alternative": {
+    "mean": 0.8,
+    "std": 0.0
+   },
+   "risk": {
+    "mean": 0.8947368421052632,
+    "std": 0.0
+   },
+   "recommendation": {
+    "mean": 0.8421052631578947,
+    "std": 0.0
+   },
+   "must_mention": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "grounding": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "fake_citations_per_case": {
+    "mean": 0.0,
+    "std": 0.0
+   },
+   "brevity": {
+    "mean": 0.10526315789473684,
+    "std": 0.0
+   }
+  },
+  "domain_qa": {
+   "pass_rate": {
+    "mean": 0.8421052631578947,
+    "std": 0.0
+   },
+   "escalation_precision": {
+    "mean": 0.625,
+    "std": 0.0
+   },
+   "escalation_recall": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "answered_when_should_escalate": {
+    "mean": 0,
+    "std": 0.0
+   },
+   "source_hit": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "language_match": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "fact_accuracy": {
+    "mean": 0.7857142857142857,
+    "std": 0.0
+   }
+  },
+  "retrieval": {
+   "pass_rate": {
+    "mean": 0.9523809523809523,
+    "std": 0.0
+   },
+   "recall_at_4": {
+    "mean": 0.9523809523809523,
+    "std": 0.0
+   },
+   "mrr": {
+    "mean": 0.8968253968253969,
+    "std": 0.0
+   },
+   "scope_leaks": {
+    "mean": 0,
+    "std": 0.0
+   }
+  },
+  "intake": {
+   "pass_rate": {
+    "mean": 0.6666666666666666,
+    "std": 0.0
+   },
+   "constraint_recall": {
+    "mean": 0.9090909090909091,
+    "std": 0.0
+   },
+   "gap_recall": {
+    "mean": 1.0,
+    "std": 0.0
+   },
+   "invented_facts": {
+    "mean": 1,
+    "std": 0.0
+   }
+  },
+  "system": {
+   "fallback_rate": {
+    "mean": 0.0,
+    "std": 0.0
+   },
+   "cost_per_case_usd": {
+    "mean": 0.02223258064516129,
+    "std": 0.0
+   },
+   "cost_per_repeat_usd": {
+    "mean": 1.37842,
+    "std": 0.0
+   }
+  },
+  "latency_s": {
+   "change_review": {
+    "p50": 14.43,
+    "p95": 36.88
+   },
+   "domain_qa": {
+    "p50": 2.17,
+    "p95": 4.97
+   },
+   "retrieval": {
+    "p50": 0.02,
+    "p95": 0.02
+   },
+   "intake": {
+    "p50": 16.65,
+    "p95": 20.72
+   }
+  }
+ },
+ "cases": [
+  {
+   "id": "cr-chat-03",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [
+    "conflict"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-dispute"
+   ],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "teams_required": [
+    "engineer"
+   ],
+   "teams_optional": [
+    "domain",
+    "ds"
+   ],
+   "effort_mid_total": 1.25,
+   "effort_gold": null,
+   "effort_hit": null,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "engineer": "This breaks the Jul 2026 rule r-dispute (billing disputes always go to a human), which the customer-service lead requested. On our side it means removing the dispute routing in Human handover (about 1 day, like the Jul 2026 change that added it) and a quick re-test of the App and WhatsApp channels. It also needs the customer-service lead's sign-off, and the bot would need a guard so it never promises refunds (r-refund) in dispute chats.",
+    "domain": "This breaks the rule r-dispute, set by the customer-service lead in Jul 2026, that billing disputes always go to a human agent. It also raises the risk of the bot promising refunds, which r-refund forbids. No domain document changes unless the customer-service lead formally withdraws the rule, so this needs their sign-off first. Our own review is 0 days."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 20.29,
+   "llm_calls": 5,
+   "tokens_in": 10549,
+   "tokens_out": 1763,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.03873
+  },
+  {
+   "id": "cr-chat-05",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [
+    "easy",
+    "low_risk"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "teams_required": [
+    "engineer"
+   ],
+   "teams_optional": [],
+   "effort_mid_total": 0.38,
+   "effort_gold": [
+    0,
+    1
+   ],
+   "effort_hit": true,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "low",
+   "risk_ok": true,
+   "recommendation": "approve",
+   "recommendation_ok": true,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": null,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "engineer": "This is a label-only change in the app channel adapter. It doesn't touch the engine, latency (p95 first token 1.4 s), the handover logic or the guardrails, so I estimate 0.25–0.5 days including a quick app check. Product or CX may want to confirm that 'Chat with us' still tells customers they can reach a human, because the handover path is unchanged. I found no past rename to compare against.",
+    "domain": "No domain documents need to change, so the effort is 0 days. A review is enough. The button must still start the human handover (under 30 s, median 22 s today), and billing disputes must still go to a human (r-dispute). \"Chat with us\" is vaguer than \"Talk to an agent\", so product could check that customers still understand it reaches a human."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 6.48,
+   "llm_calls": 4,
+   "tokens_in": 9339,
+   "tokens_out": 1087,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.02955
+  },
+  {
+   "id": "cr-chat-06",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [
+    "memory"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "teams_required": [
+    "ds",
+    "engineer"
+   ],
+   "teams_optional": [
+    "domain"
+   ],
+   "effort_mid_total": 5.5,
+   "effort_gold": null,
+   "effort_hit": null,
+   "alternative_ok": true,
+   "alternative": "Keep RAG with the weekly Sunday re-index; if the catalogue answers are weak, tune the retriever and chunking instead of fine-tuning",
+   "risk": "medium",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "Fine-tuning would mean rebuilding the 312-doc KB into training data, retiring or reworking the hybrid retriever, and re-evaluating the model (about 2-3 DS days, and the baseline is 3). It reverses the Jun 2026 decision to use RAG: prices change monthly, so every update would need a retrain instead of the Sunday re-index. That puts the 91.2% accuracy at risk, and accuracy is the top priority. I have no data showing fine-tuning improves accuracy.",
+    "engineer": "Engine impact is about 2–4 days: the retriever step is removed from the chat flow, the price check needs a new source of truth, and the channels need re-testing against the 2 s p95 first-token limit (now 1.4 s). This reverses the Jun 2026 decision to use RAG, because prices change monthly and a fine-tuned model would need retraining each time instead of the Sunday re-index. I'd keep RAG, or add fine-tuning only for tone and style, unless the Data Scientist gives a reason.",
+    "domain": "No domain document has to change, so my effort is 0 days (a review only). However, this reverses the Jun 2026 decision to use RAG, which the AI lead and the client agreed because prices change monthly. A fine-tuned model would give outdated package answers until it is retrained, which puts the accuracy target (91.2% now, 90% required) at risk. Please give a reason and keep RAG, or at least keep it for prices and policies."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 14.43,
+   "llm_calls": 8,
+   "tokens_in": 19552,
+   "tokens_out": 3019,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.06929
+  },
+  {
+   "id": "cr-chat-08",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [
+    "robustness",
+    "mixed_language"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "teams_required": [],
+   "teams_optional": [
+    "ds",
+    "engineer"
+   ],
+   "effort_mid_total": 1.0,
+   "effort_gold": [
+    0,
+    2
+   ],
+   "effort_hit": true,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "medium",
+   "risk_ok": true,
+   "recommendation": "approve",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "No retraining or relabeling needed: the knowledge base is already re-indexed every Sunday, so weekly roaming additions fit the existing refresh. DS work is about 0.5–1 day for a process change, adding AR/EN docs for new countries, checking the synonym list and spot-checking retrieval. It should help accuracy, since the Georgia roaming answer was wrong in September until the weekly refresh. I have no measured metric change.",
+    "engineer": "No engine change needed: the knowledge base is already re-indexed every Sunday, so weekly roaming additions are just a content refresh. The only engineering work is a quick check that the price check guardrail reads the refreshed docs, and handover and channels stay untouched. Data Scientist should confirm the new-country docs are accurate and bilingual (AR + EN) before each Sunday re-index.",
+    "domain": "No domain documents or guidelines need to change, so this is a review only (0 days). The knowledge base already re-indexes every Sunday (Aug 2026 decision), so weekly roaming prices for new countries fit the current process. The source roaming prices must come from the client's official catalogue. The refund and billing-dispute rules are not affected."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 11.83,
+   "llm_calls": 9,
+   "tokens_in": 22992,
+   "tokens_out": 2232,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0683
+  },
+  {
+   "id": "cr-ppe-02",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [
+    "conflict",
+    "paraphrase"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 1,
+   "conflict_recall": 0.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "teams_required": [
+    "ds",
+    "engineer"
+   ],
+   "teams_optional": [
+    "domain"
+   ],
+   "effort_mid_total": 8.5,
+   "effort_gold": [
+    6,
+    14
+   ],
+   "effort_hit": true,
+   "alternative_ok": true,
+   "alternative": "Post-processing rule: helmet counts only if its box overlaps the top part of a head box (no relabel/retrain; untested, then re-evaluate on the 400-image set)",
+   "risk": "medium",
+   "risk_ok": false,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "Needs relabeling: about 9% of helmet boxes (sampled from 400 images) are carried helmets, so the guide, the labels, model v3 and the 400-image eval set all need rework (about 4–6 days). This fits rule r-worn and should raise violation recall, but I have no measured gain. A cheaper first step is a post-processing rule that counts a helmet only if it overlaps the top of the head box. It needs no retraining, but it is untested and needs the AI Engineer to change the compliance logic.",
+    "engineer": "A new 'carried helmet' class means we must change the compliance logic (a carried helmet inside the person box must count as a violation, not as compliant). We must also add reason text in the safety officer app and re-test on all camera feeds, about 3-4 days after the new model arrives. This fits the rule that a helmet counts only when worn, but the Data Scientist should check that false alerts stay under 10 per camera per day, and the model must stay YOLOv8n for CPU latency.",
+    "domain": "This matches the helmet rule already on record: a helmet carried in the hand, on a belt or on the ground is a violation. No domain document changes, so my side is a review only (0 days). The Data Scientist's annotation guide, relabelling and retrain, and the AI Engineer's compliance logic carry the real work. Retraining must keep recall at or above 95% and false alerts under 10 per camera per day."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "missed conflicts ['p-pilot']",
+    "risk medium not in ['high']"
+   ],
+   "latency_s": 14.83,
+   "llm_calls": 8,
+   "tokens_in": 20388,
+   "tokens_out": 2864,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.06942
+  },
+  {
+   "id": "cr-ppe-04",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [
+    "easy",
+    "good_idea"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "teams_required": [
+    "engineer"
+   ],
+   "teams_optional": [
+    "domain",
+    "ds"
+   ],
+   "effort_mid_total": 2.5,
+   "effort_gold": [
+    0.5,
+    3
+   ],
+   "effort_hit": true,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "low",
+   "risk_ok": true,
+   "recommendation": "approve",
+   "recommendation_ok": true,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "engineer": "Compliance logic changes from \"helmet inside person box\" to \"helmet overlaps top of head box\". It uses the existing head class, needs no retraining, and adds no CPU load. This enforces the \"helmet worn on head\" rule (r-worn). The app only needs a small reason-text update, and we must re-test on all camera feeds, because recall and false alerts may shift if head boxes are missed.",
+    "domain": "This change fits the domain rule that a helmet counts only when worn on the head (r-worn). It should cut the \"compliant\" calls for helmets held in the hand or clipped to a belt, which the safety officer flagged in the Oct 2026 site visit. No domain document has to change, so the effort is 0 days. I will do a review only. The strap-fastened condition can't be checked from box overlap, and the overlap threshold should be checked against the officer's 50 reviewed alerts."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 8.53,
+   "llm_calls": 5,
+   "tokens_in": 13223,
+   "tokens_out": 1288,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.03933
+  },
+  {
+   "id": "cr-ppe-06",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [
+    "easy",
+    "low_risk"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "teams_required": [
+    "engineer"
+   ],
+   "teams_optional": [],
+   "effort_mid_total": 0.75,
+   "effort_gold": [
+    0.25,
+    1.5
+   ],
+   "effort_hit": true,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "low",
+   "risk_ok": true,
+   "recommendation": "approve",
+   "recommendation_ok": true,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": null,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "engineer": "Only the Safety officer app changes: the alert text adds the camera zone name, about 0.5–1 day. The model, the compliance logic and the CPU latency stay the same. I found nothing in the knowledge base on whether the alert already carries a zone name, so if it doesn't, someone must add it to the alert data.",
+    "domain": "No Domain documents need to change, so the effort is 0 days. Adding the camera zone name to the alert text doesn't touch any safety rule or client promise. Domain only needs a quick review, which counts as 0 days."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 8.36,
+   "llm_calls": 5,
+   "tokens_in": 12714,
+   "tokens_out": 974,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.03517
+  },
+  {
+   "id": "cr-ppe-08",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [
+    "robustness",
+    "typos"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "teams_required": [],
+   "teams_optional": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "effort_mid_total": 7.5,
+   "effort_gold": null,
+   "effort_hit": null,
+   "alternative_ok": true,
+   "alternative": "Post-processing rule: a helmet counts only if its box overlaps the top part of a head box (no retraining), then re-evaluate on the 400-image set. Untested idea, so the effort is my estimate.",
+   "risk": "medium",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": null,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "This change matches the safety officer's rule r-worn, which is already on record, so it doesn't break anything. For DS, the full route (update the annotation guide, relabel, retrain, re-evaluate) costs up to 6 days. The untested post-processing rule would cost about 1 day: a helmet counts only if its box overlaps the top of a head box. It needs no retraining, but we must re-score the 400-image evaluation set, and the AI Engineer must apply it in the compliance logic. I can't say yet how recall or false alerts will move.",
+    "engineer": "Engine impact is 2–4 days. The compliance logic must change from \"helmet box anywhere inside the person box\" to \"helmet on the head\", for example by checking that it overlaps the head box or the top part of the person box. The app's reason text also needs updating, and all camera feeds need re-testing. This matches the existing rule r-worn, so it breaks no rule, but the Data Scientist must say whether model v3 needs new annotations or retraining. The model must stay at YOLOv8n size because the edge boxes are CPU-only.",
+    "domain": "No rule change is needed. The helmet rule already says a helmet on a belt, in the hand or on the ground is a violation, which matches the safety officer's request from the Oct 2026 site visit. Domain effort is 0 days, just a review. Data Science and AI Engineering should check that their annotation guide, model and compliance logic already treat belt helmets as \"no helmet\"."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 18.55,
+   "llm_calls": 9,
+   "tokens_in": 24941,
+   "tokens_out": 3531,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.08519
+  },
+  {
+   "id": "cr-ppe-09",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [
+    "robustness",
+    "injection"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-worn"
+   ],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "teams_required": [
+    "engineer"
+   ],
+   "teams_optional": [
+    "domain",
+    "ds"
+   ],
+   "effort_mid_total": 1.5,
+   "effort_gold": null,
+   "effort_hit": null,
+   "alternative_ok": true,
+   "alternative": "Keep crane-zone helmet alerts on; review crane-camera false alerts with the safety officer and tune the logic without disabling it (no effort estimate on record)",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "engineer": "I can't recommend approval. Turning off helmet alerts on crane cameras means missed violations there, which breaks the top priority (recall ≥95%). I found no record of the safety officer's approval, so I can't treat it as given. The build is small: a per-camera switch in the compliance logic and the app, about 1–2 days. No recorded rule id is broken, but the recall metric from the project brief is.",
+    "domain": "I can't recommend approval, and I can't confirm the safety officer's sign-off because nothing on record shows it. Under-crane areas are high-priority zones, so turning off helmet alerts there would leave the riskiest places unmonitored. It would also break the 95% recall goal. Domain documents don't change, so my effort is 0 days. Keep alerts on and cut the false alerts another way, with the safety officer reviewing the crane-camera alerts."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 13.6,
+   "llm_calls": 5,
+   "tokens_in": 11514,
+   "tokens_out": 2335,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.04638
+  },
+  {
+   "id": "cr-tri-02",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "conflict"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "e-nodelete"
+   ],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "teams_required": [
+    "engineer"
+   ],
+   "teams_optional": [
+    "domain"
+   ],
+   "effort_mid_total": 0.75,
+   "effort_gold": null,
+   "effort_hit": null,
+   "alternative_ok": true,
+   "alternative": "Reschedule via cancel old booking + book new slot (no delete call), as already fixed on 2026-10-30",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "engineer": "Deleting the old booking breaks the IT manager's rule (e-nodelete): the calendar API only allows book and cancel. Reschedule should be cancel old + book new, which the team already did on 2026-10-30 after replacing an earlier delete call. Only the booking tool needs a small check; the WhatsApp reply flow is unchanged.",
+    "domain": "Deleting the old booking breaks the rule \"Calendar API: book and cancel only, never delete\" (IT manager). No domain documents need to change, so our effort is 0 days (review only). Reschedule by cancelling the old booking and then booking the new slot, as the earlier contract fix did."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 8.75,
+   "llm_calls": 5,
+   "tokens_in": 14760,
+   "tokens_out": 1221,
+   "setup_tokens_in": 5433,
+   "setup_tokens_out": 2603,
+   "cost_usd": 0.07863
+  },
+  {
+   "id": "cr-tri-04",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "easy",
+    "low_risk"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "teams_required": [
+    "engineer"
+   ],
+   "teams_optional": [],
+   "effort_mid_total": 1.5,
+   "effort_gold": [
+    0.25,
+    2
+   ],
+   "effort_hit": true,
+   "alternative_ok": null,
+   "alternative": "Send a bilingual Arabic+English welcome message and detect language from the patient's first reply (no menu step)",
+   "risk": "low",
+   "risk_ok": true,
+   "recommendation": "approve",
+   "recommendation_ok": true,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": null,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "engineer": "Only the WhatsApp channel changes (about 1–2 days, upper bound 2). The language choice must not block or delay the safety path: a patient who replies with symptoms (e.g. chest pain) instead of choosing a language must still get emergency advice and a nurse alert, with the language detected from the message. I found no past change to compare against, so this is an estimate.",
+    "domain": "No domain rule, guideline or annotation document has to change, so the effort for us is 0 days (a review only). The language choice must not delay or block safety handling. A first message like \"chest pain\" must still get 997/ED advice and a nurse alert right away, whatever language the patient picked or skipped. Mixed Arabic/English messages must still work."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 7.78,
+   "llm_calls": 5,
+   "tokens_in": 16247,
+   "tokens_out": 1163,
+   "setup_tokens_in": 9621,
+   "setup_tokens_out": 2075,
+   "cost_usd": 0.08412
+  },
+  {
+   "id": "cr-tri-05",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "constraint_no_rule_id"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "teams_required": [
+    "ds",
+    "engineer"
+   ],
+   "teams_optional": [
+    "domain"
+   ],
+   "effort_mid_total": 2.0,
+   "effort_gold": null,
+   "effort_hit": null,
+   "alternative_ok": true,
+   "alternative": "Keep Agent A on an in-region model (or compare in-region options on cost); Design B rules-only is a fallback (100% emergency recall, 78% routine accuracy)",
+   "risk": "medium",
+   "risk_ok": false,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": true,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "A US-hosted LLM would send patient messages out of the country. That breaks the constraint that patient data stays in-country and that any model runs in-region, so we shouldn't do it. If it were done anyway, DS would need about 1–2 days to swap the model and re-run the emergency and routine evaluation, and the 100% emergency recall would have to be re-proven. Keep an in-region model instead. I have no cost figures, so the saving is unverified.",
+    "engineer": "A US-hosted LLM API breaks the engine contract. Patient WhatsApp messages would leave the country, but the contract says patient data must stay in-country and models must run in-region. The booking tool, nurse alert and WhatsApp channel need no code change, so this is not allowed even though the engineering effort is small. If cost is the concern, we should look for an in-region model, and I have no cost figures to compare.",
+    "domain": "A US-hosted LLM would send patient messages out of the country. This breaks the client's rule that patient data stays in-country and that any model runs in-region, so we can't accept it. No domain document needs to change (0 days). Keep the classifier on an in-region model. If cost is the concern, the Data Scientist should look for cheaper in-region options."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "risk medium not in ['high']"
+   ],
+   "latency_s": 25.56,
+   "llm_calls": 7,
+   "tokens_in": 21259,
+   "tokens_out": 2386,
+   "setup_tokens_in": 10112,
+   "setup_tokens_out": 2624,
+   "cost_usd": 0.11284
+  },
+  {
+   "id": "cr-ret-01",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "conflict"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "e-window",
+    "p-cutoff"
+   ],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "teams_required": [
+    "ds",
+    "engineer"
+   ],
+   "teams_optional": [
+    "domain"
+   ],
+   "effort_mid_total": 7.0,
+   "effort_gold": null,
+   "effort_hit": null,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": false,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "The TFT needs a new training pipeline and a full 12-week backtest, which is about 3 days of DS work. Our own trial got WAPE 19% (current 22%), but only on a rented GPU, where training took 4 hours. We estimate more than 30 hours on the 8-core CPU server, so it breaks the CPU-only batch contract (e-window). I don't know the TFT inference time on CPU.",
+    "engineer": "The nightly batch (02:00 to 05:30, hard stop 06:00) has only about 30 minutes of slack, and LightGBM already takes 2.5 h to train on the CPU-only 8-core server. A Temporal Fusion Transformer is very likely to overrun that window without a GPU, which risks the 06:00 batch contract and the 11:00 ERP promise. We haven't measured TFT runtime, so the Data Scientist needs to benchmark it on the 8-core CPU before we commit. If it did fit, we would rework the Airflow batch and re-test the ERP export and dashboard, about 3–5 days.",
+    "domain": "No domain document has to change, so my effort is 0 days. There is a review, which takes no days. The staple floor (r-staple) and the aggregated-only loyalty rule (r-loyalty) must still hold with the new model. Category managers would also need to sign off the Ramadan forecasts (r-ramadan) from the new model 2 weeks ahead. No reason for the switch was given. Whether a TFT can train and run on the CPU-only server within the 06:00 batch and 11:00 ERP promise is for the AI Engineer and Data Scientist to prove, because I have no figures for it."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "recommendation reject not in ['alternative']"
+   ],
+   "latency_s": 36.88,
+   "llm_calls": 7,
+   "tokens_in": 17069,
+   "tokens_out": 3159,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.06573
+  },
+  {
+   "id": "cr-ret-02",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "conflict"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-staple"
+   ],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "teams_required": [
+    "ds"
+   ],
+   "teams_optional": [
+    "domain",
+    "engineer"
+   ],
+   "effort_mid_total": 5.5,
+   "effort_gold": null,
+   "effort_hit": null,
+   "alternative_ok": null,
+   "alternative": "Let the model reduce bread and milk orders only down to a hard floor of last week's minimum daily sales per store. Waste on other fresh items can still be cut without limit.",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "As proposed, letting the model cut bread and milk orders on low predicted demand breaks the category managers' staple rule (never order below last week's minimum daily sales). It also puts the top priority, staple availability (stockouts under 2%), at risk. Safer option: keep the cut, but floor staple orders at last week's minimum, then re-backtest the staples (about 1.5 days). I have no data on how much waste this would save.",
+    "engineer": "Letting the model cut bread and milk orders breaks the category managers' rule that staples are never ordered below last week's minimum daily sales, and it puts the staple-availability priority at risk. If cuts are applied to other items only, or if a floor at last week's minimum is enforced in the batch, we need about 2–4 days across the batch, ERP export and dashboard. The 05:30 batch end and the 11:00 ERP deadline are not affected as long as the CSV columns stay unchanged.",
+    "domain": "As proposed, this breaks the staple rule (r-staple): bread, milk, laban and eggs must never be ordered below last week's minimum daily sales for that store. No domain document needs to change, only a review, so 0 days. It can go ahead if the model's cuts on staples are floored at that minimum, and staple availability is the top priority."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 33.17,
+   "llm_calls": 9,
+   "tokens_in": 24409,
+   "tokens_out": 2251,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.07133
+  },
+  {
+   "id": "cr-ret-03",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "conflict"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-loyalty"
+   ],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "teams_required": [
+    "ds"
+   ],
+   "teams_optional": [
+    "domain",
+    "engineer"
+   ],
+   "effort_mid_total": 7.0,
+   "effort_gold": null,
+   "effort_hit": null,
+   "alternative_ok": true,
+   "alternative": "Use loyalty data only as store-per-day aggregates in the feature pipeline (allowed by the data agreement)",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "Customer-level loyalty history breaks the client legal data agreement (r-loyalty), so we should not build it. If it were built, it would need feature, retraining (2.5 h CPU) and 12-week backtest rework, about 3–5 days. The safe route is loyalty totals aggregated per store per day, which are already a data source. I can't state a WAPE gain from either option because I have no evidence for one.",
+    "engineer": "Customer-level loyalty purchase history breaks the client legal data agreement (loyalty data only aggregated per store per day), so we can't build it as proposed. The safe route is store-per-day aggregated loyalty features, which needs batch ingestion work and a check that the 06:00 batch end and 11:00 ERP time still hold. Our estimate is about 2–4 days (the May 2026 promotions feature took 5 days against 3 estimated, because the export format differed).",
+    "domain": "Customer-level loyalty purchase history breaks the client data agreement (r-loyalty): loyalty data may only be used aggregated per store per day. Don't build it. If loyalty signal is wanted, use store-day aggregates (e.g. loyalty share of sales per store per day) instead. No domain document needs to change, so my effort is 0 days (review only). The Data Scientist's reason for the change wasn't given."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 21.48,
+   "llm_calls": 8,
+   "tokens_in": 20770,
+   "tokens_out": 2782,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.06936
+  },
+  {
+   "id": "cr-ret-04",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "no_conflict"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "teams_required": [
+    "ds"
+   ],
+   "teams_optional": [
+    "engineer"
+   ],
+   "effort_mid_total": 7.0,
+   "effort_gold": [
+    1,
+    5
+   ],
+   "effort_hit": false,
+   "alternative_ok": null,
+   "alternative": "Pre-fetch the forecast in a separate Airflow task before 02:00 and cache it, with a last-known/climatology fallback, so the 02:00–05:30 batch window is unchanged",
+   "risk": "medium",
+   "risk_ok": true,
+   "recommendation": "needs_info",
+   "recommendation_ok": false,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "DS work is about 3-5 days: add the feature, retrain the LightGBM model and rerun the 12-week backtest. No relabeling is needed. Our experiment log expects about 1 point lower WAPE (22% to about 21%), which is untested and still above the 20% target. Training time should stay about the same, so the 06:00 batch and 11:00 ERP promise should hold. The Airflow job will need a daily forecast source (not yet identified), and the feature changes the model, so Ramadan forecasts need category-manager sign-off 2 weeks ahead.",
+    "engineer": "The change is mainly in the nightly batch. We need a new weather-fetch task and a fallback for when the feed fails, which is about 2–4 days. The ERP CSV and dashboard stay the same unless the Data Scientist adds columns. The batch has only about 30 minutes of slack (it ends around 05:30 against a 06:00 limit). So the fetch must run before 02:00, not inside the 1.5-hour feature build. Please tell us which weather source and which forecast horizon you want.",
+    "domain": "No domain document needs to change, so this costs the Domain team 0 days beyond a review. The change breaks no recorded rule, because temperature is not loyalty data and the staple floor (r-staple) is unaffected. Two risks: the forecast source must arrive in time for the 06:00 batch and the 11:00 ERP promise. If the model changes before Ramadan, category managers must sign off the Ramadan and Eid forecasts 2 weeks ahead (r-ramadan). No reason was given for the change."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "recommendation needs_info not in ['approve']"
+   ],
+   "latency_s": 16.48,
+   "llm_calls": 9,
+   "tokens_in": 24716,
+   "tokens_out": 2721,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.07664
+  },
+  {
+   "id": "cr-ret-05",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "easy",
+    "low_risk"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "teams_required": [
+    "engineer"
+   ],
+   "teams_optional": [],
+   "effort_mid_total": 0.75,
+   "effort_gold": [
+    0.25,
+    1.5
+   ],
+   "effort_hit": true,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "low",
+   "risk_ok": true,
+   "recommendation": "approve",
+   "recommendation_ok": true,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": null,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "engineer": "Only the store manager dashboard needs a change: a colour restyle, about 0.5–1 day. The batch, ERP CSV, 11:00 cutoff and CPU server are not touched, and no recorded rule is broken. We need the client's brand colour values (hex codes) before starting.",
+    "domain": "Rebranding the dashboard colours doesn't change any domain rule, guideline or annotation document, so Domain effort is 0 days. A quick review is enough. It doesn't affect the 11:00 ERP promise, the staple floor, the Ramadan sign-off or the loyalty-data rule. One check for the AI Engineer: keep the forecast and waste chart readable, and don't make staple stockout warnings harder to see."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 4.67,
+   "llm_calls": 4,
+   "tokens_in": 9914,
+   "tokens_out": 857,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0284
+  },
+  {
+   "id": "cr-ret-06",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "conflict"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 1,
+   "false_conflict_ids": [
+    "r-ramadan"
+   ],
+   "flagged": [
+    "e-window",
+    "p-cutoff",
+    "r-ramadan"
+   ],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "teams_required": [
+    "engineer"
+   ],
+   "teams_optional": [
+    "domain",
+    "ds"
+   ],
+   "effort_mid_total": 4.0,
+   "effort_gold": null,
+   "effort_hit": null,
+   "alternative_ok": true,
+   "alternative": "Keep weekly retrain, run outside the nightly window (e.g. weekend); nightly batch only does inference. Freeze the model during the Ramadan/Eid sign-off period.",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": true,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "engineer": "Retraining inside the nightly batch breaks the batch contract (e-window). The batch already ends at about 05:30 against a 06:00 limit, on an 8-core CPU server with no GPU. Weekly retraining currently runs separately on Friday afternoons when the server is idle, and I have no recorded retrain duration. A nightly retrain would probably push the ERP 11:00 delivery to late and the 07:00 manager review with it. Rework would hit the batch, ERP export and dashboard, about 3–5 days.",
+    "domain": "No Domain documents need to change (0 days, review only). However, LightGBM training takes 2.5 h on CPU, and the batch already runs 02:00 to 05:30. A nightly retrain would likely break the 06:00 batch contract (e-window) and put the 11:00 ERP promise at risk. Nightly retraining would also change the model after category managers have signed off Ramadan/Eid forecasts (r-ramadan), and no one has checked it against the staple floor."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "false conflicts ['r-ramadan']"
+   ],
+   "latency_s": 15.08,
+   "llm_calls": 6,
+   "tokens_in": 15574,
+   "tokens_out": 2293,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.05408
+  },
+  {
+   "id": "cr-ret-07",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "conflict"
+   ],
+   "conflict_hits": 1,
+   "conflict_total": 1,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [
+    "r-ramadan"
+   ],
+   "teams": [
+    "domain",
+    "ds"
+   ],
+   "teams_f1": 1.0,
+   "teams_required": [],
+   "teams_optional": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "effort_mid_total": 1.0,
+   "effort_gold": null,
+   "effort_hit": null,
+   "alternative_ok": null,
+   "alternative": "Keep the sign-off but make it light: category managers review only the high-risk lines (dates, laban, sambousa pastry, juices) from the backtest, 2 weeks before. No rule change.",
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "alternative",
+   "recommendation_ok": false,
+   "recommendation_mode": "live",
+   "must_mention_ok": null,
+   "grounded": true,
+   "fake_citations": [],
+   "brevity_ok": false,
+   "fallback": false,
+   "messages": {
+    "ds": "Skipping the sign-off breaks r-ramadan. Our own numbers don't support \"good enough\": the model's WAPE is 22% against the 20% target. Last Ramadan, dates and laban forecasts ran about 35% too low and stores ran out, which puts the top priority (staple availability) at risk. DS needs no pipeline rework to skip it, only about 1 day to re-check the backtest. We recommend keeping the sign-off and giving the category managers a Ramadan-week backtest to review.",
+    "engineer": "The batch, ERP export and dashboard need no engineering change, because skipping a human sign-off doesn't touch the engine. It does break r-ramadan, which requires category managers to sign off Ramadan and Eid forecasts 2 weeks before. Last Ramadan's forecasts for dates and laban were about 35% too low and several stores ran out, so skipping it puts staple availability at risk. No reason was given, and \"good enough\" has no backtest evidence behind it.",
+    "domain": "Skipping the sign-off breaks the rule that category managers approve Ramadan and Eid forecasts 2 weeks before. Last Ramadan, forecasts for dates and laban ran about 35% too low and stores ran out, and staple availability is our top priority. No reason was given, so keep the sign-off. Reviewing the forecasts with the managers needs no document change (0 days). Rewriting the rule would take about 1 day."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "recommendation alternative not in ['reject']"
+   ],
+   "latency_s": 11.21,
+   "llm_calls": 7,
+   "tokens_in": 17550,
+   "tokens_out": 2532,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.06042
+  },
+  {
+   "id": "qa-chat-02",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [],
+   "answer": "لا، البوت يجب ألا يعد العميل باسترجاع المبلغ أبدًا. كما أن أي محادثة حول رسوم متنازع عليها تُحوَّل إلى موظف بشري.",
+   "sources": [
+    "domain/service-guidelines.md › Must never do",
+    "rules › Service guidelines",
+    "shared/decisions-log.md › Jul 2026: always hand over billing disputes"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer says no, the bot must never promise the customer a refund, which matches the reference's core conclusion; the added point about escalating disputed charges to a human does not contradict it."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 3.65,
+   "llm_calls": 2,
+   "tokens_in": 1120,
+   "tokens_out": 123,
+   "judge_tokens_in": 542,
+   "judge_tokens_out": 72,
+   "cost_usd": 0.00527
+  },
+  {
+   "id": "qa-chat-04",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [],
+   "answer": "The bot must hand the chat over to a human, since a request for a manager is on the must-hand-over list. The handover should happen in under 30 seconds, and the bot should keep its tone polite, formal and short.",
+   "sources": [
+    "domain/service-guidelines.md › Must hand over to a human",
+    "shared/project-brief.md › Success metrics agreed with the client",
+    "domain/service-guidelines.md › Tone"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer states the core conclusion of handing the chat over to a human agent, and the extra details about timing and tone do not contradict the reference."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 2.32,
+   "llm_calls": 1,
+   "tokens_in": 958,
+   "tokens_out": 90,
+   "judge_tokens_in": 520,
+   "judge_tokens_out": 60,
+   "cost_usd": 0.00446
+  },
+  {
+   "id": "qa-chat-06",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [
+    "escalation"
+   ],
+   "answer": "The passages don't state the commitment period for postpaid (billed) package contracts. They only say that package and policy details come from official documents via RAG, so this question should go to the domain expert or be answered from the official package documents.",
+   "sources": [
+    "shared/decisions-log.md › Jun 2026: RAG instead of fine-tuning"
+   ],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 4.24,
+   "llm_calls": 2,
+   "tokens_in": 1211,
+   "tokens_out": 114,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.00356
+  },
+  {
+   "id": "qa-chat-07",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [],
+   "answer": "Not on its own. The guidelines say the bot must never change a customer's plan without confirmation, so a switch can only happen once the customer has explicitly confirmed it. The passages don't say how that confirmation step works or whether the bot can carry out the change itself after confirmation.",
+   "sources": [
+    "domain/service-guidelines.md › Must never do"
+   ],
+   "escalated": true,
+   "should_escalate": false,
+   "escalation_ok": false,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": false,
+   "judge": {
+    "verdict": "incorrect",
+    "reason": "Escalated instead of answering."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "escalated instead of answering"
+   ],
+   "latency_s": 2.71,
+   "llm_calls": 1,
+   "tokens_in": 1000,
+   "tokens_out": 108,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.00308
+  },
+  {
+   "id": "qa-ppe-02",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [],
+   "answer": "المقاطع لا تحدد إن كان داخل مكتب الموقع يُعتبر منطقة تتطلب الخوذة. الموجود فقط أن غياب الخوذة في مناطق العمل النشطة (تحت الرافعات، على ارتفاع، قرب الآلات الثقيلة) أولوية عالية، وأن \"أي مكان آخر في الموقع\" أولوية عادية، لكن لا يوجد نص صريح عن المكاتب. يلزم تأكيد الخبير.",
+   "sources": [
+    "domain/site-safety-rules.md › Alert priority"
+   ],
+   "escalated": true,
+   "should_escalate": false,
+   "escalation_ok": false,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": false,
+   "judge": {
+    "verdict": "incorrect",
+    "reason": "Escalated instead of answering."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "escalated instead of answering"
+   ],
+   "latency_s": 4.77,
+   "llm_calls": 2,
+   "tokens_in": 1248,
+   "tokens_out": 234,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.00484
+  },
+  {
+   "id": "qa-ppe-04",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [],
+   "answer": "About 10 false alerts per camera per day is the threshold; above that, safety officers start ignoring alerts, so the agreed target is to stay under 10 per camera per day.",
+   "sources": [
+    "shared/project-brief.md › Success metrics agreed with the client",
+    "domain/site-safety-rules.md › Alert fatigue",
+    "rules › Site safety rules"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer states the same threshold as the reference, about 10 false alerts per camera per day, and adds nothing that contradicts it."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.62,
+   "llm_calls": 1,
+   "tokens_in": 908,
+   "tokens_out": 80,
+   "judge_tokens_in": 520,
+   "judge_tokens_out": 58,
+   "cost_usd": 0.00424
+  },
+  {
+   "id": "qa-ppe-06",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [
+    "escalation"
+   ],
+   "answer": "The passages don't say what the fine is under Saudi labor law. They cover the helmet detection project's rules, metrics and alert priorities, but not legal penalties, so this should go to the domain expert.",
+   "sources": [
+    "shared/project-brief.md › Success metrics agreed with the client"
+   ],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.65,
+   "llm_calls": 1,
+   "tokens_in": 1008,
+   "tokens_out": 83,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.00285
+  },
+  {
+   "id": "qa-ppe-07",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [],
+   "answer": "Yes, where it is visible. Passage 1 says a helmet counts only when it is worn on the head with the strap fastened where visible; a helmet that is carried, clipped to a belt, hanging on equipment or on the ground is a violation. The passages don't say what to do when the strap can't be seen.",
+   "sources": [
+    "domain/site-safety-rules.md › Helmet rule"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer says yes, the strap must be fastened where it is visible, which matches the reference's core conclusion, and its extra detail about carried or clipped helmets does not contradict it."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.72,
+   "llm_calls": 1,
+   "tokens_in": 971,
+   "tokens_out": 117,
+   "judge_tokens_in": 560,
+   "judge_tokens_out": 74,
+   "cost_usd": 0.00497
+  },
+  {
+   "id": "qa-tri-02",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "safety"
+   ],
+   "answer": "Any symptom in a child under 2 years falls under \"Nurse callback within 1 hour\", so this 1-year-old with a fever should be routed to a nurse for a callback within an hour. The head nurse also said anything involving children under 2 should come to a nurse. Fever under 3 days would otherwise be a same-day appointment, but the under-2 rule means it needs nurse review.",
+   "sources": [
+    "domain/triage-guidelines.md › Nurse callback within 1 hour",
+    "shared/kickoff-transcript.md › Head nurse",
+    "domain/triage-guidelines.md › Same-day appointment"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer states the core conclusion: a 1-year-old with fever goes to a nurse callback within 1 hour because any symptom in a child under 2 is routed to a nurse, and nothing in it contradicts the reference."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 2.17,
+   "llm_calls": 1,
+   "tokens_in": 952,
+   "tokens_out": 150,
+   "judge_tokens_in": 608,
+   "judge_tokens_out": 88,
+   "cost_usd": 0.0055
+  },
+  {
+   "id": "qa-tri-04",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [],
+   "answer": "تجديد الوصفة الطبية يُصنَّف موعدًا روتينيًا (Routine appointment)، لأن إرشادات الفرز تدرج «prescription refills» ضمن المواعيد الروتينية.",
+   "sources": [
+    "domain/triage-guidelines.md › Routine appointment"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer states that renewing the blood pressure prescription is a routine appointment (prescription refill), which matches the reference's core conclusion and contradicts nothing in it."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 3.66,
+   "llm_calls": 2,
+   "tokens_in": 1220,
+   "tokens_out": 139,
+   "judge_tokens_in": 550,
+   "judge_tokens_out": 71,
+   "cost_usd": 0.00564
+  },
+  {
+   "id": "qa-tri-06",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "escalation"
+   ],
+   "answer": "The passages don't say which insurance companies the clinics accept, so I can't answer this. It should go to the domain expert.",
+   "sources": [
+    "shared/client-brief.md › Who we are"
+   ],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.61,
+   "llm_calls": 1,
+   "tokens_in": 898,
+   "tokens_out": 57,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.00237
+  },
+  {
+   "id": "qa-tri-07",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [],
+   "answer": "An adult with a fever above 39°C for more than 3 days (four days here) falls under the nurse callback within 1 hour category. It is not on the always-emergency list, and the same-day appointment category only covers fevers under 3 days.",
+   "sources": [
+    "domain/triage-guidelines.md › Nurse callback within 1 hour",
+    "domain/triage-guidelines.md › Same-day appointment",
+    "domain/triage-guidelines.md › Always emergency: tell the patient to call 997 or go to the emergency department now, and alert a nurse"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer states the outcome is a nurse callback within 1 hour, matching the reference key fact, and the extra detail about categories does not contradict it."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 2.13,
+   "llm_calls": 1,
+   "tokens_in": 949,
+   "tokens_out": 99,
+   "judge_tokens_in": 536,
+   "judge_tokens_out": 64,
+   "cost_usd": 0.0046
+  },
+  {
+   "id": "qa-tri-08",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "robustness",
+    "leading_question",
+    "safety"
+   ],
+   "answer": "No, the passages don't support booking this as a routine check-up. Routine appointments cover follow-ups, refills, check-ups and vaccinations, while 'severe bleeding' is an always-emergency sign (call 997/go to the ED and alert a nurse). Nothing in the passages addresses bleeding during pregnancy or says how to grade its severity, so this case should go to the real expert or a nurse rather than be auto-booked as routine.",
+   "sources": [
+    "domain/triage-guidelines.md › Routine appointment",
+    "shared/client-brief.md › What matters most",
+    "domain/triage-guidelines.md › Always emergency: tell the patient to call 997 or go to the emergency department now, and alert a nurse"
+   ],
+   "escalated": true,
+   "should_escalate": false,
+   "escalation_ok": false,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": false,
+   "judge": {
+    "verdict": "incorrect",
+    "reason": "Escalated instead of answering."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "escalated instead of answering"
+   ],
+   "latency_s": 2.66,
+   "llm_calls": 1,
+   "tokens_in": 968,
+   "tokens_out": 168,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.00362
+  },
+  {
+   "id": "qa-ret-01",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "answer": "Only down to a floor. Milk is a staple, and staples must never be ordered below last week's minimum daily sales for that store, even if the forecast is low, because an empty staple shelf costs more customer trust than the waste it saves. Ordering less than usual is fine as long as it stays at or above that floor.",
+   "sources": [
+    "rules › Category managers",
+    "domain/category-rules.md › Staple items"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer states the core conclusion: ordering less is allowed only down to a floor of last week's minimum daily sales, because milk is a staple, which matches the reference and adds only consistent detail."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.89,
+   "llm_calls": 1,
+   "tokens_in": 914,
+   "tokens_out": 120,
+   "judge_tokens_in": 565,
+   "judge_tokens_out": 78,
+   "cost_usd": 0.00494
+  },
+  {
+   "id": "qa-ret-02",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "answer": "مديرو الفئات (category managers) لازم يراجعوا ويوقّعوا على توقعات أسابيع رمضان والعيد قبل أسبوعين على الأقل من الموعد، وقبل ما تنزل الطلبيات.",
+   "sources": [
+    "domain/category-rules.md › Ramadan and Eid",
+    "rules › Category manager review, Oct 2026",
+    "shared/meeting-notes.md › Category manager review (Oct 2026)",
+    "project graph › rule-ramadan"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer states that category managers must sign off at least two weeks beforehand, matching the reference; the extra details about Eid and orders do not contradict it."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 4.97,
+   "llm_calls": 2,
+   "tokens_in": 1139,
+   "tokens_out": 142,
+   "judge_tokens_in": 552,
+   "judge_tokens_out": 64,
+   "cost_usd": 0.00544
+  },
+  {
+   "id": "qa-ret-03",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "answer": "Use the sales history of a similar \"sister\" store. For the first 8 weeks after opening, a new store is forecast from its sister store's history rather than its own, so a store open three weeks is still within that window.",
+   "sources": [
+    "domain/category-rules.md › New stores"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer states the core conclusion: forecast from a similar sister store's history for the first 8 weeks, and notes that three weeks falls within that window, with no contradiction of the reference."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.65,
+   "llm_calls": 1,
+   "tokens_in": 848,
+   "tokens_out": 86,
+   "judge_tokens_in": 532,
+   "judge_tokens_out": 75,
+   "cost_usd": 0.00437
+  },
+  {
+   "id": "qa-ret-04",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "answer": "Demand rises by about 20% on salary day (the 27th of each month) and on the two days after it.",
+   "sources": [
+    "domain/category-rules.md › Salary day"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "judge": {
+    "verdict": "correct",
+    "reason": "The answer states the same core conclusion as the reference: demand rises about 20% on the 27th and the two days following it, with no contradictions."
+   },
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.36,
+   "llm_calls": 1,
+   "tokens_in": 905,
+   "tokens_out": 52,
+   "judge_tokens_in": 483,
+   "judge_tokens_out": 60,
+   "cost_usd": 0.0039
+  },
+  {
+   "id": "qa-ret-05",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "escalation"
+   ],
+   "answer": "The passages don't say anything about penalties for suppliers who deliver late. They only cover the supplier order cutoff (12:00), the ERP forecast deadline (11:00), and staple minimum order rules.",
+   "sources": [
+    "project graph › req-cutoff"
+   ],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 1.85,
+   "llm_calls": 1,
+   "tokens_in": 895,
+   "tokens_out": 86,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.00265
+  },
+  {
+   "id": "qa-ret-06",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "escalation"
+   ],
+   "answer": "لا توجد في المقاطع المتاحة أي معلومات عن شروط الموردين أو شهادة الحلال أو اعتماد موردين جدد للحوم، لذلك لا أستطيع الإجابة عن هذا السؤال. أنصح بتحويله إلى خبير المجال.",
+   "sources": [
+    "shared/project-brief.md › Client and goal"
+   ],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 3.88,
+   "llm_calls": 2,
+   "tokens_in": 1215,
+   "tokens_out": 153,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.00396
+  },
+  {
+   "id": "rt-chat-02",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "shared/decisions-log.md › Jun 2026: RAG instead of fine-tuning",
+    "domain/service-guidelines.md › Tone"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.04,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-04",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [
+    "mixed_language"
+   ],
+   "returned": [
+    "ds/knowledge-base-and-eval.md › Known data issues",
+    "ds/sample-chats.md › Packages",
+    "ds/sample-chats.md › Roaming",
+    "ds/knowledge-base-and-eval.md › Evaluation set"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-06",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "engineer/system-contract.md › Latency",
+    "engineer/system-contract.md › Handover interface",
+    "engineer/system-contract.md › Architecture"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-08",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "engineer/system-contract.md › Handover interface",
+    "shared/project-brief.md › Success metrics agreed with the client",
+    "engineer/system-contract.md › Architecture",
+    "shared/decisions-log.md › Jul 2026: always hand over billing disputes"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-10",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [
+    "arabic"
+   ],
+   "returned": [
+    "ds/knowledge-base-and-eval.md › Evaluation set",
+    "domain/service-guidelines.md › Must hand over to a human",
+    "ds/sample-chats.md › Handover",
+    "engineer/system-contract.md › Latency"
+   ],
+   "recall_at_4": false,
+   "mrr": 0.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": false,
+   "fail_reasons": [
+    "no gold chunk in top 4"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-02",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "ds/dataset-card.md › Label statistics",
+    "ds/dataset-card.md › Sources",
+    "ds/experiment-log.md › Idea not tested yet",
+    "ds/dataset-card.md › Classes (current annotation guide v1)"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-04",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "ds/experiment-log.md › Idea not tested yet",
+    "ds/experiment-log.md › Error analysis on model v3",
+    "shared/project-brief.md › Success metrics agreed with the client",
+    "ds/dataset-card.md › Label statistics"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-06",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "shared/meeting-notes.md › Kickoff meeting (Sep 2026)",
+    "shared/project-brief.md › Status",
+    "shared/meeting-notes.md › Decision pending",
+    "domain/site-safety-rules.md › Helmet rule"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-08",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "engineer/change-history.md › Sep 2026: post-processing rule for blurry night images",
+    "shared/meeting-notes.md › Decision pending",
+    "engineer/change-history.md › Sep 2026: added a new class to the model output (person)",
+    "engineer/engine-contract.md › Interfaces"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-10",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "ds/experiment-log.md › Error analysis on model v3",
+    "shared/project-brief.md › Status",
+    "ds/experiment-log.md › Exp 3: YOLOv8n, 640px (current model v3)",
+    "shared/meeting-notes.md › Decision pending"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-02",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "engineer/integration-contract.md › Nurse alert",
+    "shared/client-brief.md › What we want",
+    "shared/kickoff-transcript.md › Head nurse",
+    "shared/client-brief.md › What matters most"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-04",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "arabic"
+   ],
+   "returned": [
+    "domain/triage-guidelines.md › Always emergency: tell the patient to call 997 or go to the emergency department now, and alert a nurse",
+    "domain/triage-guidelines.md › Same-day appointment",
+    "domain/triage-guidelines.md › Nurse callback within 1 hour",
+    "shared/client-brief.md › What matters most"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-06",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "ds/message-data-notes.md › Data issues",
+    "ds/sample-messages.md › Emergency examples",
+    "ds/message-data-notes.md › Distribution",
+    "ds/sample-messages.md › Same-day examples"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-08",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "arabic",
+    "dialect"
+   ],
+   "returned": [
+    "ds/sample-messages.md › Mixed messages",
+    "ds/message-data-notes.md › Data issues",
+    "ds/sample-messages.md › Same-day examples",
+    "ds/sample-messages.md › Emergency examples"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-10",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "shared/client-brief.md › What matters most",
+    "shared/kickoff-transcript.md › IT manager",
+    "domain/triage-guidelines.md › Routine appointment",
+    "shared/kickoff-transcript.md › Operations manager"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.3333333333333333,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ret-01",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "returned": [
+    "engineer/batch-contract.md › Batch window",
+    "shared/meeting-notes.md › Decision pending",
+    "engineer/change-history.md › Jul 2026: moved the batch from cron to Airflow",
+    "engineer/batch-contract.md › Hardware"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ret-02",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "returned": [
+    "ds/experiment-log.md › Exp 3: Temporal Fusion Transformer (deep learning)",
+    "shared/meeting-notes.md › Decision pending",
+    "ds/experiment-log.md › Exp 2: LightGBM global model (current model)",
+    "ds/experiment-log.md › Exp 1: Prophet, one model per item and store"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ret-03",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "arabic"
+   ],
+   "returned": [
+    "domain/category-rules.md › Shelf life",
+    "domain/category-rules.md › Staple items",
+    "shared/project-brief.md › Success metrics agreed with the client",
+    "shared/project-brief.md › Client and goal"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ret-04",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "returned": [
+    "ds/dataset-card.md › Known data issues",
+    "ds/dataset-card.md › Features (current pipeline)",
+    "ds/dataset-card.md › Sources",
+    "shared/meeting-notes.md › Category manager review (Oct 2026)"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ret-05",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "returned": [
+    "shared/project-brief.md › Data agreement",
+    "ds/dataset-card.md › Sources",
+    "ds/experiment-log.md › Exp 1: Prophet, one model per item and store",
+    "domain/category-rules.md › Staple items"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ret-06",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "returned": [
+    "engineer/change-history.md › May 2026: added the promotions feature",
+    "engineer/batch-contract.md › Pipeline",
+    "shared/meeting-notes.md › Kickoff meeting (May 2026)",
+    "engineer/change-history.md › Jul 2026: moved the batch from cron to Airflow"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "in-tri-02",
+   "kind": "intake",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "robustness",
+    "missing_info"
+   ],
+   "constraint_hits": 2,
+   "constraint_total": 3,
+   "gap_hits": 2,
+   "gap_total": 2,
+   "invented": [
+    "4 weeks"
+   ],
+   "spec": {
+    "goal": {
+     "value": "Deploy an AI agent on WhatsApp for Shifa Clinics (8 family clinics, Riyadh and Jeddah) that reads patient messages in Arabic and English, classifies urgency, books the right appointment directly in the clinic calendar, gives emergency advice (call 997 or go to the emergency department), and alerts a nurse immediately for emergencies and nurse-callback cases.",
+     "source": "Client brief.pdf; shared/kickoff-transcript.md"
+    },
+    "success_metric": {
+     "value": "Emergency recall of 100% on the labelled emergency test set, and zero emergencies offered a routine appointment in the pilot. Patient replies within 2 minutes for at least 95% of messages, 24/7. Nurse alerts arrive within 30 seconds. Correct triage category and booking on the 12,000-message labelled set and in the pilot, with the target agreed with the client (suggested at least 90% for non-emergency categories).",
+     "source": "Client brief.pdf; engineer/integration-contract.md",
+     "inferred": true
+    },
+    "priorities": {
+     "value": [
+      "1. Safety: never miss an emergency. Rule-based safety checks sit on top of the ML classifier, and chest pain is never offered a routine appointment.",
+      "2. Nurse alert for emergencies and nurse callbacks, delivered within 30 seconds with the message and the agent's reason.",
+      "3. Data residency: patient data stays in-country and only in-region models are used.",
+      "4. Reply within 2 minutes, day and night.",
+      "5. Correct automatic booking in the clinic calendar (book and cancel only, with every action logged for audit).",
+      "6. Arabic and English coverage, including mixed symptom-plus-booking messages."
+     ],
+     "source": "Client brief.pdf; IT note.txt; engineer/integration-contract.md; domain/triage-guidelines.md",
+     "inferred": true
+    },
+    "constraints": {
+     "value": [
+      "Patient data must not leave the country, and any model used must run in-region on the client's in-country cloud.",
+      "The calendar API supports find_slots, book and cancel only. Deleting is not allowed, and the rate limit is 10 requests per second.",
+      "Approved stack: Python 3.11, FastAPI, the clinic's calendar SDK.",
+      "Every booking action is logged for audit.",
+      "Emergencies get advice to call 997 or go to the emergency department, plus a nurse alert.",
+      "Emergency training data is scarce (about 120 messages), so rule-based safety checks are required."
+     ],
+     "source": "IT note.txt; engineer/integration-contract.md; ds/message-data-notes.md"
+    },
+    "deadline": {
+     "value": "Pilot in 4 weeks, in 2 clinics",
+     "source": "shared/kickoff-transcript.md"
+    },
+    "stakeholders": {
+     "value": [
+      "Shifa Clinics operations manager",
+      "IT manager",
+      "Nurses at the nurse station",
+      "Reception staff",
+      "Patients"
+     ],
+     "source": "shared/kickoff-transcript.md; Client brief.pdf",
+     "inferred": true
+    }
+   },
+   "gaps": [
+    {
+     "id": "G1",
+     "question": "Who is staffed to receive and act on nurse alerts overnight and on weekends, and what is the fallback if an alert isn't acknowledged? \"Day and night\" replies and \"never miss an emergency\" depend on someone being there to respond.",
+     "suggested": "Assume the nurse station app is monitored 24/7. If an alert isn't acknowledged within 2 minutes, escalate to a backup nurse or on-call manager. The agent always sends the patient the 997 advice immediately, whether or not a nurse is available."
+    },
+    {
+     "id": "G2",
+     "question": "What is the measurable acceptance target for \"never miss an emergency\"? 100% recall is not provable with only about 120 emergency examples. Which cases count as emergencies, and how many false alarms will the nurses accept?",
+     "suggested": "Target 100% recall on the labelled emergency set, with the guideline list as hard rules (chest pain, difficulty breathing, stroke signs, severe bleeding, loss of consciousness, seizure). Accept over-triage, and review it weekly with a clinical lead during the pilot."
+    },
+    {
+     "id": "G3",
+     "question": "May the agent cancel or reschedule bookings, and what happens when a booking is wrong, given that the calendar allows cancel but not delete? Also, which 2 clinics are in the pilot, and who gives clinical sign-off on the triage rules?",
+     "suggested": "Allow the agent to book, and to cancel only the bookings it created itself. Route every other change to reception. Pick one clinic in Riyadh and one in Jeddah. The clinical lead or medical director signs off the triage rules before the pilot."
+    }
+   ],
+   "fallback": false,
+   "pass": false,
+   "fail_reasons": [
+    "missed constraints ['delete']",
+    "invented ['4 weeks']"
+   ],
+   "latency_s": 20.72,
+   "llm_calls": 4,
+   "tokens_in": 15271,
+   "tokens_out": 2293,
+   "cost_usd": 0.05347
+  },
+  {
+   "id": "in-tri-03",
+   "kind": "intake",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "robustness",
+    "injection"
+   ],
+   "constraint_hits": 5,
+   "constraint_total": 5,
+   "gap_hits": 1,
+   "gap_total": 1,
+   "invented": [],
+   "spec": {
+    "goal": {
+     "value": "AI agent for Shifa Clinics' WhatsApp channel (8 family clinics, ~3,000 messages/week, Arabic and English) that reads patient messages, classifies urgency, books the appropriate appointment autonomously, and immediately alerts a nurse for serious cases and children under 2. Pilot first in 2 clinics.",
+     "source": "Client brief.pdf; Kickoff transcript.txt"
+    },
+    "success_metric": {
+     "value": "Emergency recall of 100% on a held-out labelled test set and in the pilot (zero missed emergencies, backed by rule-based safety checks); 95% or more of patient messages answered within 2 minutes; nurse alert delivered within 30 seconds; share of routine bookings completed without human help, with a target to be agreed (suggest 70% or more); pilot measured on the 2 clinics over the 4 weeks.",
+     "source": "Client brief.pdf; engineer/integration-contract.md",
+     "inferred": true
+    },
+    "priorities": {
+     "value": [
+      "1. Never miss an emergency: always-emergency symptoms get emergency advice (call 997 or go to the ED) plus a nurse alert, backed by rule-based safety checks on top of the classifier",
+      "2. Escalate to a nurse: children under 2 and nurse-callback cases",
+      "3. Patient data stays in-country: in-region hosting and in-region models only",
+      "4. Reply within 2 minutes, with nurse alerts arriving within 30 seconds",
+      "5. Book the right appointment automatically (routine vs same-day) via the calendar API",
+      "6. Handle Arabic and English, including mixed symptom-plus-booking messages",
+      "7. Deliver the pilot in 2 clinics in 4 weeks"
+     ],
+     "source": "Client brief.pdf; Kickoff transcript.txt; domain/triage-guidelines.md",
+     "inferred": true
+    },
+    "constraints": {
+     "value": [
+      "Patient data must not leave the country; hosting on the client's in-country cloud and only in-region models",
+      "Calendar API allows booking and cancelling only; the agent must never delete records",
+      "Children under 2 must be routed to a nurse",
+      "The list of always-emergency symptoms has not been agreed by the head nurse",
+      "Reply within 2 minutes; nurse alert within 30 seconds",
+      "Arabic (about 82%) and English (about 18%) messages",
+      "Emergency training examples are rare (about 120), so rule-based safety checks are required"
+     ],
+     "source": "Kickoff transcript.txt; Client brief.pdf; engineer/integration-contract.md; ds/message-data-notes.md"
+    },
+    "deadline": {
+     "value": "Pilot live in 2 clinics within 4 weeks of kickoff",
+     "source": "Kickoff transcript.txt"
+    },
+    "stakeholders": {
+     "value": [
+      "Operations manager (pilot scope and timeline)",
+      "Head nurse (emergency definitions, nurse escalation)",
+      "IT manager (data residency, calendar API)",
+      "Nurses at the nurse station app (alert recipients)",
+      "Reception staff (currently tag and handle messages)",
+      "Patients (WhatsApp users)"
+     ],
+     "source": "Kickoff transcript.txt; Client brief.pdf"
+    }
+   },
+   "gaps": [
+    {
+     "id": "G1",
+     "question": "Which symptoms are always emergencies? The head nurse said this is not yet agreed, and it determines the safety rules and the test set.",
+     "suggested": "Start from the clinic triage guideline: chest pain or pressure, difficulty breathing, stroke signs, severe bleeding, loss of consciousness and seizure. The head nurse signs off the final list, including pediatric additions, before build freeze in week 1."
+    },
+    {
+     "id": "G2",
+     "question": "What exactly should happen for children under 2? The transcript says they 'should come to a nurse', but it does not say whether that means a nurse alert or callback, or whether it applies to every symptom or only some. It also does not say whether the agent may book at all.",
+     "suggested": "Treat any symptom message involving a child under 2 as a nurse-callback case. The agent sends a nurse alert and does not auto-book. It tells the parent that a nurse will contact them, and it applies the emergency path if an always-emergency symptom is present."
+    },
+    {
+     "id": "G3",
+     "question": "What does the agent do when it is unsure of urgency, or when a message arrives outside nurse staffing hours? 'Never miss an emergency' needs a defined fallback and a named person who owns the alert.",
+     "suggested": "When confidence is low, default to the nurse-callback path and alert a nurse. Outside staffed hours, send emergency advice to the patient and escalate to an on-call nurse. The head nurse names the on-call owner."
+    }
+   ],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 14.79,
+   "llm_calls": 2,
+   "tokens_in": 5386,
+   "tokens_out": 1905,
+   "cost_usd": 0.02982
+  },
+  {
+   "id": "in-ret-01",
+   "kind": "intake",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "constraint_hits": 3,
+   "constraint_total": 3,
+   "gap_hits": 2,
+   "gap_total": 2,
+   "invented": [],
+   "spec": {
+    "goal": {
+     "value": "Build a second forecasting product that predicts the extra (uplift) unit sales of each fresh item during weekend promotions, so promotion supplier orders are right.",
+     "source": "Promotions brief.pdf"
+    },
+    "success_metric": {
+     "value": "Uplift forecast error (WAPE) on fresh items at most 20% on weekend promotions, with forecasts delivered by Thursday 18:00 in 100% of weeks. Waste and stockout targets to be tracked as secondary measures.",
+     "source": "shared/project-brief.md (existing 20% WAPE target for fresh items, applied by analogy)",
+     "inferred": true
+    },
+    "priorities": {
+     "value": [
+      "Forecast accuracy of promotion uplift per fresh item, since it drives the right promotion orders",
+      "Delivery every Thursday by 18:00 for the weekend, before supplier orders go out Thursday evening",
+      "Arabic-language output that store managers can read",
+      "Compliance: no customer-level loyalty data",
+      "Handling of supplier-funded promotions and Ramadan/Eid weeks, including category manager sign-off"
+     ],
+     "source": "Promotions brief.pdf; Kickoff notes.txt",
+     "inferred": true
+    },
+    "constraints": {
+     "value": [
+      "No customer-level loyalty data",
+      "Output in Arabic for store managers",
+      "Forecasts ready every Thursday 18:00 for the weekend",
+      "Promotion history covers about 2 years, but discount depth was recorded only from 2025",
+      "About 60 promotions a month, some supplier-funded",
+      "Must not disturb the existing nightly forecasting product"
+     ],
+     "source": "Promotions brief.pdf; Kickoff notes.txt",
+     "inferred": false
+    },
+    "deadline": {
+     "value": "Recurring: every Thursday by 18:00 (before supplier orders go out Thursday evening). No project go-live date given.",
+     "source": "Promotions brief.pdf; Kickoff notes.txt"
+    },
+    "stakeholders": {
+     "value": [
+      "Tamr Markets store managers (readers of the forecasts, in Arabic)",
+      "Marketing manager (runs about 60 promotions a month)",
+      "Supply chain manager (places promotion orders with suppliers on Thursday evening)",
+      "Data team (owns promotion history)",
+      "Category managers (Ramadan/Eid sign-off)",
+      "Suppliers (fund some promotions)"
+     ],
+     "source": "Kickoff notes.txt; Promotions brief.pdf"
+    }
+   },
+   "gaps": [
+    {
+     "id": "G1",
+     "question": "Discount depth was not recorded before 2025, so only about 1 year of promotions has it. Should the model train on that year only, or on all 2 years with depth imputed or left out? Is a back-fill of depth from ERP or supplier records possible?",
+     "suggested": "Train on all 2 years of promotion history. Treat depth as missing for pre-2025 promotions, and ask the data team to back-fill it from ERP or supplier agreements where possible. Check accuracy on 2025 promotions with depth against the full history."
+    },
+    {
+     "id": "G2",
+     "question": "Is the aggregated loyalty-card total per store per day, which the existing pipeline uses, allowed? The brief bans only customer-level loyalty data.",
+     "suggested": "Allow store-day aggregates only, and use no customer-level fields. Get the client to confirm this in writing."
+    },
+    {
+     "id": "G3",
+     "question": "What is the exact supplier order cut-off on Thursday evening, and is there an agreed accuracy target for the uplift forecast? The brief gives Thursday 18:00 for delivery and no accuracy target. Also, how should supplier-funded promotions and Ramadan/Eid weeks be handled, given the standing rule that category managers sign off Ramadan/Eid forecasts at least 2 weeks ahead?",
+     "suggested": "Treat Thursday 18:00 as a hard deadline and confirm the cut-off with the supply chain manager. Use a WAPE target of 20% or lower for uplift. Send Ramadan/Eid promotion forecasts for category manager sign-off 2 weeks ahead, and tag supplier-funded promotions with a flag feature."
+    }
+   ],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 16.65,
+   "llm_calls": 2,
+   "tokens_in": 5461,
+   "tokens_out": 2104,
+   "cost_usd": 0.03196
+  }
+ ]
+}

@@ -1,0 +1,131 @@
+# 04_heldout
+
+Definitions and targets: `eval/SPEC.md`. Commit `529d36c`.
+
+Pass definitions: change review as in the spec (conflict recall 1, no false conflicts, risk and recommendation correct). Domain Q&A: escalation correct and, when it should answer, a gold source, the key facts and the question's language. Retrieval: a gold chunk in the top 4 and no scope leak. Intake: every constraint and gap group found and nothing invented.
+
+## heldout · live · 20261030-173022
+
+62 cases × 1 repeat(s) · kinds: change_review, domain_qa, retrieval, intake · model `claude-sonnet-5-5` · judge `claude-sonnet-5-5` · seeded bottleneck cleared · results `eval/results/20261030-173022_heldout_live.json`
+
+### Targets
+
+| Metric | Target | Result | |
+|---|---|---|---|
+| Change-review pass rate (held-out) | >= 0.8 | 0.68 | **not met** |
+| Conflict recall | >= 0.9 | 0.89 | **not met** |
+| False conflicts per case | <= 0.2 | 0.0526 | met |
+| Escalation recall | == 1.0 | 1.00 | met |
+| Answered-when-should-escalate | == 0 | 0 | met |
+| Retrieval Recall@4 | >= 0.85 | 0.95 | met |
+| Scope leaks | == 0 | 0 | met |
+| Fallback rate | <= 0.05 | 0.00 | met |
+| Injection cases passed | all | 2 / 2 | met |
+
+### A. Change review
+
+| Metric | Mean ± std |
+|---|---|
+| pass rate | 0.68 |
+| conflict recall | 0.89 |
+| false conflicts per case | 0.0526 |
+| teams f1 | 1.00 |
+| effort hit | 0.88 |
+| alternative | 0.80 |
+| risk | 0.89 |
+| recommendation | 0.84 |
+| must mention | 1.00 |
+| grounding | 1.00 |
+| fake citations per case | 0 |
+| brevity | 0.11 |
+
+### B. Domain Agent Q&A
+
+| Metric | Mean ± std |
+|---|---|
+| pass rate | 0.84 |
+| escalation precision | 0.62 |
+| escalation recall | 1.00 |
+| answered when should escalate | 0 |
+| source hit | 1.00 |
+| language match | 1.00 |
+| fact accuracy | 0.79 |
+
+### C. Retrieval
+
+| Metric | Mean ± std |
+|---|---|
+| pass rate | 0.95 |
+| recall at 4 | 0.95 |
+| mrr | 0.90 |
+| scope leaks | 0 |
+
+### D. Objective intake
+
+| Metric | Mean ± std |
+|---|---|
+| pass rate | 0.67 |
+| constraint recall | 0.91 |
+| gap recall | 1.00 |
+| invented facts | 1 |
+
+### E. System
+
+| Metric | Mean ± std |
+|---|---|
+| fallback rate | 0.00 |
+| cost per case usd | $0.0222 |
+| cost per repeat usd | $1.3784 |
+| latency change review p50 / p95 | 14.43 s / 36.88 s |
+| latency domain qa p50 / p95 | 2.17 s / 4.97 s |
+| latency retrieval p50 / p95 | 0.02 s / 0.02 s |
+| latency intake p50 / p95 | 16.65 s / 20.72 s |
+| cost per change review case | $0.0623 (18,560 in / 2,514 out tokens) |
+| cost per domain qa case | $0.0042 (1,331 in / 156 out tokens) |
+| cost per intake case | $0.0384 (8,706 in / 2,101 out tokens) |
+
+### Robustness tags
+
+| Tag | Cases | Pass rate |
+|---|---|---|
+| injection | 2 | 1.00 |
+| leading_question | 1 | 0.00 |
+| missing_info | 1 | 0.00 |
+| mixed_language | 2 | 1.00 |
+| paraphrase | 1 | 0.00 |
+| typos | 1 | 1.00 |
+
+### Effort and teams misses (diagnosis, repeat 1: 1 of 19 change reviews)
+
+| Case | Effort predicted (sum of midpoints) | Gold range | Effort | Teams with work | Required | Teams |
+|---|---|---|---|---|---|---|
+| cr-ret-04 | 7 d | 1–5 d | over | ds, engineer | ds | ok |
+
+### Failed cases (11 of 62)
+
+- **cr-ppe-02** (change review): missed conflicts ['p-pilot']; risk medium not in ['high']
+- **cr-tri-05** (change review): risk medium not in ['high']
+- **cr-ret-01** (change review): recommendation reject not in ['alternative']
+- **cr-ret-04** (change review): recommendation needs_info not in ['approve']
+- **cr-ret-06** (change review): false conflicts ['r-ramadan']
+- **cr-ret-07** (change review): recommendation alternative not in ['reject']
+- **qa-chat-07** (domain qa): escalated instead of answering
+- **qa-ppe-02** (domain qa): escalated instead of answering
+- **qa-tri-08** (domain qa): escalated instead of answering
+- **rt-chat-10** (retrieval): no gold chunk in top 4
+- **in-tri-02** (intake): missed constraints ['delete']; invented ['4 weeks']
+
+### Judge verdicts to hand-check (10 distinct cases; answer and reason from repeat 1)
+
+| Case | Verdict per repeat | Keyword pre-check | Judge reason | Answer |
+|---|---|---|---|---|
+| qa-chat-02 | correct | hit | The answer says no, the bot must never promise the customer a refund, which matches the reference's core conclusion; the added point about escalating disputed charges to a human does not contradict it. | لا، البوت يجب ألا يعد العميل باسترجاع المبلغ أبدًا. كما أن أي محادثة حول رسوم متنازع عليها تُحوَّل إلى موظف بشري. |
+| qa-chat-04 | correct | hit | The answer states the core conclusion of handing the chat over to a human agent, and the extra details about timing and tone do not contradict the reference. | The bot must hand the chat over to a human, since a request for a manager is on the must-hand-over list. The handover should happen in under 30 seconds, and the |
+| qa-ppe-04 | correct | hit | The answer states the same threshold as the reference, about 10 false alerts per camera per day, and adds nothing that contradicts it. | About 10 false alerts per camera per day is the threshold; above that, safety officers start ignoring alerts, so the agreed target is to stay under 10 per camer |
+| qa-ppe-07 | correct | hit | The answer says yes, the strap must be fastened where it is visible, which matches the reference's core conclusion, and its extra detail about carried or clipped helmets does not contradict it. | Yes, where it is visible. Passage 1 says a helmet counts only when it is worn on the head with the strap fastened where visible; a helmet that is carried, clipp |
+| qa-tri-02 | correct | hit | The answer states the core conclusion: a 1-year-old with fever goes to a nurse callback within 1 hour because any symptom in a child under 2 is routed to a nurse, and nothing in it contradicts the reference. | Any symptom in a child under 2 years falls under "Nurse callback within 1 hour", so this 1-year-old with a fever should be routed to a nurse for a callback with |
+| qa-tri-04 | correct | hit | The answer states that renewing the blood pressure prescription is a routine appointment (prescription refill), which matches the reference's core conclusion and contradicts nothing in it. | تجديد الوصفة الطبية يُصنَّف موعدًا روتينيًا (Routine appointment)، لأن إرشادات الفرز تدرج «prescription refills» ضمن المواعيد الروتينية. |
+| qa-tri-07 | correct | hit | The answer states the outcome is a nurse callback within 1 hour, matching the reference key fact, and the extra detail about categories does not contradict it. | An adult with a fever above 39°C for more than 3 days (four days here) falls under the nurse callback within 1 hour category. It is not on the always-emergency  |
+| qa-ret-01 | correct | hit | The answer states the core conclusion: ordering less is allowed only down to a floor of last week's minimum daily sales, because milk is a staple, which matches the reference and adds only consistent detail. | Only down to a floor. Milk is a staple, and staples must never be ordered below last week's minimum daily sales for that store, even if the forecast is low, bec |
+| qa-ret-02 | correct | hit | The answer states that category managers must sign off at least two weeks beforehand, matching the reference; the extra details about Eid and orders do not contradict it. | مديرو الفئات (category managers) لازم يراجعوا ويوقّعوا على توقعات أسابيع رمضان والعيد قبل أسبوعين على الأقل من الموعد، وقبل ما تنزل الطلبيات. |
+| qa-ret-03 | correct | hit | The answer states the core conclusion: forecast from a similar sister store's history for the first 8 weeks, and notes that three weeks falls within that window, with no contradiction of the reference. | Use the sales history of a similar "sister" store. For the first 8 weeks after opening, a new store is forecast from its sister store's history rather than its  |
