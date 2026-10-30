@@ -25,6 +25,8 @@ export const api = {
   decide: (cid, body) => req(`/api/proposals/${cid}/decide`, { method: "POST", body }),
   intake: (id) => req(`/api/products/${id}/intake`, { method: "POST" }),
   confirm: (id, answers) => req(`/api/products/${id}/confirm`, { method: "POST", body: { answers } }),
-  ask: (id, question) => req(`/api/products/${id}/ask`, { method: "POST", body: { question } }),
+  ask: (id, question, agent) => req(`/api/products/${id}/ask`, { method: "POST", body: { question, agent } }),
+  rerun: (cid) => req(`/api/proposals/${cid}/rerun`, { method: "POST" }),
+  health: () => req("/api/health"),
   reset: () => req("/api/reset", { method: "POST" }),
 };

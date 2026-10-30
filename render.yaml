@@ -9,6 +9,10 @@ services:
     healthCheckPath: /api/health
     envVars:
       - key: AGENT_MODE
-        value: demo
+        value: auto
+      - key: ANTHROPIC_API_KEY
+        sync: false   # paste your key in the Render dashboard; without it the agents run in demo mode
+      - key: CLAUDE_MODEL
+        value: claude-sonnet-5-5
       - key: ALLOWED_ORIGINS
         value: "*"

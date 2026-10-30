@@ -95,30 +95,35 @@ def assess_change(product: dict, node_id: str, option: dict, proposer: str) -> d
         responses.append({"agent": TEAM_AGENTS["domain"], "team": "domain", "team_name": ROLES["domain"],
                           "effort_range": (0, 0), "effort_text": "no work", "nodes": [], "message": dmsg})
 
-    # --- decide risk level and who must approve ------------------------
+    return finalize_card(product, nodes, option, proposer, responses, conflicts, option.get("alternative"), "demo")
+
+
+def finalize_card(product, nodes, option, proposer, responses, conflicts, alternative, mode, blocked=False):
+    """Shared by demo and live agents: risk level, verdict, and who must approve."""
+    severity = option.get("severity", 1.0)
     other_teams = {r["team"] for r in responses if r["team"] != proposer and r["effort_range"][1] > 0}
     touches_objective = any(n["kind"] == "objective" for n in nodes)
-    if conflicts or touches_objective or severity >= 1.6:
+    total = sum(r["effort_range"][1] for r in responses)
+    if conflicts or blocked or touches_objective or severity >= 1.6 or total > 10:
         risk = "high"
     elif other_teams:
         risk = "medium"
     else:
         risk = "low"
 
-    approvers = sorted(other_teams)
-    if conflicts:
-        approvers = sorted(set(approvers) | {"lead"})
-    if risk == "high" and "lead" not in approvers:
-        approvers.append("lead")
-
-    total = sum(r["effort_range"][1] for r in responses)
-    verdict = "conflict" if conflicts else ("works_with_changes" if other_teams else "works")
+    approvers = set(other_teams)
+    if conflicts or risk == "high":
+        approvers.add("lead")
+    if conflicts or blocked:
+        verdict = "conflict"
+    else:
+        verdict = "works_with_changes" if other_teams else "works"
 
     return {
         "id": "chg-" + uuid.uuid4().hex[:6],
         "product_id": product["id"],
-        "node_id": node_id,
-        "node_label": origin["label"],
+        "node_id": nodes[0]["id"],
+        "node_label": nodes[0]["label"],
         "option_id": option.get("id", "custom"),
         "title": option["label"],
         "rationale": option.get("rationale", ""),
@@ -128,12 +133,13 @@ def assess_change(product: dict, node_id: str, option: dict, proposer: str) -> d
         "metric_delta": option.get("metric_delta", {}),
         "responses": responses,
         "conflicts": conflicts,
-        "alternative": option.get("alternative"),
+        "alternative": alternative,
         "risk": risk,
         "verdict": verdict,
         "total_effort_max": total,
-        "approvers": [] if risk == "low" else approvers,
+        "approvers": [] if risk == "low" else sorted(approvers),
         "status": "auto_approved" if risk == "low" else "pending",
+        "mode": mode,
         "created_at": now(),
     }
 

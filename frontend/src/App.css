@@ -110,3 +110,17 @@ input { width: 100%; border: 1px solid var(--line); background: var(--panel); bo
   .panel { position: fixed; inset: auto 8px 8px 8px; top: auto; width: auto; max-height: 75vh; }
   .side { border-left: none; border-top: 1px solid var(--line); }
 }
+
+/* live agents */
+.mode { font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--bg); color: var(--muted); }
+.mode.m-live { color: var(--good); background: #1a7f4614; }
+.live-btn { border-color: var(--good); color: var(--good); align-self: flex-start; }
+.evidence { display: flex; flex-direction: column; gap: 2px; margin-top: 6px; font-size: 0.72rem; color: var(--muted); }
+.thinking { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--muted); }
+.spin { width: 14px; height: 14px; border: 2px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.ask-h { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.seg { display: flex; background: var(--bg); border-radius: 8px; padding: 2px; }
+.seg button { border: none; background: transparent; padding: 4px 8px; font-size: 0.75rem; }
+.seg button.on { background: var(--panel); box-shadow: 0 1px 2px #0002; }
+.esc { color: var(--warn); font-size: 0.8rem; }
