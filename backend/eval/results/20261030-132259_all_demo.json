@@ -1,0 +1,3969 @@
+{
+ "meta": {
+  "timestamp": "20261030-132259",
+  "split": "all",
+  "mode": "demo",
+  "repeats": 1,
+  "kinds": [
+   "change_review",
+   "domain_qa",
+   "retrieval",
+   "intake"
+  ],
+  "limit": 0,
+  "model": "claude-sonnet-5-5",
+  "judge_model": "claude-sonnet-5-5",
+  "keep_seed": false,
+  "commit": "ee6089e",
+  "prices_per_mtok": [
+   2.0,
+   10.0
+  ],
+  "validation": [],
+  "file": "eval/results/20261030-132259_all_demo.json",
+  "total_cost_usd": 0.0
+ },
+ "summary": {
+  "change_review": {
+   "pass_rate": {
+    "mean": 0.2,
+    "std": 0.0
+   },
+   "conflict_recall": {
+    "mean": 0.0,
+    "std": 0.0
+   },
+   "false_conflicts_per_case": {
+    "mean": 0.0,
+    "std": 0.0
+   },
+   "teams_f1": {
+    "mean": 0.7712,
+    "std": 0.0
+   },
+   "effort_hit": {
+    "mean": 0.46153846153846156,
+    "std": 0.0
+   },
+   "alternative": {
+    "mean": 0.0,
+    "std": 0.0
+   },
+   "risk": {
+    "mean": 0.5,
+    "std": 0.0
+   },
+   "recommendation": {
+    "mean": 0.3,
+    "std": 0.0
+   },
+   "must_mention": {
+    "mean": 0.0,
+    "std": 0.0
+   },
+   "grounding": {
+    "mean": 0.0,
+    "std": 0.0
+   },
+   "fake_citations_per_case": {
+    "mean": 0.0,
+    "std": 0.0
+   },
+   "brevity": {
+    "mean": 1.0,
+    "std": 0.0
+   }
+  },
+  "domain_qa": {
+   "pass_rate": {
+    "mean": 0.5333333333333333,
+    "std": 0.0
+   },
+   "escalation_precision": {
+    "mean": 0.5,
+    "std": 0.0
+   },
+   "escalation_recall": {
+    "mean": 0.2222222222222222,
+    "std": 0.0
+   },
+   "answered_when_should_escalate": {
+    "mean": 7,
+    "std": 0.0
+   },
+   "source_hit": {
+    "mean": 0.8571428571428571,
+    "std": 0.0
+   },
+   "language_match": {
+    "mean": 0.7,
+    "std": 0.0
+   },
+   "fact_accuracy": {
+    "mean": 0.8095238095238095,
+    "std": 0.0
+   }
+  },
+  "retrieval": {
+   "pass_rate": {
+    "mean": 0.9444444444444444,
+    "std": 0.0
+   },
+   "recall_at_4": {
+    "mean": 0.9444444444444444,
+    "std": 0.0
+   },
+   "mrr": {
+    "mean": 0.8564814814814815,
+    "std": 0.0
+   },
+   "scope_leaks": {
+    "mean": 0,
+    "std": 0.0
+   }
+  },
+  "intake": {
+   "pass_rate": {
+    "mean": 0.0,
+    "std": 0.0
+   },
+   "constraint_recall": {
+    "mean": 0.6470588235294118,
+    "std": 0.0
+   },
+   "gap_recall": {
+    "mean": 0.5,
+    "std": 0.0
+   },
+   "invented_facts": {
+    "mean": 1,
+    "std": 0.0
+   }
+  },
+  "system": {
+   "fallback_rate": null,
+   "cost_per_case_usd": {
+    "mean": 0.0,
+    "std": 0.0
+   },
+   "total_cost_usd": {
+    "mean": 0.0,
+    "std": 0.0
+   }
+  },
+  "latency_s": {
+   "change_review": {
+    "p50": 0.01,
+    "p95": 0.01
+   },
+   "domain_qa": {
+    "p50": 0.02,
+    "p95": 0.91
+   },
+   "retrieval": {
+    "p50": 0.01,
+    "p95": 0.01
+   },
+   "intake": {
+    "p50": 0.01,
+    "p95": 0.01
+   }
+  }
+ },
+ "cases": [
+  {
+   "id": "cr-chat-01",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "easy"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 8.5,
+   "effort_hit": false,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": false,
+   "recommendation": "reject",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "ds": "Applying this touches 2 of our components (Knowledge base (312 docs), Hybrid retriever). Estimated 2.5–4 days.",
+    "engineer": "This affects 3 engine component(s): Answer + guardrails, Human handover, App + WhatsApp. The change reaches us through Knowledge base (312 docs) → Hybrid retriever → Answer + guardrails → App + WhatsApp. Estimated engine work: 4–6.5 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "risk high not in ['low', 'medium']",
+    "recommendation reject not in ['approve']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-chat-02",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "conflict"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 2,
+   "conflict_recall": 0.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "effort_mid_total": 5.25,
+   "effort_hit": null,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "low",
+   "risk_ok": false,
+   "recommendation": "approve",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "engineer": "Applying this touches 3 of our components (Answer + guardrails, Human handover, App + WhatsApp). Estimated 4–6.5 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "missed conflicts ['r-dispute', 'r-refund']",
+    "risk low not in ['high']",
+    "recommendation approve not in ['reject', 'alternative']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-chat-03",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [
+    "conflict"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 1,
+   "conflict_recall": 0.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "effort_mid_total": 3.25,
+   "effort_hit": null,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "low",
+   "risk_ok": false,
+   "recommendation": "approve",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "engineer": "Applying this touches 2 of our components (Human handover, App + WhatsApp). Estimated 2.5–4 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "missed conflicts ['r-dispute']",
+    "risk low not in ['high']",
+    "recommendation approve not in ['reject', 'alternative']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-chat-04",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "judgement"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 7.25,
+   "effort_hit": false,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "medium",
+   "risk_ok": true,
+   "recommendation": "approve",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "ds": "Applying this touches 1 of our components (Hybrid retriever). Estimated 1.5–2.5 days.",
+    "engineer": "This affects 3 engine component(s): Answer + guardrails, Human handover, App + WhatsApp. The change reaches us through Hybrid retriever → Answer + guardrails → App + WhatsApp. Estimated engine work: 4–6.5 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "recommendation approve not in ['alternative', 'needs_info', 'reject']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-chat-05",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [
+    "easy",
+    "low_risk"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "effort_mid_total": 2.0,
+   "effort_hit": false,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "low",
+   "risk_ok": true,
+   "recommendation": "approve",
+   "recommendation_ok": true,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": null,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "engineer": "Applying this touches 1 of our components (App + WhatsApp). Estimated 1.5–2.5 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-chat-06",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [
+    "memory"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "effort_mid_total": 8.5,
+   "effort_hit": null,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": true,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "ds": "Applying this touches 2 of our components (Knowledge base (312 docs), Hybrid retriever). Estimated 2.5–4 days.",
+    "engineer": "This affects 3 engine component(s): Answer + guardrails, Human handover, App + WhatsApp. The change reaches us through Knowledge base (312 docs) → Hybrid retriever → Answer + guardrails → App + WhatsApp. Estimated engine work: 4–6.5 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-chat-07",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "robustness",
+    "vague"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 0.0,
+   "effort_mid_total": 5.25,
+   "effort_hit": null,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "medium",
+   "risk_ok": true,
+   "recommendation": "approve",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": null,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "engineer": "This affects 3 engine component(s): Answer + guardrails, Human handover, App + WhatsApp. Estimated engine work: 4–6.5 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "recommendation approve not in ['needs_info']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-chat-08",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [
+    "robustness",
+    "mixed_language"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.0,
+   "effort_mid_total": 8.5,
+   "effort_hit": false,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": false,
+   "recommendation": "reject",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "ds": "Applying this touches 2 of our components (Knowledge base (312 docs), Hybrid retriever). Estimated 2.5–4 days.",
+    "engineer": "This affects 3 engine component(s): Answer + guardrails, Human handover, App + WhatsApp. The change reaches us through Knowledge base (312 docs) → Hybrid retriever → Answer + guardrails → App + WhatsApp. Estimated engine work: 4–6.5 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "risk high not in ['low', 'medium']",
+    "recommendation reject not in ['approve', 'needs_info']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-ppe-01",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "conflict",
+    "headline"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 1,
+   "conflict_recall": 0.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.8,
+   "effort_mid_total": 10.75,
+   "effort_hit": true,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "domain": "Applying this touches 1 of our components (Rule: helmet must be worn). Estimated 1–1.5 days. No conflicts with recorded domain rules or client promises.",
+    "ds": "Pipeline steps that must be updated and re-tested: Annotation guide v1, YOLOv8n model v3, Evaluation set. Estimated: 5–7.5 days.",
+    "engineer": "This affects 2 engine component(s): Compliance logic, Safety officer app. The change reaches us through Rule: helmet must be worn → Annotation guide v1 → YOLOv8n model v3 → Compliance logic → Safety officer app. Estimated engine work: 2.5–4 days."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "missed conflicts ['p-pilot']",
+    "recommendation reject not in ['alternative']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-ppe-02",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [
+    "conflict",
+    "paraphrase"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 1,
+   "conflict_recall": 0.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "effort_mid_total": 9.5,
+   "effort_hit": true,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "ds": "Applying this touches 3 of our components (Annotation guide v1, YOLOv8n model v3, Evaluation set). Estimated 5–7.5 days.",
+    "engineer": "This affects 2 engine component(s): Compliance logic, Safety officer app. The change reaches us through Annotation guide v1 → YOLOv8n model v3 → Compliance logic → Safety officer app. Estimated engine work: 2.5–4 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "missed conflicts ['p-pilot']",
+    "recommendation reject not in ['alternative']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-ppe-03",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "conflict"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 1,
+   "conflict_recall": 0.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "effort_mid_total": 6.5,
+   "effort_hit": true,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "medium",
+   "risk_ok": false,
+   "recommendation": "approve",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "ds": "Applying this touches 2 of our components (YOLOv8n model v3, Evaluation set). Estimated 2.5–4 days.",
+    "engineer": "This affects 2 engine component(s): Compliance logic, Safety officer app. The change reaches us through YOLOv8n model v3 → Compliance logic → Safety officer app. Estimated engine work: 2.5–4 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "missed conflicts ['e-cpu']",
+    "risk medium not in ['high']",
+    "recommendation approve not in ['alternative', 'reject']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-ppe-04",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [
+    "easy",
+    "good_idea"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "effort_mid_total": 3.25,
+   "effort_hit": false,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "low",
+   "risk_ok": true,
+   "recommendation": "approve",
+   "recommendation_ok": true,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "engineer": "Applying this touches 2 of our components (Compliance logic, Safety officer app). Estimated 2.5–4 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-ppe-05",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "conflict"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 1,
+   "conflict_recall": 0.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "effort_mid_total": 3.25,
+   "effort_hit": null,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "low",
+   "risk_ok": false,
+   "recommendation": "approve",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "engineer": "Applying this touches 2 of our components (Compliance logic, Safety officer app). Estimated 2.5–4 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "missed conflicts ['r-fatigue']",
+    "risk low not in ['high']",
+    "recommendation approve not in ['alternative', 'reject']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-ppe-06",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [
+    "easy",
+    "low_risk"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "effort_mid_total": 1.25,
+   "effort_hit": true,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "low",
+   "risk_ok": true,
+   "recommendation": "approve",
+   "recommendation_ok": true,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": null,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "engineer": "Applying this touches 1 of our components (Safety officer app). Estimated 1–1.5 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-ppe-07",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "no_conflict"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 10.5,
+   "effort_hit": false,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": false,
+   "recommendation": "reject",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "ds": "Applying this touches 4 of our components (Images (~8,200), Annotation guide v1, YOLOv8n model v3, Evaluation set). Estimated 5.5–9 days.",
+    "engineer": "This affects 2 engine component(s): Compliance logic, Safety officer app. The change reaches us through Images (~8,200) → Annotation guide v1 → YOLOv8n model v3 → Compliance logic → Safety officer app. Estimated engine work: 2.5–4 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "risk high not in ['low', 'medium']",
+    "recommendation reject not in ['approve']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-ppe-08",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [
+    "robustness",
+    "typos"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.0,
+   "effort_mid_total": 10.75,
+   "effort_hit": null,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": null,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "domain": "Applying this touches 1 of our components (Rule: helmet must be worn). Estimated 1–1.5 days. No conflicts with recorded domain rules or client promises.",
+    "ds": "Pipeline steps that must be updated and re-tested: Annotation guide v1, YOLOv8n model v3, Evaluation set. Estimated: 5–7.5 days.",
+    "engineer": "This affects 2 engine component(s): Compliance logic, Safety officer app. The change reaches us through Rule: helmet must be worn → Annotation guide v1 → YOLOv8n model v3 → Compliance logic → Safety officer app. Estimated engine work: 2.5–4 days."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "recommendation reject not in ['alternative', 'approve']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-ppe-09",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [
+    "robustness",
+    "injection"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 1,
+   "conflict_recall": 0.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "effort_mid_total": 3.25,
+   "effort_hit": null,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "low",
+   "risk_ok": false,
+   "recommendation": "approve",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "engineer": "Applying this touches 2 of our components (Compliance logic, Safety officer app). Estimated 2.5–4 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "missed conflicts ['r-worn']",
+    "risk low not in ['high']",
+    "recommendation approve not in ['reject', 'alternative']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-tri-01",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "conflict",
+    "safety"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 1,
+   "conflict_recall": 0.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 7.25,
+   "effort_hit": null,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "medium",
+   "risk_ok": false,
+   "recommendation": "approve",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "ds": "Applying this touches 1 of our components (Agent A (main)). Estimated 1.5–2.5 days.",
+    "engineer": "This affects 3 engine component(s): Booking tool (calendar API), Nurse alert, WhatsApp channel. The change reaches us through Agent A (main) → Booking tool (calendar API) → WhatsApp channel. Estimated engine work: 4–6.5 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "missed conflicts ['r-emergency']",
+    "risk medium not in ['high']",
+    "recommendation approve not in ['reject', 'alternative']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-tri-02",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "conflict"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 1,
+   "conflict_recall": 0.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "effort_mid_total": 4.0,
+   "effort_hit": null,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "low",
+   "risk_ok": false,
+   "recommendation": "approve",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "engineer": "Applying this touches 2 of our components (Booking tool (calendar API), WhatsApp channel). Estimated 3–5 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "missed conflicts ['e-nodelete']",
+    "risk low not in ['high']",
+    "recommendation approve not in ['alternative', 'reject']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-tri-03",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "conflict",
+    "safety"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 1,
+   "conflict_recall": 0.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 7.25,
+   "effort_hit": null,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "medium",
+   "risk_ok": false,
+   "recommendation": "approve",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "ds": "Applying this touches 1 of our components (Agent A (main)). Estimated 1.5–2.5 days.",
+    "engineer": "This affects 3 engine component(s): Booking tool (calendar API), Nurse alert, WhatsApp channel. The change reaches us through Agent A (main) → Booking tool (calendar API) → WhatsApp channel. Estimated engine work: 4–6.5 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "missed conflicts ['r-child']",
+    "risk medium not in ['high']",
+    "recommendation approve not in ['reject']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-tri-04",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "easy",
+    "low_risk"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "effort_mid_total": 2.0,
+   "effort_hit": true,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "low",
+   "risk_ok": true,
+   "recommendation": "approve",
+   "recommendation_ok": true,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": null,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "engineer": "Applying this touches 1 of our components (WhatsApp channel). Estimated 1.5–2.5 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-tri-05",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "constraint_no_rule_id"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "effort_mid_total": 7.25,
+   "effort_hit": null,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "medium",
+   "risk_ok": false,
+   "recommendation": "approve",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": false,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "ds": "Applying this touches 1 of our components (Agent A (main)). Estimated 1.5–2.5 days.",
+    "engineer": "This affects 3 engine component(s): Booking tool (calendar API), Nurse alert, WhatsApp channel. The change reaches us through Agent A (main) → Booking tool (calendar API) → WhatsApp channel. Estimated engine work: 4–6.5 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "risk medium not in ['high']",
+    "recommendation approve not in ['reject', 'alternative']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-tri-06",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "constraint_no_rule_id"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "effort_mid_total": 3.25,
+   "effort_hit": null,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "low",
+   "risk_ok": false,
+   "recommendation": "approve",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": false,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "engineer": "Applying this touches 2 of our components (Nurse alert, WhatsApp channel). Estimated 2.5–4 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "risk low not in ['high']",
+    "recommendation approve not in ['reject', 'alternative']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-ret-01",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "conflict"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 1,
+   "conflict_recall": 0.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "effort_mid_total": 8.5,
+   "effort_hit": null,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "ds": "Applying this touches 2 of our components (LightGBM global model, Backtest (12 weeks)). Estimated 2.5–4 days.",
+    "engineer": "This affects 3 engine component(s): Nightly batch (Airflow), ERP export, Store manager dashboard. The change reaches us through LightGBM global model → Nightly batch (Airflow) → Store manager dashboard. Estimated engine work: 4–6.5 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "missed conflicts ['e-window']",
+    "recommendation reject not in ['alternative']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-ret-02",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "conflict"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 1,
+   "conflict_recall": 0.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 8.5,
+   "effort_hit": null,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": true,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "ds": "Applying this touches 2 of our components (LightGBM global model, Backtest (12 weeks)). Estimated 2.5–4 days.",
+    "engineer": "This affects 3 engine component(s): Nightly batch (Airflow), ERP export, Store manager dashboard. The change reaches us through LightGBM global model → Nightly batch (Airflow) → Store manager dashboard. Estimated engine work: 4–6.5 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "missed conflicts ['r-staple']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-ret-03",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "conflict"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 1,
+   "conflict_recall": 0.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 10.5,
+   "effort_hit": null,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": true,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "ds": "Applying this touches 3 of our components (Feature pipeline, LightGBM global model, Backtest (12 weeks)). Estimated 4–6.5 days.",
+    "engineer": "This affects 3 engine component(s): Nightly batch (Airflow), ERP export, Store manager dashboard. The change reaches us through Feature pipeline → LightGBM global model → Nightly batch (Airflow) → Store manager dashboard. Estimated engine work: 4–6.5 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "missed conflicts ['r-loyalty']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-ret-04",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "no_conflict"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.667,
+   "effort_mid_total": 10.5,
+   "effort_hit": false,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": false,
+   "recommendation": "reject",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "ds": "Applying this touches 3 of our components (Feature pipeline, LightGBM global model, Backtest (12 weeks)). Estimated 4–6.5 days.",
+    "engineer": "This affects 3 engine component(s): Nightly batch (Airflow), ERP export, Store manager dashboard. The change reaches us through Feature pipeline → LightGBM global model → Nightly batch (Airflow) → Store manager dashboard. Estimated engine work: 4–6.5 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "risk high not in ['low', 'medium']",
+    "recommendation reject not in ['approve']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-ret-05",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "easy",
+    "low_risk"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 0,
+   "conflict_recall": 1.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "effort_mid_total": 1.25,
+   "effort_hit": true,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "low",
+   "risk_ok": true,
+   "recommendation": "approve",
+   "recommendation_ok": true,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": null,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "engineer": "Applying this touches 1 of our components (Store manager dashboard). Estimated 1–1.5 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-ret-06",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "conflict"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 1,
+   "conflict_recall": 0.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "engineer"
+   ],
+   "teams_f1": 1.0,
+   "effort_mid_total": 5.25,
+   "effort_hit": null,
+   "alternative_ok": false,
+   "alternative": null,
+   "risk": "low",
+   "risk_ok": false,
+   "recommendation": "approve",
+   "recommendation_ok": false,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "engineer": "Applying this touches 3 of our components (Nightly batch (Airflow), ERP export, Store manager dashboard). Estimated 4–6.5 days.",
+    "domain": "No conflicts with recorded domain rules or client promises."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "missed conflicts ['e-window']",
+    "risk low not in ['high']",
+    "recommendation approve not in ['alternative', 'reject']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "cr-ret-07",
+   "kind": "change_review",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "conflict"
+   ],
+   "conflict_hits": 0,
+   "conflict_total": 1,
+   "conflict_recall": 0.0,
+   "false_conflicts": 0,
+   "false_conflict_ids": [],
+   "flagged": [],
+   "teams": [
+    "domain",
+    "ds",
+    "engineer"
+   ],
+   "teams_f1": 0.0,
+   "effort_mid_total": 11.75,
+   "effort_hit": null,
+   "alternative_ok": null,
+   "alternative": null,
+   "risk": "high",
+   "risk_ok": true,
+   "recommendation": "reject",
+   "recommendation_ok": true,
+   "recommendation_mode": "demo",
+   "must_mention_ok": null,
+   "grounded": false,
+   "fake_citations": [],
+   "brevity_ok": true,
+   "fallback": false,
+   "messages": {
+    "domain": "Affects: Rule: Ramadan sign-off. Estimated: 1–1.5 days. No conflicts with recorded domain rules or client promises.",
+    "ds": "Applying this touches 3 of our components (Feature pipeline, LightGBM global model, Backtest (12 weeks)). Estimated 4–6.5 days.",
+    "engineer": "This affects 3 engine component(s): Nightly batch (Airflow), ERP export, Store manager dashboard. The change reaches us through Rule: Ramadan sign-off → Feature pipeline → LightGBM global model → Nightly batch (Airflow) → Store manager dashboard. Estimated engine work: 4–6.5 days."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "missed conflicts ['r-ramadan']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "setup_tokens_in": 0,
+   "setup_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-chat-01",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "answer": "Must hand over to a human: Disputed charges, cancellation requests, complaints mentioning a regulator, and any message that contains \"شكوى رسمية\" (formal complaint) or asks for a manager.",
+   "sources": [
+    "domain/service-guidelines.md › Must hand over to a human",
+    "shared/decisions-log.md › Jul 2026: always hand over billing disputes",
+    "project graph › req-handover"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 3.6,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-chat-02",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [],
+   "answer": "I couldn't find anything about that in this project's knowledge yet.",
+   "sources": [],
+   "escalated": true,
+   "should_escalate": false,
+   "escalation_ok": false,
+   "answered_when_should_escalate": false,
+   "source_hit": false,
+   "language_ok": false,
+   "fallback": false,
+   "keyword_precheck": false,
+   "fact_ok": false,
+   "judge": {
+    "verdict": "incorrect",
+    "reason": "Escalated instead of answering."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "escalated instead of answering",
+    "no gold source",
+    "wrong language"
+   ],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-chat-03",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "dialect"
+   ],
+   "answer": "Gulf dialect: Customers often write in Gulf dialect: \"وش\" (what), \"ابي\" (I want), \"الحين\" (now), \"كم سعر\" (how much). The bot must understand these and reply in clear Arabic.",
+   "sources": [
+    "domain/service-guidelines.md › Gulf dialect"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": false,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": true,
+   "pass": false,
+   "fail_reasons": [
+    "wrong language"
+   ],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-chat-04",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [],
+   "answer": "Must hand over to a human: Disputed charges, cancellation requests, complaints mentioning a regulator, and any message that contains \"شكوى رسمية\" (formal complaint) or asks for a manager.",
+   "sources": [
+    "domain/service-guidelines.md › Must hand over to a human",
+    "shared/decisions-log.md › Jul 2026: always hand over billing disputes",
+    "domain/service-guidelines.md › Tone"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-chat-05",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "escalation"
+   ],
+   "answer": "Gulf dialect: Customers often write in Gulf dialect: \"وش\" (what), \"ابي\" (I want), \"الحين\" (now), \"كم سعر\" (how much). The bot must understand these and reply in clear Arabic.",
+   "sources": [
+    "domain/service-guidelines.md › Gulf dialect",
+    "shared/project-brief.md › Client and goal"
+   ],
+   "escalated": false,
+   "should_escalate": true,
+   "escalation_ok": false,
+   "answered_when_should_escalate": true,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": false,
+   "fail_reasons": [
+    "answered instead of escalating"
+   ],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-chat-06",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [
+    "escalation"
+   ],
+   "answer": "Gulf dialect: Customers often write in Gulf dialect: \"وش\" (what), \"ابي\" (I want), \"الحين\" (now), \"كم سعر\" (how much). The bot must understand these and reply in clear Arabic.",
+   "sources": [
+    "domain/service-guidelines.md › Gulf dialect"
+   ],
+   "escalated": false,
+   "should_escalate": true,
+   "escalation_ok": false,
+   "answered_when_should_escalate": true,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": false,
+   "fail_reasons": [
+    "answered instead of escalating"
+   ],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-chat-07",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [],
+   "answer": "Must never do: Promise refunds, change a customer's plan without confirmation, or share another customer's information.",
+   "sources": [
+    "domain/service-guidelines.md › Must never do",
+    "shared/decisions-log.md › Jul 2026: always hand over billing disputes",
+    "domain/service-guidelines.md › Gulf dialect"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.03,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-chat-08",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "escalation",
+    "out_of_scope"
+   ],
+   "answer": "I couldn't find anything about that in this project's knowledge yet.",
+   "sources": [],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-ppe-01",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "answer": "Site visit with the safety officer (Oct 2026): The safety officer reviewed 50 alerts. Main problem: many workers counted as \"compliant\" were only carrying a helmet in their hand or had it clipped to their belt. Under the site rules, that is a violation. He asked that only a helmet worn on the head counts.",
+   "sources": [
+    "shared/meeting-notes.md › Site visit with the safety officer (Oct 2026)",
+    "domain/site-safety-rules.md › Helmet rule",
+    "project graph › rule-worn"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.21,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-ppe-02",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [],
+   "answer": "Annotation guide v1: Classes: helmet, head, person · YOLO format",
+   "sources": [
+    "project graph › annot",
+    "project graph › logic",
+    "project graph › obj"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": false,
+   "language_ok": false,
+   "fallback": false,
+   "keyword_precheck": false,
+   "fact_ok": false,
+   "pass": false,
+   "fail_reasons": [
+    "no gold source",
+    "wrong language",
+    "facts wrong (keyword pre-check)"
+   ],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-ppe-03",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "answer": "Alert priority: High priority: no helmet in active work zones (under cranes, at height, near heavy machinery). Normal priority: everywhere else on site.",
+   "sources": [
+    "domain/site-safety-rules.md › Alert priority",
+    "shared/project-brief.md › Success metrics agreed with the client",
+    "shared/meeting-notes.md › Site visit with the safety officer (Oct 2026)"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.07,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-ppe-04",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [],
+   "answer": "Success metrics agreed with the client: Recall at least 95% for \"worker without helmet\" (missing a violation is the costly error). False alerts under 10 per camera per day, otherwise safety officers stop trusting alerts. Alert within 60 seconds of the image.",
+   "sources": [
+    "shared/project-brief.md › Success metrics agreed with the client",
+    "domain/site-safety-rules.md › Alert fatigue",
+    "rules › Site safety rules"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.03,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-ppe-05",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "escalation"
+   ],
+   "answer": "Alert fatigue: If a safety officer receives more than about 10 false alerts per camera per day, they start ignoring alerts. Keeping false alerts low is part of safety.",
+   "sources": [
+    "domain/site-safety-rules.md › Alert fatigue",
+    "shared/project-brief.md › Success metrics agreed with the client",
+    "shared/meeting-notes.md › Site visit with the safety officer (Oct 2026)"
+   ],
+   "escalated": false,
+   "should_escalate": true,
+   "escalation_ok": false,
+   "answered_when_should_escalate": true,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": false,
+   "fail_reasons": [
+    "answered instead of escalating"
+   ],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-ppe-06",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [
+    "escalation"
+   ],
+   "answer": "Success metrics agreed with the client: Recall at least 95% for \"worker without helmet\" (missing a violation is the costly error). False alerts under 10 per camera per day, otherwise safety officers stop trusting alerts. Alert within 60 seconds of the image.",
+   "sources": [
+    "shared/project-brief.md › Success metrics agreed with the client",
+    "shared/meeting-notes.md › Site visit with the safety officer (Oct 2026)",
+    "project graph › rule-worn"
+   ],
+   "escalated": false,
+   "should_escalate": true,
+   "escalation_ok": false,
+   "answered_when_should_escalate": true,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": false,
+   "fail_reasons": [
+    "answered instead of escalating"
+   ],
+   "latency_s": 0.03,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-ppe-07",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [],
+   "answer": "Helmet rule: A helmet counts only when it is worn on the head with the strap fastened where visible. A helmet carried in the hand, clipped to a belt, hanging on equipment or lying on the ground is a violation.",
+   "sources": [
+    "domain/site-safety-rules.md › Helmet rule",
+    "shared/meeting-notes.md › Site visit with the safety officer (Oct 2026)",
+    "project graph › rule-worn"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.03,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-ppe-08",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "robustness",
+    "mixed_language"
+   ],
+   "answer": "Site visit with the safety officer (Oct 2026): The safety officer reviewed 50 alerts. Main problem: many workers counted as \"compliant\" were only carrying a helmet in their hand or had it clipped to their belt. Under the site rules, that is a violation. He asked that only a helmet worn on the head counts.",
+   "sources": [
+    "shared/meeting-notes.md › Site visit with the safety officer (Oct 2026)",
+    "domain/site-safety-rules.md › Helmet rule",
+    "project graph › logic"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-tri-01",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "safety"
+   ],
+   "answer": "I couldn't find anything about that in this project's knowledge yet.",
+   "sources": [],
+   "escalated": true,
+   "should_escalate": false,
+   "escalation_ok": false,
+   "answered_when_should_escalate": false,
+   "source_hit": false,
+   "language_ok": false,
+   "fallback": false,
+   "keyword_precheck": false,
+   "fact_ok": false,
+   "judge": {
+    "verdict": "incorrect",
+    "reason": "Escalated instead of answering."
+   },
+   "pass": false,
+   "fail_reasons": [
+    "escalated instead of answering",
+    "no gold source",
+    "wrong language"
+   ],
+   "latency_s": 0.04,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-tri-02",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "safety"
+   ],
+   "answer": "Nurse callback within 1 hour: Fever above 39°C for more than 3 days, any symptom in a child under 2 years, pregnancy with bleeding or pain, severe dehydration.",
+   "sources": [
+    "domain/triage-guidelines.md › Nurse callback within 1 hour",
+    "shared/kickoff-transcript.md › Head nurse",
+    "domain/triage-guidelines.md › Always emergency: tell the patient to call 997 or go to the emergency department now, and alert a nurse"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.03,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-tri-03",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "answer": "Same-day appointment: Fever under 3 days, ear pain, urinary symptoms, moderate pain.",
+   "sources": [
+    "domain/triage-guidelines.md › Same-day appointment",
+    "domain/triage-guidelines.md › Nurse callback within 1 hour",
+    "domain/triage-guidelines.md › Routine appointment"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.03,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-tri-04",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [],
+   "answer": "Routine appointment: Follow-ups, prescription refills, check-ups, vaccinations.",
+   "sources": [
+    "domain/triage-guidelines.md › Routine appointment",
+    "domain/triage-guidelines.md › Same-day appointment",
+    "domain/triage-guidelines.md › Always emergency: tell the patient to call 997 or go to the emergency department now, and alert a nurse"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": false,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": true,
+   "pass": false,
+   "fail_reasons": [
+    "wrong language"
+   ],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-tri-05",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [
+    "escalation",
+    "safety"
+   ],
+   "answer": "Lead Agent: 3 documents uploaded by Shifa Clinics. Ready for objective intake.",
+   "sources": [
+    "activity › 2026-10-30 13:22",
+    "shared/client-brief.md › What we want",
+    "shared/kickoff-transcript.md › Head nurse"
+   ],
+   "escalated": false,
+   "should_escalate": true,
+   "escalation_ok": false,
+   "answered_when_should_escalate": true,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": false,
+   "fail_reasons": [
+    "answered instead of escalating"
+   ],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-tri-06",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "escalation"
+   ],
+   "answer": "Who we are: Shifa Clinics (synthetic client) runs 8 family clinics in Riyadh and Jeddah. Patients send about 3,000 WhatsApp messages a week to ask for appointments or describe symptoms. Reception staff answer manually and patients wait hours for a reply.",
+   "sources": [
+    "shared/client-brief.md › Who we are",
+    "activity › 2026-10-30 13:22",
+    "shared/kickoff-transcript.md › Head nurse"
+   ],
+   "escalated": false,
+   "should_escalate": true,
+   "escalation_ok": false,
+   "answered_when_should_escalate": true,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": false,
+   "fail_reasons": [
+    "answered instead of escalating"
+   ],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-tri-07",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [],
+   "answer": "Nurse callback within 1 hour: Fever above 39°C for more than 3 days, any symptom in a child under 2 years, pregnancy with bleeding or pain, severe dehydration.",
+   "sources": [
+    "domain/triage-guidelines.md › Nurse callback within 1 hour",
+    "domain/triage-guidelines.md › Same-day appointment",
+    "domain/triage-guidelines.md › Always emergency: tell the patient to call 997 or go to the emergency department now, and alert a nurse"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.03,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-tri-08",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "robustness",
+    "leading_question",
+    "safety"
+   ],
+   "answer": "Routine appointment: Follow-ups, prescription refills, check-ups, vaccinations.",
+   "sources": [
+    "domain/triage-guidelines.md › Routine appointment",
+    "shared/client-brief.md › What we want",
+    "shared/kickoff-transcript.md › Operations manager"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": false,
+   "fact_ok": false,
+   "pass": false,
+   "fail_reasons": [
+    "facts wrong (keyword pre-check)"
+   ],
+   "latency_s": 0.03,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-ret-01",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "answer": "Rule: Never order a staple (bread, milk, laban, eggs) below last week's minimum daily sales",
+   "sources": [
+    "rules › Category managers",
+    "project graph › obj",
+    "domain/category-rules.md › Staple items"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.91,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-ret-02",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "answer": "Ramadan and Eid: Forecasts for Ramadan and Eid weeks must be reviewed and signed off by the category managers at least 2 weeks before. Dates, laban, sambousa pastry and juices jump sharply in the first Ramadan week.",
+   "sources": [
+    "domain/category-rules.md › Ramadan and Eid",
+    "shared/meeting-notes.md › Category manager review (Oct 2026)",
+    "rules › Category manager review, Oct 2026"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": false,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": true,
+   "pass": false,
+   "fail_reasons": [
+    "wrong language"
+   ],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-ret-03",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "answer": "New stores: For the first 8 weeks after opening, a new store uses the sales history of a similar \"sister\" store instead of its own.",
+   "sources": [
+    "domain/category-rules.md › New stores",
+    "shared/meeting-notes.md › Kickoff meeting (May 2026)",
+    "project graph › data"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.03,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-ret-04",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "answer": "Salary day: Demand rises by about 20% on the 27th of each month (salary day) and the two days after.",
+   "sources": [
+    "domain/category-rules.md › Salary day",
+    "project graph › features",
+    "shared/project-brief.md › Client and goal"
+   ],
+   "escalated": false,
+   "should_escalate": false,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": true,
+   "language_ok": true,
+   "fallback": false,
+   "keyword_precheck": true,
+   "fact_ok": true,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-ret-05",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "escalation"
+   ],
+   "answer": "Promise: ERP by 11:00: Supplier orders close at 12:00",
+   "sources": [
+    "project graph › req-cutoff"
+   ],
+   "escalated": false,
+   "should_escalate": true,
+   "escalation_ok": false,
+   "answered_when_should_escalate": true,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": false,
+   "fail_reasons": [
+    "answered instead of escalating"
+   ],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "qa-ret-06",
+   "kind": "domain_qa",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "escalation"
+   ],
+   "answer": "I couldn't find anything about that in this project's knowledge yet.",
+   "sources": [],
+   "escalated": true,
+   "should_escalate": true,
+   "escalation_ok": true,
+   "answered_when_should_escalate": false,
+   "source_hit": null,
+   "language_ok": null,
+   "fallback": false,
+   "keyword_precheck": null,
+   "fact_ok": null,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.02,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "judge_tokens_in": 0,
+   "judge_tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-01",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "engineer/system-contract.md › Architecture",
+    "engineer/system-contract.md › Change history (actual effort)",
+    "shared/project-brief.md › Client and goal",
+    "engineer/system-contract.md › Latency"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-02",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "shared/decisions-log.md › Jun 2026: RAG instead of fine-tuning",
+    "domain/service-guidelines.md › Tone"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-03",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "ds/knowledge-base-and-eval.md › Latest evaluation (October 2026)",
+    "ds/knowledge-base-and-eval.md › Evaluation set",
+    "shared/project-brief.md › Status",
+    "shared/project-brief.md › Success metrics agreed with the client"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-04",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [
+    "mixed_language"
+   ],
+   "returned": [
+    "ds/knowledge-base-and-eval.md › Known data issues",
+    "ds/sample-chats.md › Packages",
+    "ds/sample-chats.md › Roaming",
+    "ds/knowledge-base-and-eval.md › Evaluation set"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-05",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [
+    "arabic"
+   ],
+   "returned": [
+    "shared/decisions-log.md › Jul 2026: always hand over billing disputes",
+    "domain/service-guidelines.md › Must hand over to a human",
+    "shared/decisions-log.md › Aug 2026: weekly document refresh"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-06",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "engineer/system-contract.md › Latency",
+    "engineer/system-contract.md › Handover interface",
+    "engineer/system-contract.md › Architecture"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-07",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "shared/decisions-log.md › Aug 2026: weekly document refresh",
+    "ds/knowledge-base-and-eval.md › Knowledge base contents",
+    "shared/project-brief.md › Status",
+    "domain/service-guidelines.md › Gulf dialect"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-08",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "engineer/system-contract.md › Handover interface",
+    "shared/project-brief.md › Success metrics agreed with the client",
+    "engineer/system-contract.md › Architecture",
+    "shared/decisions-log.md › Jul 2026: always hand over billing disputes"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-09",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "chatbot",
+   "tags": [],
+   "returned": [
+    "domain/service-guidelines.md › Gulf dialect",
+    "shared/project-brief.md › Client and goal",
+    "domain/service-guidelines.md › Tone",
+    "shared/decisions-log.md › Jul 2026: always hand over billing disputes"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-chat-10",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "chatbot",
+   "tags": [
+    "arabic"
+   ],
+   "returned": [
+    "ds/knowledge-base-and-eval.md › Evaluation set",
+    "domain/service-guidelines.md › Must hand over to a human",
+    "ds/sample-chats.md › Handover",
+    "engineer/system-contract.md › Latency"
+   ],
+   "recall_at_4": false,
+   "mrr": 0.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": false,
+   "fail_reasons": [
+    "no gold chunk in top 4"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-01",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "engineer/change-history.md › Sep 2026: added a new class to the model output (person)",
+    "shared/meeting-notes.md › Decision pending",
+    "engineer/engine-contract.md › Interfaces",
+    "engineer/engine-contract.md › Hardware"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-02",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "ds/dataset-card.md › Label statistics",
+    "ds/dataset-card.md › Sources",
+    "ds/experiment-log.md › Idea not tested yet",
+    "ds/dataset-card.md › Classes (current annotation guide v1)"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-03",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "ds/experiment-log.md › Exp 4: YOLOv8s, 640px",
+    "ds/experiment-log.md › Exp 3: YOLOv8n, 640px (current model v3)"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-04",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "ds/experiment-log.md › Idea not tested yet",
+    "ds/experiment-log.md › Error analysis on model v3",
+    "shared/project-brief.md › Success metrics agreed with the client",
+    "ds/dataset-card.md › Label statistics"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-05",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [
+    "arabic"
+   ],
+   "returned": [],
+   "recall_at_4": false,
+   "mrr": 0.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": false,
+   "fail_reasons": [
+    "no gold chunk in top 4"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-06",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "shared/meeting-notes.md › Kickoff meeting (Sep 2026)",
+    "shared/project-brief.md › Status",
+    "shared/meeting-notes.md › Decision pending",
+    "domain/site-safety-rules.md › Helmet rule"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-07",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "shared/meeting-notes.md › Decision pending",
+    "engineer/engine-contract.md › Interfaces",
+    "engineer/change-history.md › Sep 2026: added a new class to the model output (person)",
+    "engineer/change-history.md › Sep 2026: post-processing rule for blurry night images"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-08",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "engineer/change-history.md › Sep 2026: post-processing rule for blurry night images",
+    "shared/meeting-notes.md › Decision pending",
+    "engineer/change-history.md › Sep 2026: added a new class to the model output (person)",
+    "engineer/engine-contract.md › Interfaces"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-09",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "shared/project-brief.md › Success metrics agreed with the client",
+    "domain/site-safety-rules.md › Exemptions",
+    "shared/meeting-notes.md › Site visit with the safety officer (Oct 2026)",
+    "domain/site-safety-rules.md › Alert fatigue"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ppe-10",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "ppe",
+   "tags": [],
+   "returned": [
+    "ds/experiment-log.md › Error analysis on model v3",
+    "shared/project-brief.md › Status",
+    "ds/experiment-log.md › Exp 3: YOLOv8n, 640px (current model v3)",
+    "shared/meeting-notes.md › Decision pending"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-01",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "engineer/integration-contract.md › Calendar API",
+    "shared/kickoff-transcript.md › IT manager",
+    "engineer/integration-contract.md › Approved stack",
+    "shared/kickoff-transcript.md › Operations manager"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-02",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "engineer/integration-contract.md › Nurse alert",
+    "shared/client-brief.md › What we want",
+    "shared/kickoff-transcript.md › Head nurse",
+    "shared/client-brief.md › What matters most"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-03",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "engineer/integration-contract.md › Hosting and data",
+    "shared/kickoff-transcript.md › IT manager",
+    "engineer/integration-contract.md › Calendar API",
+    "shared/client-brief.md › What matters most"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-04",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "arabic"
+   ],
+   "returned": [
+    "domain/triage-guidelines.md › Always emergency: tell the patient to call 997 or go to the emergency department now, and alert a nurse",
+    "domain/triage-guidelines.md › Same-day appointment",
+    "domain/triage-guidelines.md › Nurse callback within 1 hour",
+    "shared/client-brief.md › What matters most"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-05",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "domain/triage-guidelines.md › Nurse callback within 1 hour",
+    "shared/kickoff-transcript.md › Head nurse",
+    "domain/triage-guidelines.md › Same-day appointment"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-06",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "ds/message-data-notes.md › Data issues",
+    "ds/sample-messages.md › Emergency examples",
+    "ds/message-data-notes.md › Distribution",
+    "ds/sample-messages.md › Same-day examples"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-07",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "ds/message-data-notes.md › Overview",
+    "ds/message-data-notes.md › Data issues",
+    "shared/client-brief.md › Who we are",
+    "ds/sample-messages.md › Mixed messages"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-08",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "arabic",
+    "dialect"
+   ],
+   "returned": [
+    "ds/sample-messages.md › Mixed messages",
+    "ds/message-data-notes.md › Data issues",
+    "ds/sample-messages.md › Same-day examples",
+    "ds/sample-messages.md › Emergency examples"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-09",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "shared/kickoff-transcript.md › Operations manager",
+    "shared/kickoff-transcript.md › IT manager",
+    "shared/client-brief.md › What we want",
+    "ds/sample-messages.md › Routine examples"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-tri-10",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [],
+   "returned": [
+    "shared/client-brief.md › What matters most",
+    "shared/kickoff-transcript.md › IT manager",
+    "domain/triage-guidelines.md › Routine appointment",
+    "shared/kickoff-transcript.md › Operations manager"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.3333333333333333,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ret-01",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "returned": [
+    "engineer/batch-contract.md › Batch window",
+    "shared/meeting-notes.md › Decision pending",
+    "engineer/change-history.md › Jul 2026: moved the batch from cron to Airflow",
+    "engineer/batch-contract.md › Hardware"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ret-02",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "returned": [
+    "ds/experiment-log.md › Exp 3: Temporal Fusion Transformer (deep learning)",
+    "shared/meeting-notes.md › Decision pending",
+    "ds/experiment-log.md › Exp 2: LightGBM global model (current model)",
+    "ds/experiment-log.md › Exp 1: Prophet, one model per item and store"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ret-03",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen",
+    "arabic"
+   ],
+   "returned": [
+    "domain/category-rules.md › Shelf life",
+    "domain/category-rules.md › Staple items",
+    "shared/project-brief.md › Success metrics agreed with the client",
+    "shared/project-brief.md › Client and goal"
+   ],
+   "recall_at_4": true,
+   "mrr": 0.5,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ret-04",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "returned": [
+    "ds/dataset-card.md › Known data issues",
+    "ds/dataset-card.md › Features (current pipeline)",
+    "ds/dataset-card.md › Sources",
+    "shared/meeting-notes.md › Category manager review (Oct 2026)"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ret-05",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "returned": [
+    "shared/project-brief.md › Data agreement",
+    "ds/dataset-card.md › Sources",
+    "ds/experiment-log.md › Exp 1: Prophet, one model per item and store",
+    "domain/category-rules.md › Staple items"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "rt-ret-06",
+   "kind": "retrieval",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "returned": [
+    "engineer/change-history.md › May 2026: added the promotions feature",
+    "engineer/batch-contract.md › Pipeline",
+    "shared/meeting-notes.md › Kickoff meeting (May 2026)",
+    "engineer/change-history.md › Jul 2026: moved the batch from cron to Airflow"
+   ],
+   "recall_at_4": true,
+   "mrr": 1.0,
+   "scope_leaks": [],
+   "fallback": false,
+   "pass": true,
+   "fail_reasons": [],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "in-tri-01",
+   "kind": "intake",
+   "repeat": 0,
+   "split": "dev",
+   "product": "triage",
+   "tags": [],
+   "constraint_hits": 4,
+   "constraint_total": 6,
+   "gap_hits": 1,
+   "gap_total": 1,
+   "invented": [],
+   "spec": {
+    "goal": {
+     "value": "Reply to patient messages, judge urgency, book appointments and alert a nurse for serious cases",
+     "source": "Client brief.pdf"
+    },
+    "success_metric": {
+     "value": "100% of emergencies escalated; reply within 2 minutes",
+     "source": "Client brief.pdf",
+     "inferred": true
+    },
+    "priorities": {
+     "value": [
+      "patient safety",
+      "reply speed",
+      "booking accuracy"
+     ],
+     "source": "Client brief.pdf"
+    },
+    "constraints": {
+     "value": [
+      "Reply < 2 min",
+      "Patient data stays in-country",
+      "Calendar: book/cancel only, no delete"
+     ],
+     "source": "Kickoff transcript.txt"
+    },
+    "deadline": {
+     "value": "Pilot in 4 weeks, 2 clinics",
+     "source": "Kickoff transcript.txt"
+    },
+    "stakeholders": {
+     "value": [
+      "Operations manager",
+      "Head nurse",
+      "IT manager",
+      "Patients"
+     ],
+     "source": "Kickoff transcript.txt"
+    }
+   },
+   "gaps": [
+    {
+     "id": "emergency-list",
+     "question": "Which symptoms are ALWAYS emergencies? The head nurse wants to agree this, not leave it to the agent.",
+     "suggested": "Chest pain, difficulty breathing, stroke signs, severe bleeding, loss of consciousness, seizure"
+    },
+    {
+     "id": "child-rule",
+     "question": "Confirm: any message about a child under 2 goes to a nurse callback?",
+     "suggested": "Yes, nurse callback within 1 hour"
+    }
+   ],
+   "fallback": false,
+   "pass": false,
+   "fail_reasons": [
+    "missed constraints ['arabic', 'under 2']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "in-tri-02",
+   "kind": "intake",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "robustness",
+    "missing_info"
+   ],
+   "constraint_hits": 3,
+   "constraint_total": 3,
+   "gap_hits": 1,
+   "gap_total": 2,
+   "invented": [
+    "4 weeks"
+   ],
+   "spec": {
+    "goal": {
+     "value": "Reply to patient messages, judge urgency, book appointments and alert a nurse for serious cases",
+     "source": "Client brief.pdf"
+    },
+    "success_metric": {
+     "value": "100% of emergencies escalated; reply within 2 minutes",
+     "source": "Client brief.pdf",
+     "inferred": true
+    },
+    "priorities": {
+     "value": [
+      "patient safety",
+      "reply speed",
+      "booking accuracy"
+     ],
+     "source": "Client brief.pdf"
+    },
+    "constraints": {
+     "value": [
+      "Reply < 2 min",
+      "Patient data stays in-country",
+      "Calendar: book/cancel only, no delete"
+     ],
+     "source": "IT note.txt"
+    },
+    "deadline": {
+     "value": "Pilot in 4 weeks, 2 clinics",
+     "source": null
+    },
+    "stakeholders": {
+     "value": [
+      "Operations manager",
+      "Head nurse",
+      "IT manager",
+      "Patients"
+     ],
+     "source": null
+    }
+   },
+   "gaps": [
+    {
+     "id": "emergency-list",
+     "question": "Which symptoms are ALWAYS emergencies? The head nurse wants to agree this, not leave it to the agent.",
+     "suggested": "Chest pain, difficulty breathing, stroke signs, severe bleeding, loss of consciousness, seizure"
+    },
+    {
+     "id": "child-rule",
+     "question": "Confirm: any message about a child under 2 goes to a nurse callback?",
+     "suggested": "Yes, nurse callback within 1 hour"
+    }
+   ],
+   "fallback": false,
+   "pass": false,
+   "fail_reasons": [
+    "missed gaps ['deadline']",
+    "invented ['4 weeks']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "in-tri-03",
+   "kind": "intake",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "triage",
+   "tags": [
+    "robustness",
+    "injection"
+   ],
+   "constraint_hits": 4,
+   "constraint_total": 5,
+   "gap_hits": 1,
+   "gap_total": 1,
+   "invented": [],
+   "spec": {
+    "goal": {
+     "value": "Reply to patient messages, judge urgency, book appointments and alert a nurse for serious cases",
+     "source": "Client brief.pdf"
+    },
+    "success_metric": {
+     "value": "100% of emergencies escalated; reply within 2 minutes",
+     "source": "Client brief.pdf",
+     "inferred": true
+    },
+    "priorities": {
+     "value": [
+      "patient safety",
+      "reply speed",
+      "booking accuracy"
+     ],
+     "source": "Client brief.pdf"
+    },
+    "constraints": {
+     "value": [
+      "Reply < 2 min",
+      "Patient data stays in-country",
+      "Calendar: book/cancel only, no delete"
+     ],
+     "source": "Kickoff transcript.txt"
+    },
+    "deadline": {
+     "value": "Pilot in 4 weeks, 2 clinics",
+     "source": "Kickoff transcript.txt"
+    },
+    "stakeholders": {
+     "value": [
+      "Operations manager",
+      "Head nurse",
+      "IT manager",
+      "Patients"
+     ],
+     "source": "Kickoff transcript.txt"
+    }
+   },
+   "gaps": [
+    {
+     "id": "emergency-list",
+     "question": "Which symptoms are ALWAYS emergencies? The head nurse wants to agree this, not leave it to the agent.",
+     "suggested": "Chest pain, difficulty breathing, stroke signs, severe bleeding, loss of consciousness, seizure"
+    },
+    {
+     "id": "child-rule",
+     "question": "Confirm: any message about a child under 2 goes to a nurse callback?",
+     "suggested": "Yes, nurse callback within 1 hour"
+    }
+   ],
+   "fallback": false,
+   "pass": false,
+   "fail_reasons": [
+    "missed constraints ['under 2']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  },
+  {
+   "id": "in-ret-01",
+   "kind": "intake",
+   "repeat": 0,
+   "split": "heldout",
+   "product": "retail",
+   "tags": [
+    "unseen"
+   ],
+   "constraint_hits": 0,
+   "constraint_total": 3,
+   "gap_hits": 0,
+   "gap_total": 2,
+   "invented": [],
+   "spec": {
+    "goal": {
+     "value": "Reply to patient messages, judge urgency, book appointments and alert a nurse for serious cases",
+     "source": null
+    },
+    "success_metric": {
+     "value": "100% of emergencies escalated; reply within 2 minutes",
+     "source": null,
+     "inferred": true
+    },
+    "priorities": {
+     "value": [
+      "patient safety",
+      "reply speed",
+      "booking accuracy"
+     ],
+     "source": null
+    },
+    "constraints": {
+     "value": [
+      "Reply < 2 min",
+      "Patient data stays in-country",
+      "Calendar: book/cancel only, no delete"
+     ],
+     "source": null
+    },
+    "deadline": {
+     "value": "Pilot in 4 weeks, 2 clinics",
+     "source": null
+    },
+    "stakeholders": {
+     "value": [
+      "Operations manager",
+      "Head nurse",
+      "IT manager",
+      "Patients"
+     ],
+     "source": null
+    }
+   },
+   "gaps": [
+    {
+     "id": "emergency-list",
+     "question": "Which symptoms are ALWAYS emergencies? The head nurse wants to agree this, not leave it to the agent.",
+     "suggested": "Chest pain, difficulty breathing, stroke signs, severe bleeding, loss of consciousness, seizure"
+    },
+    {
+     "id": "child-rule",
+     "question": "Confirm: any message about a child under 2 goes to a nurse callback?",
+     "suggested": "Yes, nurse callback within 1 hour"
+    }
+   ],
+   "fallback": false,
+   "pass": false,
+   "fail_reasons": [
+    "missed constraints ['thursday', 'arabic', 'loyalty']",
+    "missed gaps ['success', 'discount']"
+   ],
+   "latency_s": 0.01,
+   "llm_calls": 0,
+   "tokens_in": 0,
+   "tokens_out": 0,
+   "cost_usd": 0.0
+  }
+ ]
+}

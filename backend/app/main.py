@@ -38,14 +38,23 @@ RECOMMENDATION_TEXT = {"approve": "approving the change", "alternative": "the ch
 SESSIONS: "OrderedDict[str, dict]" = OrderedDict()
 SESSIONS_LOCK = threading.Lock()
 MAX_SESSIONS = 300
-LIVE_LIMIT = int(os.getenv("LIVE_LIMIT_PER_SESSION", "8"))
+# Separate budgets per visitor, so chatting never uses up the live change reviews.
+LIVE_LIMITS = {
+    "review": int(os.getenv("LIVE_REVIEW_LIMIT_PER_SESSION", os.getenv("LIVE_LIMIT_PER_SESSION", "8"))),  # reviews + intake
+    "chat": int(os.getenv("LIVE_CHAT_LIMIT_PER_SESSION", "20")),
+}
 
 
-def _use_live(st) -> bool:
-    """Live agents if enabled and this visitor still has live runs left."""
-    if not llm.enabled() or st.get("live_used", 0) >= LIVE_LIMIT:
+def _live_left(st, kind: str) -> bool:
+    return st.get("live_used", {}).get(kind, 0) < LIVE_LIMITS[kind]
+
+
+def _use_live(st, kind: str) -> bool:
+    """Live agents if enabled and this visitor still has live runs of this kind left."""
+    if not llm.enabled() or not _live_left(st, kind):
         return False
-    st["live_used"] = st.get("live_used", 0) + 1
+    used = st.setdefault("live_used", {})
+    used[kind] = used.get(kind, 0) + 1
     return True
 
 
@@ -132,7 +141,7 @@ def _assess(st, product, node_id, option, proposer):
 
 def _run_agents(st, product, node_id, option, proposer):
     """Live agents when available, demo agents otherwise (or if live fails)."""
-    if _use_live(st):
+    if _use_live(st, "review"):
         try:
             from .live_agents import assess_change_live
             return assess_change_live(product, node_id, option, proposer, st["activity"][product["id"]])
@@ -143,7 +152,7 @@ def _run_agents(st, product, node_id, option, proposer):
             return card
     card = assess_change(product, node_id, option, proposer)
     if llm.enabled():
-        card["fallback_reason"] = "Live-agent limit for this session reached"
+        card["fallback_reason"] = "Live-review limit for this session reached"
     return card
 
 
@@ -273,8 +282,8 @@ def rerun(cid: str, x_session: str | None = Header(None)):
         raise HTTPException(409, "Already decided")
     if not llm.enabled():
         raise HTTPException(400, "Live agents are not enabled on this server")
-    if st.get("live_used", 0) >= LIVE_LIMIT:
-        raise HTTPException(429, "You've used all live-agent runs for this session. Reset the demo to start over.")
+    if not _live_left(st, "review"):
+        raise HTTPException(429, "You've used all live reviews for this session. Restart the demo to start over.")
     p = _product(st, card["product_id"])
     node = next(n for n in p["nodes"] if n["id"] == card["node_id"])
     option = next((o for o in node["change_options"] if o["id"] == card["option_id"]),
@@ -339,7 +348,7 @@ def intake(pid: str, x_session: str | None = Header(None)):
         raise HTTPException(400, "No documents to read")
     mode = "demo"
     result = None
-    if _use_live(st):
+    if _use_live(st, "review"):
         try:
             from .live_agents import intake_live
             result, mode = intake_live(p), "live"
@@ -405,7 +414,7 @@ def ask(pid: str, body: AskIn, x_session: str | None = Header(None)):
     if not hits:
         result = {"answer": "I couldn't find anything about that in this project's knowledge yet.",
                   "sources": [], "confident": False, "mode": "demo"}
-    elif _use_live(st):
+    elif _use_live(st, "chat"):
         try:
             from .live_agents import answer_live
             out = answer_live(question, hits, body.agent)

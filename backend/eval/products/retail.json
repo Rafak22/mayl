@@ -1,0 +1,48 @@
+{
+  "id": "retail",
+  "name": "Fresh-Food Demand Forecasting",
+  "domain": "Retail · Time-series forecasting",
+  "state": "healthy",
+  "eval_only": true,
+  "summary": "Mid-project. Nightly forecasts for 1,800 fresh items in 40 stores feed automatic supplier orders.",
+  "objective": {
+    "goal": "Forecast next-day demand for fresh items per store to cut waste without empty shelves",
+    "success_metric": "WAPE <= 20%, waste -15%, staple stockouts < 2%",
+    "priorities": ["staple availability", "waste", "forecast accuracy"],
+    "constraints": ["Forecasts in ERP by 11:00", "Batch done by 06:00", "CPU-only server", "Loyalty data aggregated only"],
+    "deadline": "Rollout to 40 stores after Ramadan review"
+  },
+  "metrics": {"wape": 0.22, "pilot_stores": 10},
+  "rules": [
+    {"id": "p-cutoff", "text": "Client promise: order forecasts in the ERP by 11:00 every day", "source": "Kickoff meeting, May 2026"},
+    {"id": "r-staple", "text": "Never order a staple (bread, milk, laban, eggs) below last week's minimum daily sales", "source": "Category managers"},
+    {"id": "r-ramadan", "text": "Ramadan and Eid forecasts must be signed off by category managers 2 weeks before", "source": "Category manager review, Oct 2026"},
+    {"id": "r-loyalty", "text": "Loyalty data only aggregated per store per day; never customer-level", "source": "Data agreement with client legal"},
+    {"id": "e-window", "text": "Nightly batch must finish by 06:00 on one 8-core CPU server (no GPU)", "source": "Batch contract"}
+  ],
+  "nodes": [
+    {"id": "obj", "label": "Objective: less waste, full shelves", "kind": "objective", "owner": "lead", "effort_days": 0, "description": "WAPE <= 20%, waste -15%", "position": {"x": 0, "y": 0}},
+    {"id": "req-cutoff", "label": "Promise: ERP by 11:00", "kind": "requirement", "owner": "lead", "effort_days": 1, "description": "Supplier orders close at 12:00", "position": {"x": 0, "y": 150}},
+    {"id": "rule-staple", "label": "Rule: staple minimum orders", "kind": "requirement", "owner": "domain", "effort_days": 1, "description": "Never below last week's minimum", "position": {"x": 0, "y": 300}},
+    {"id": "rule-ramadan", "label": "Rule: Ramadan sign-off", "kind": "requirement", "owner": "domain", "effort_days": 1, "description": "Category managers sign off 2 weeks before", "position": {"x": 0, "y": 450}},
+    {"id": "data", "label": "Sales history (3 years)", "kind": "dataset", "owner": "ds", "effort_days": 1, "description": "40 stores, 1,800 fresh items", "position": {"x": 290, "y": 0}},
+    {"id": "features", "label": "Feature pipeline", "kind": "pipeline", "owner": "ds", "effort_days": 2, "description": "Lags, Hijri calendar, salary day, promotions", "position": {"x": 580, "y": 0}},
+    {"id": "model", "label": "LightGBM global model", "kind": "pipeline", "owner": "ds", "effort_days": 2, "description": "WAPE 22% · trains in 2.5 h on CPU", "position": {"x": 870, "y": 0}},
+    {"id": "eval", "label": "Backtest (12 weeks)", "kind": "pipeline", "owner": "ds", "effort_days": 1, "description": "Rolling backtest per category", "position": {"x": 870, "y": 150}},
+    {"id": "server", "label": "Batch server (8-core CPU)", "kind": "engine", "owner": "engineer", "effort_days": 1, "description": "No GPU", "position": {"x": 1160, "y": 300}},
+    {"id": "batch", "label": "Nightly batch (Airflow)", "kind": "engine", "owner": "engineer", "effort_days": 2, "description": "02:00 → 05:30, must end by 06:00", "position": {"x": 1160, "y": 0}},
+    {"id": "erp", "label": "ERP export", "kind": "engine", "owner": "engineer", "effort_days": 2, "description": "CSV per store, by 11:00", "position": {"x": 1450, "y": 0}},
+    {"id": "dash", "label": "Store manager dashboard", "kind": "engine", "owner": "engineer", "effort_days": 1, "description": "Forecasts and waste chart", "position": {"x": 1450, "y": 150}}
+  ],
+  "edges": [
+    ["obj", "data", "feeds"], ["data", "features", "feeds"], ["rule-ramadan", "features", "feeds"],
+    ["features", "model", "feeds"], ["model", "eval", "feeds"], ["model", "batch", "feeds"],
+    ["eval", "batch", "feeds"], ["rule-staple", "batch", "feeds"], ["req-cutoff", "batch", "feeds"],
+    ["batch", "erp", "feeds"], ["batch", "dash", "feeds"],
+    ["server", "model", "constrains"], ["server", "batch", "constrains"]
+  ],
+  "documents": [
+    {"name": "Promotions brief.pdf", "text": "Tamr Markets wants a second forecasting product: predict how much extra each fresh item will sell during weekend promotions, so promotion orders are right. Forecasts must be ready every Thursday by 18:00 for the weekend. Store managers read the results in Arabic. We cannot use customer-level loyalty data."},
+    {"name": "Kickoff notes.txt", "text": "Marketing manager: we run about 60 promotions a month; some are supplier-funded. Supply chain manager: promotion orders go to suppliers on Thursday evening. Data team: promotions history exists for 2 years but discount depth was not recorded before 2025."}
+  ]
+}

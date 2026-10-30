@@ -230,10 +230,28 @@ def _bm25(query_tokens, docs: list[list[str]], k1=1.5, b=0.75) -> list[float]:
     return scores
 
 
+EXTRA_KNOWLEDGE: dict[str, Path] = {}  # product id -> knowledge dir, for products outside data/mayl.db
+
+
+def register_knowledge_dir(product_id: str, path: Path) -> None:
+    """Search `path/<scope>/*.md` for this product, in memory (used by eval-only products)."""
+    EXTRA_KNOWLEDGE[product_id] = Path(path)
+    _extra_chunks.cache_clear()
+
+
+@lru_cache(maxsize=8)
+def _extra_chunks(product_id: str) -> tuple[Chunk, ...]:
+    root = EXTRA_KNOWLEDGE.get(product_id)
+    if not root:
+        return ()
+    return tuple(c for scope in SCOPES for f in sorted((root / scope).glob("*.md")) for c in chunk_file(f, scope))
+
+
 class Retriever:
     def __init__(self, product_id: str, live_docs: list[Chunk] | None = None):
         self.product_id = product_id
-        self.live = list(live_docs or [])
+        # Searched in memory: an override knowledge dir's chunks (real scopes) + live project memory (scope "live").
+        self.live = list(_extra_chunks(product_id)) + list(live_docs or [])
         self._live_tokens = [tokenize(c.text) for c in self.live]
         self._live_vecs = None
         self._lock = threading.Lock()
@@ -249,19 +267,20 @@ class Retriever:
         if not q:
             return []
         static_scopes = [s for s in (scopes or SCOPES) if s in SCOPES]
-        use_live = bool(self.live) and (not scopes or "live" in scopes)
+        mem = [i for i, c in enumerate(self.live) if not scopes or c.scope in scopes]  # in-memory chunks in scope
         qvec = embed_query(query)
 
-        # Each ranking is a list of keys: ("db", chunk_id) or ("live", index).
+        # Each ranking is a list of keys: ("db", chunk_id) or ("live", index into self.live).
         rankings = []
         if static_scopes:
             rankings.append([("db", cid) for cid in _keyword_static(q, self.product_id, static_scopes, CANDIDATES)])
         vectors = _vector_static(qvec, self.product_id, static_scopes, CANDIDATES) if static_scopes else []
-        if use_live:
-            kw = _bm25(q, self._live_tokens)
-            rankings.append([("live", i) for i in sorted(range(len(kw)), key=lambda i: -kw[i])[:CANDIDATES] if kw[i] > 0])
-            sims = self._live_matrix() @ qvec  # vectors are normalized: dot product = cosine
-            vectors += [(float(s), ("live", i)) for i, s in enumerate(sims)]
+        if mem:
+            kw = _bm25(q, [self._live_tokens[i] for i in mem])
+            order = sorted(range(len(mem)), key=lambda j: -kw[j])
+            rankings.append([("live", mem[j]) for j in order[:CANDIDATES] if kw[j] > 0])
+            sims = self._live_matrix()[mem] @ qvec  # vectors are normalized: dot product = cosine
+            vectors += [(float(s), ("live", i)) for i, s in zip(mem, sims)]
         # Same model, same cosine: static and live vector hits rank together.
         vectors = sorted((v for v in vectors if v[0] >= MIN_SIMILARITY), key=lambda v: -v[0])
         rankings.append([key for _, key in vectors[:CANDIDATES]])

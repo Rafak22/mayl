@@ -70,6 +70,15 @@ def test_stored_vectors_match_runtime_embeddings():
     assert np.array_equal(np.stack(stored), rag.embed_passages(texts))
 
 
+def test_knowledge_dir_override_for_eval_products():
+    rag.register_knowledge_dir("retail-test", rag.BACKEND / "eval" / "knowledge" / "retail")
+    r = Retriever("retail-test")
+    hits = r.search("when must the nightly batch finish", AGENT_SCOPES["engineer"])
+    assert hits and hits[0]["source"].startswith("engineer/batch-contract.md")
+    assert not any(s.startswith("domain/") for s in sources(r.search("staple bread milk minimum", AGENT_SCOPES["engineer"], k=10)))
+    assert not any("batch-contract" in s for s in sources(Retriever("ppe").search("nightly batch window", None, k=10)))
+
+
 def test_index_is_up_to_date():
     stored = dict(rag._db().execute("SELECT key, value FROM meta"))
     assert stored["fingerprint"] == rag.fingerprint(rag.knowledge_chunks()), \

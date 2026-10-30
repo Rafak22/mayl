@@ -163,11 +163,22 @@ def test_live_chat_uses_each_agents_persona(fake):
         assert fake.seen[-1][0] == prompts.CHAT_AGENTS[agent]
 
 
-def test_live_limit_per_session(monkeypatch):
+def test_live_review_limit_per_session(monkeypatch):
     from app import main
-    monkeypatch.setattr(main, "LIVE_LIMIT", 1)
+    monkeypatch.setitem(main.LIVE_LIMITS, "review", 1)
     c.post("/api/reset")
     first = c.post("/api/products/ppe/proposals", json={"node_id": "edge", "custom_text": "A", "role": "engineer"}).json()
     second = c.post("/api/products/ppe/proposals", json={"node_id": "edge", "custom_text": "B", "role": "engineer"}).json()
     assert first["mode"] == "live" and second["mode"] == "demo"
     assert "limit" in second["fallback_reason"]
+
+
+def test_chat_has_its_own_live_budget(monkeypatch):
+    from app import main
+    monkeypatch.setitem(main.LIVE_LIMITS, "review", 1)
+    monkeypatch.setitem(main.LIVE_LIMITS, "chat", 2)
+    c.post("/api/reset")
+    chats = [c.post("/api/products/ppe/ask", json={"question": "helmet rule", "agent": "domain"}).json()["mode"] for _ in range(3)]
+    assert chats == ["live", "live", "demo"]  # chat budget used up...
+    review = c.post("/api/products/ppe/proposals", json={"node_id": "edge", "custom_text": "A", "role": "engineer"}).json()
+    assert review["mode"] == "live"  # ...but the review budget is untouched
