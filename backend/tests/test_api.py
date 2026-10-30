@@ -64,6 +64,13 @@ def test_decide_alternative_resolves_bottleneck():
     assert p["state"] == "resolved" and p["metrics"]["violation_recall"] == 0.94
 
 
+def test_approving_the_retrain_does_not_claim_the_cheap_fix():
+    card = c.get("/api/inbox/ds").json()[0]
+    c.post(f"/api/proposals/{card['id']}/decide", json={"role": "ds", "decision": "approve"})
+    p = c.get("/api/products/ppe").json()
+    assert "rule-only fix" not in p["summary"] and p["metrics"]["violation_recall"] == 0.88
+
+
 def test_from_scratch_flow():
     spec = c.post("/api/products/triage/intake").json()
     assert len(spec["gaps"]) == 2 and spec["spec"]["goal"]["source"] == "Client brief.pdf"

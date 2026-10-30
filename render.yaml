@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: relay-api
+    name: mayl-api
     runtime: python
     rootDir: backend
     plan: free

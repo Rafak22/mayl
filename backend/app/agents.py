@@ -3,10 +3,11 @@
 Each agent speaks for one team and answers the same question about a change
 proposal: "what does this mean for MY team?"
 
-Demo mode (default) is deterministic: estimates come from the Project Graph
-(which components a change touches and their effort profile), conflicts come
-from the product's recorded rules and client promises. Live mode can later
-swap the message wording for LLM-written text without changing the numbers.
+These are the demo agents: deterministic and free. Estimates come from the
+Project Graph (which components a change touches and their effort profile),
+conflicts from the product's recorded rules and client promises. They run when
+there is no API key and as the fallback when a live call fails; the live Claude
+agents are in live_agents.py. `finalize_card` and `recommend` are shared by both.
 """
 import math
 import uuid

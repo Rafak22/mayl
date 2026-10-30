@@ -11,7 +11,7 @@ AI agent in seconds, so humans make one informed decision instead of discovering
 ![LangGraph](https://img.shields.io/badge/orchestration-LangGraph-1c3c3c)
 ![FastAPI](https://img.shields.io/badge/backend-FastAPI-009688)
 ![React](https://img.shields.io/badge/frontend-React%2019-61dafb)
-![Tests](https://img.shields.io/badge/tests-44%20passing-2ea44f)
+![Tests](https://img.shields.io/badge/tests-45%20passing-2ea44f)
 
 </div>
 
@@ -46,10 +46,10 @@ deadlines and recommends one option: **approve**, **use the alternative**, **rej
 
 | Agent | Represents | Knows about |
 |---|---|---|
-| 🧭 **Lead Agent** | The AI lead | The Objective Spec (goal, priorities in order, deadline), every team's assessment, rules and promises. Turns client documents into the Objective Spec. |
-| 📊 **DS Agent** | Data science | Data, annotations, models, experiments, evaluation |
-| ⚙️ **Engineer Agent** | AI engineering | The engine, APIs, apps, hardware, the engine contract (latency, limits), change history with actual effort |
-| 🛡️ **Domain Agent** | The domain expert (an "expert twin") | Domain rules, safety, client promises. Answers domain questions with sources, and **hands the question to a human** when the documents don't cover it. |
+| **Lead Agent** | The AI lead | The Objective Spec (goal, priorities in order, deadline), every team's assessment, rules and promises. Turns client documents into the Objective Spec. |
+| **DS Agent** | Data science | Data, annotations, models, experiments, evaluation |
+| **Engineer Agent** | AI engineering | The engine, APIs, apps, hardware, the engine contract (latency, limits), change history with actual effort |
+| **Domain Agent** | The domain expert (an "expert twin") | Domain rules, safety, client promises. Answers domain questions with sources, and **hands the question to a human** when the documents don't cover it. |
 
 Each agent sees only its own team's knowledge plus the shared project memory, and the tests
 confirm that nothing leaks between teams.
@@ -60,14 +60,14 @@ Three projects, each in a different state:
 
 | Project | State | What it shows |
 |---|---|---|
-| 💬 Arabic customer-service chatbot | 🟢 Healthy | The calm view: everything green, ask the agents anything |
-| ⛑️ Helmet compliance detection | 🟠 Bottleneck | A domain rule (a carried helmet doesn't count) → impact on every team → conflict with a client deadline → a 1-day alternative instead of a retrain → one decision |
-| 🏥 Smart clinic receptionist | 🔵 New | Client documents → Objective Spec with open questions → agents design the system → handoff |
+| Arabic customer-service chatbot | Healthy | The calm view: everything green, ask the agents anything |
+| Helmet compliance detection | Bottleneck | A domain rule (a carried helmet doesn't count) → impact on every team → conflict with a client deadline → a 1-day alternative instead of a retrain → one decision |
+| Smart clinic receptionist | New | Client documents → Objective Spec with open questions → agents design the system → handoff |
 
 | Screen | What you do there |
 |---|---|
 | **Overview** | Projects at a glance, decisions waiting for you, recent activity |
-| **Projects** | Each project's map (components owned by each team), data and solution, knowledge files and results against goals. Tap any component to propose a change. |
+| **Projects** | Each project's map (components owned by each team), data and solution, and knowledge files, with its metrics against goals. Tap any component to propose a change. |
 | **Agents** | Who the agents are, what they know and what they have done |
 | **Chat** | Ask any agent or the project memory, in Arabic or English |
 
@@ -159,7 +159,7 @@ licenses: **[docs/DATA.md](docs/DATA.md)**.
 | Backend | Python, FastAPI, NetworkX |
 | Search | SQLite FTS5 + sqlite-vec, multilingual-e5-small (ONNX + sentencepiece) |
 | Frontend | React 19, Vite, React Router, React Flow (`@xyflow/react`), plain CSS |
-| Hosting (planned) | Render (API) and Vercel (web), configured in `render.yaml` |
+| Hosting (optional) | Render (API) and Vercel (web), configured in `render.yaml`; the demo runs locally |
 
 ## Run it locally
 
@@ -191,13 +191,15 @@ backend/
   data/         mayl.db (search index) and sample data
   eval/         spec, frozen cases, eval-only product, numbered reports
   scripts/      build_index.py, run_eval.py
-  tests/        44 automated tests
+  tests/        45 automated tests
 frontend/       React app
 docs/           TESTING.md, DATA.md, design
 render.yaml     backend hosting config
 ```
 
-## Deploy (not done yet)
+## Deploy (optional)
+
+The demo runs locally. To put it online:
 
 1. **Backend on Render:** New → Blueprint → pick this repo (it reads `render.yaml`).
    Add `ANTHROPIC_API_KEY` as an environment variable.
@@ -212,4 +214,4 @@ link a minute before presenting.
 
 - Better Lead Agent judgement on brand-new projects, measured on new practice cases.
 - Build the engine side of the project graph from a real code repository.
-- Public deployment with a QR code for the demo.
+- Public deployment with a QR code.

@@ -340,10 +340,13 @@ def decide(cid: str, body: DecisionIn, x_session: str | None = Header(None)):
             p["state"] = "building"
             p["summary"] = "Handoff accepted. Engine work started with full context attached."
         seed = p.get("seed_proposal")
-        if seed and card["node_id"] == seed["node"] and body.decision != "reject":
+        if seed and card["node_id"] == seed["node"] and body.decision == "alternative":
             p["state"] = "resolved"
             p["summary"] = p["resolved"]["summary"]
             p["metrics"].update(p["resolved"]["metrics"])
+        elif seed and card["node_id"] == seed["node"] and body.decision == "approve":  # decided, but the fix isn't in yet
+            p["state"] = "resolved"
+            p["summary"] = f"Decision made: “{card['title']}” approved. The agents flagged the pilot date as at risk."
         what = card["alternative"]["label"] if body.decision == "alternative" else card["title"]
         _log(st, p["id"], ROLES[body.role], f"{body.decision.title()}: “{what}”. No meeting needed.", "decision")
         return card

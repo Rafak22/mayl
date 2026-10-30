@@ -11,7 +11,7 @@ import json
 import logging
 import os
 
-log = logging.getLogger("relay.llm")
+log = logging.getLogger("mayl.llm")
 MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-5-5")
 _client = None
 

@@ -3,8 +3,8 @@ const BASE = (import.meta.env.VITE_API_URL || "http://localhost:8000").replace(/
 // Each visitor gets their own demo state on the server.
 let SESSION = "s-" + Math.random().toString(36).slice(2, 12);
 try {
-  const saved = window.localStorage.getItem("relay-session");
-  if (saved) SESSION = saved; else window.localStorage.setItem("relay-session", SESSION);
+  const saved = window.localStorage.getItem("mayl-session");
+  if (saved) SESSION = saved; else window.localStorage.setItem("mayl-session", SESSION);
 } catch { /* storage unavailable: keep in-memory session */ }
 
 async function req(path, opts = {}) {

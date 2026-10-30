@@ -21,6 +21,7 @@ On cases the agents were never tuned on (held-out, live Claude, one run):
 | Retrieval: right document in the top 4 | ≥ 0.85 | **0.95** |
 | Scope leaks (an agent sees another team's private knowledge) | 0 | **0** |
 | Fallback to demo mode (API failure) | ≤ 5% | **0%** |
+| A human agrees with the AI judge (10 held-out verdicts checked by hand) | | **10 / 10** |
 | Cost per change review (3 team agents + Lead Agent) | | **about $0.06** |
 
 In short, Mayl is safe: it never makes up an answer it should escalate, never leaks knowledge
@@ -30,7 +31,7 @@ call, not missed rules.
 
 ## Two kinds of tests
 
-### 1. Unit and API tests (`backend/tests/`, 44 tests, free)
+### 1. Unit and API tests (`backend/tests/`, 45 tests, free)
 
 Run with `cd backend && pytest`. They run in seconds with no API key.
 
@@ -68,7 +69,8 @@ missing information, leading questions, out-of-scope questions and paraphrases.
 4. **Targets set before the first run** and never moved.
 5. **Scored by a script wherever possible.** An LLM judge is used only to check whether a
    free-text answer states the key facts, with a fixed rubric; its verdicts are listed in
-   each report for a human to spot-check.
+   each report for a human to spot-check. On held-out (run 04), a human read all 10 listed
+   verdicts against the agent's answer and agreed with **10 of 10**.
 6. **Eval files are read-only.** Cases and knowledge were never edited to make a test pass.
    For example, Arabic lines were not added to the knowledge files to help Arabic questions.
 
@@ -88,6 +90,7 @@ Each run is saved as a numbered report, so every step can be checked.
 
 | Run | What changed before it | Change-review pass rate | Cost |
 |---|---|---|---|
+| Smoke check | One live review of the helmet bottleneck, before the test set existed ([before](../backend/docs/eval_before.md), [after](../backend/docs/eval_after.md), `scripts/eval_live.py`) | not scored | |
 | Demo floor | Rule-based agents, no LLM | 0.20 (all cases) | free |
 | [01 dev baseline](../backend/eval/reports/01_dev_baseline.md) | First live run (3 repeats) | 0.73 | $2.33 |
 | [02 dev](../backend/eval/reports/02_dev_after_fixes.md) | Fixes a–d (below) | 0.73 | $0.84 |
@@ -156,6 +159,8 @@ held-out set into practice cases and remove our only unbiased number.
   recommendation but also expects an alternative; we flagged it rather than editing it.
 - **Message length.** Agents still often write more than 3 sentences per message (brevity
   0.11 on held-out). This isn't part of the pass rule.
+- **The judge check is small.** The 10 hand-checked verdicts were all "correct", so it shows
+  the judge doesn't pass wrong answers in those cases, not how it handles answers it fails.
 - **Some checks use keywords** (constraints, alternatives), so a correct answer worded
   differently can be scored as a miss.
 
