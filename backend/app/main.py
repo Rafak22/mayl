@@ -23,6 +23,7 @@ from pydantic import BaseModel
 from . import llm
 from .agents import AGENT_BY_NAME, TEAM_AGENTS, assess_change, build_from_objective, now, objective_intake
 from .details import SAMPLES, documents, product_details
+from .eval_results import project_results
 from .products import ROLES, build_products
 from .rag import AGENT_SCOPES, Retriever, live_chunks
 
@@ -209,6 +210,12 @@ def products(x_session: str | None = Header(None)):
 def details(pid: str, x_session: str | None = Header(None)):
     """Data & solution and Knowledge tabs: examples, dataset, pipeline, samples and knowledge documents."""
     return product_details(_product(session(x_session), pid))
+
+
+@app.get("/api/products/{pid}/eval")
+def eval_results(pid: str, x_session: str | None = Header(None)):
+    """Results tab: how the agents scored on this project in the saved evaluation runs."""
+    return project_results(pid, _product(session(x_session), pid).get("rules", []))
 
 
 @app.get("/api/stats")
