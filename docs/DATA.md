@@ -3,17 +3,6 @@
 What data Mayl uses, where each piece comes from, where it is stored and how it moves
 through the system. For the evaluation method and results, see [TESTING.md](TESTING.md).
 
-## In short
-
-| Question | Answer |
-|---|---|
-| Is any of it real client data? | **No.** All clients, projects, documents, messages and numbers are synthetic, written for this demo. |
-| Is any of it real at all? | Three helmet photos from a public MIT-licensed dataset, credited below. |
-| Is there personal data? | **No.** No real people, patients or customers. Names of companies (Sahm Telecom, Binaa Contracting, Shifa Clinics, Tamr Markets) are invented. |
-| Where is it stored? | Markdown and CSV files in the repo, one SQLite search index (`backend/data/mayl.db`), and each visitor's session in server memory. |
-| Is there a user database? | **No.** No accounts, no logins, nothing a visitor does is written to disk. |
-| What leaves the machine? | Only in live mode: the prompts sent to the Claude API. In demo mode nothing is sent anywhere. |
-
 ## Map of the data
 
 ```
