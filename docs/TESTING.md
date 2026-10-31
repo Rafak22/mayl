@@ -61,7 +61,7 @@ missing information, leading questions, out-of-scope questions and paraphrases.
 **Rules we kept to protect the result:**
 
 1. **Dev vs held-out.** Dev cases are for practice: we read their failures and improve the
-   prompts. Held-out cases are the final exam: never opened while tuning, run once at the end.
+   prompts. Held-out cases are the test set: never opened while tuning, run once at the end.
 2. **An unseen product.** A fourth product (retail demand forecasting) exists only in the
    eval, and only in held-out. No prompt was written with it in mind.
 3. **General fixes only.** No prompt contains a case-specific word (helmet, pilot, refund…).
@@ -95,7 +95,7 @@ Each run is saved as a numbered report, so every step can be checked.
 | [01 dev baseline](../backend/eval/reports/01_dev_baseline.md) | First live run (3 repeats) | 0.73 | $2.33 |
 | [02 dev](../backend/eval/reports/02_dev_after_fixes.md) | Fixes a–d (below) | 0.73 | $0.84 |
 | [03 dev](../backend/eval/reports/03_dev_effort_deadlines_alts.md) | Effort, deadline and alternative fixes | **0.82** | $0.79 |
-| [04 held-out](../backend/eval/reports/04_heldout.md) | Nothing; the final exam | **0.68** | $1.38 |
+| [04 held-out](../backend/eval/reports/04_heldout.md) | Nothing; the held-out test | **0.68** | $1.38 |
 
 **Total live spend for the whole evaluation: $5.55** (including a $0.21 trial run).
 
